@@ -271,7 +271,7 @@ export default function App() {
         <div className="z-10 flex flex-col items-center w-full max-w-5xl mx-auto text-center px-4 sm:px-6 mt-10 sm:mt-16 md:mt-20">
           {/* Logo + Hero */}
           <img
-            src="/3f196c0a3_generated_image.png"
+            src="/86f51b48a_generated_image.png"
             alt="PitchAleph Logo"
             className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 mb-4 md:mb-6 rounded-full shadow-[0_0_60px_rgba(16,185,129,0.3)] border border-emerald-500/30"
           />
