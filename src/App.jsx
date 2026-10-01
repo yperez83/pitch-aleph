@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const CODE_SNIPPETS = {
   1: `-- Step 1: Ingesting ℵ₀
