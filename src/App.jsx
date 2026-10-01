@@ -123,10 +123,14 @@ export default function App() {
   const [calcStake, setCalcStake] = useState(1000);
   const [calcCase, setCalcCase] = useState('2022');
   const [showCanvas, setShowCanvas] = useState(false);
+  const [manualMinute, setManualMinute] = useState(null);
+  const manualMinuteRef = useRef(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
     if (!activeCase) return;
+    // Reset scrubber ref on case switch (state is reset via button onClick handlers)
+    manualMinuteRef.current = null;
     const files = {
       '2022': '/match_data.json',
       '2018': '/match_data_2018.json',
@@ -161,10 +165,11 @@ export default function App() {
 
     const render = () => {
       const isFrozen = activeStep === 4;
-      if (!isFrozen) { time += 0.05; }
+      // Only auto-advance when not frozen and user hasn't grabbed the scrubber
+      if (!isFrozen && manualMinuteRef.current === null) { time += 0.05; }
 
       const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : 100));
-      const matchMinute = time % timeLimit;
+      const matchMinute = manualMinuteRef.current !== null ? manualMinuteRef.current : (time % timeLimit);
 
       const W = canvas.parentElement.clientWidth;
       const H = canvas.parentElement.clientHeight;
@@ -279,19 +284,19 @@ export default function App() {
 
           {/* Scenario buttons — 1 col on xs, 2 col on sm+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-10 md:mb-16">
-            <button onClick={() => { setActiveCase('2022'); setActiveStep(1); setShowCanvas(false); }} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('2022'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 01: ALPHA GENERATION</span>
               <span className="text-base sm:text-lg">ARG vs FRA (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('2018'); setActiveStep(1); setShowCanvas(false); }} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('2018'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 02: TAIL RISK / VARIANCE</span>
               <span className="text-base sm:text-lg">GER vs KOR (2018)</span>
             </button>
-            <button onClick={() => { setActiveCase('ksa'); setActiveStep(1); setShowCanvas(false); }} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('ksa'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 03: UNDERDOG INEFFICIENCY</span>
               <span className="text-base sm:text-lg">KSA vs ARG (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('ned'); setActiveStep(1); setShowCanvas(false); }} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('ned'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 04: DYNAMIC HEDGING</span>
               <span className="text-base sm:text-lg">NED vs ARG (2022)</span>
             </button>
@@ -359,6 +364,18 @@ export default function App() {
   // ─── CASE STUDY VIEW ─────────────────────────────────────────
   // On mobile: stacked layout (story → canvas toggle)
   // On desktop: side-by-side grid
+  const caseTimeLimit = activeCase === '2018' ? 82 : activeCase === 'ksa' ? 55 : activeCase === 'ned' ? 92 : 100;
+
+  const handleScrub = (val) => {
+    manualMinuteRef.current = val;
+    setManualMinute(val);
+  };
+
+  const handleAutoResume = () => {
+    manualMinuteRef.current = null;
+    setManualMinute(null);
+  };
+
   return (
     <div className="bg-slate-900 text-white font-sans min-h-screen flex flex-col md:h-screen md:overflow-hidden relative">
 
@@ -458,14 +475,55 @@ export default function App() {
         {/* Canvas panel */}
         <div className={`${showCanvas ? 'flex' : 'hidden'} md:flex h-[70vw] md:h-full w-full bg-slate-950 relative border-t md:border-t-0 md:border-l border-slate-800`}>
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
-          <div className="absolute bottom-4 right-4 text-emerald-400 font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase z-10">
-            ● {activeCase} BACKTEST RUNNING
+
+          {/* Engine status — top right */}
+          <div className="absolute top-3 right-3 text-emerald-400 font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase z-10">
+            ● {activeCase} RUNNING
           </div>
-          {/* Mobile step indicator */}
+
+          {/* Mobile step indicator — top left */}
           <div className="absolute top-3 left-3 md:hidden flex gap-1 z-10">
             {[1, 2, 3, 4].map(s => (
               <div key={s} className={`w-1.5 h-1.5 rounded-full transition-all ${activeStep === s ? 'bg-emerald-400 scale-125' : 'bg-slate-600'}`} />
             ))}
+          </div>
+
+          {/* ── Scrub slider bar ── */}
+          <div className="absolute bottom-0 left-0 right-0 z-20 bg-slate-950/90 backdrop-blur-sm border-t border-slate-800 px-4 py-3 flex flex-col gap-1.5">
+            <div className="flex items-center justify-between mb-0.5">
+              <span className="font-mono text-[10px] sm:text-xs text-slate-400 tracking-widest uppercase">
+                Scrub Match Timeline
+              </span>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-emerald-400 font-bold tabular-nums">
+                  {manualMinute !== null ? `${Math.floor(manualMinute)}'` : 'AUTO'}
+                </span>
+                {manualMinute !== null && (
+                  <button
+                    onClick={handleAutoResume}
+                    className="font-mono text-[10px] px-2 py-0.5 rounded border border-emerald-600 text-emerald-400 hover:bg-emerald-500/20 transition-all tracking-widest"
+                  >
+                    ▶ AUTO
+                  </button>
+                )}
+              </div>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={caseTimeLimit}
+              step={0.5}
+              value={manualMinute !== null ? manualMinute : 0}
+              onChange={(e) => handleScrub(Number(e.target.value))}
+              className="w-full accent-emerald-500 cursor-pointer"
+            />
+            <div className="flex justify-between font-mono text-[9px] sm:text-[10px] text-slate-600 mt-0.5">
+              <span>0'</span>
+              <span>{Math.floor(caseTimeLimit / 4)}'</span>
+              <span>{Math.floor(caseTimeLimit / 2)}'</span>
+              <span>{Math.floor(caseTimeLimit * 3 / 4)}'</span>
+              <span>{caseTimeLimit}'</span>
+            </div>
           </div>
         </div>
 
