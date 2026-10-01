@@ -1,1 +1,1976 @@
-[]
+[
+  {
+    "time": 0,
+    "type": "Pass",
+    "x": 93.8,
+    "y": 36.9,
+    "rolling_xT": 0.041
+  },
+  {
+    "time": 0.2709,
+    "type": "Pass",
+    "x": 87.5,
+    "y": 6.0,
+    "rolling_xT": 0.069
+  },
+  {
+    "time": 0.3299,
+    "type": "Shot",
+    "x": 96.9,
+    "y": 60.9,
+    "rolling_xT": 0.078
+  },
+  {
+    "time": 0.5748,
+    "type": "Pass",
+    "x": 89.6,
+    "y": 36.5,
+    "rolling_xT": 0.123
+  },
+  {
+    "time": 0.6268,
+    "type": "Pass",
+    "x": 99.3,
+    "y": 13.8,
+    "rolling_xT": 0.032
+  },
+  {
+    "time": 0.964,
+    "type": "Pass",
+    "x": 93.2,
+    "y": 46.8,
+    "rolling_xT": 0.129
+  },
+  {
+    "time": 1.1951,
+    "type": "Pass",
+    "x": 99.5,
+    "y": 12.7,
+    "rolling_xT": 0.146
+  },
+  {
+    "time": 1.3586,
+    "type": "Pass",
+    "x": 80.8,
+    "y": 29.1,
+    "rolling_xT": 0.131
+  },
+  {
+    "time": 1.5818,
+    "type": "Pass",
+    "x": 94.3,
+    "y": 34.7,
+    "rolling_xT": 0.051
+  },
+  {
+    "time": 1.6558,
+    "type": "Pass",
+    "x": 95.4,
+    "y": 48.3,
+    "rolling_xT": 0.099
+  },
+  {
+    "time": 1.8152,
+    "type": "Pass",
+    "x": 91.2,
+    "y": 49.0,
+    "rolling_xT": 0.141
+  },
+  {
+    "time": 2.0596,
+    "type": "Pass",
+    "x": 91.2,
+    "y": 33.0,
+    "rolling_xT": 0.033
+  },
+  {
+    "time": 2.2235,
+    "type": "Pass",
+    "x": 106.4,
+    "y": 38.3,
+    "rolling_xT": 0.106
+  },
+  {
+    "time": 2.5263,
+    "type": "Shot",
+    "x": 95.9,
+    "y": 27.2,
+    "rolling_xT": 0.117
+  },
+  {
+    "time": 2.6567,
+    "type": "Pass",
+    "x": 99.6,
+    "y": 79.5,
+    "rolling_xT": 0.054
+  },
+  {
+    "time": 2.9033,
+    "type": "Pass",
+    "x": 80.9,
+    "y": 64.3,
+    "rolling_xT": 0.047
+  },
+  {
+    "time": 3.0273,
+    "type": "Pass",
+    "x": 89.2,
+    "y": 34.7,
+    "rolling_xT": 0.136
+  },
+  {
+    "time": 3.1971,
+    "type": "Pass",
+    "x": 100.3,
+    "y": 79.5,
+    "rolling_xT": 0.023
+  },
+  {
+    "time": 3.2612,
+    "type": "Pass",
+    "x": 103.7,
+    "y": 56.1,
+    "rolling_xT": 0.069
+  },
+  {
+    "time": 3.3303,
+    "type": "Pass",
+    "x": 75.4,
+    "y": 79.5,
+    "rolling_xT": 0.146
+  },
+  {
+    "time": 3.6385,
+    "type": "Pass",
+    "x": 107.7,
+    "y": 42.1,
+    "rolling_xT": 0.085
+  },
+  {
+    "time": 3.7686,
+    "type": "Pass",
+    "x": 92.5,
+    "y": 33.2,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 4.1047,
+    "type": "Pass",
+    "x": 99.4,
+    "y": 30.1,
+    "rolling_xT": 0.035
+  },
+  {
+    "time": 4.4285,
+    "type": "Pass",
+    "x": 99.6,
+    "y": 29.0,
+    "rolling_xT": 0.095
+  },
+  {
+    "time": 4.5244,
+    "type": "Pass",
+    "x": 95.8,
+    "y": 17.7,
+    "rolling_xT": 0.084
+  },
+  {
+    "time": 4.5745,
+    "type": "Pass",
+    "x": 94.3,
+    "y": 43.2,
+    "rolling_xT": 0.133
+  },
+  {
+    "time": 4.874,
+    "type": "Pass",
+    "x": 94.0,
+    "y": 45.8,
+    "rolling_xT": 0.143
+  },
+  {
+    "time": 4.9497,
+    "type": "Pass",
+    "x": 92.0,
+    "y": 40.6,
+    "rolling_xT": 0.117
+  },
+  {
+    "time": 5.0382,
+    "type": "Pass",
+    "x": 85.0,
+    "y": 43.5,
+    "rolling_xT": 0.132
+  },
+  {
+    "time": 5.2152,
+    "type": "Pass",
+    "x": 97.4,
+    "y": 61.8,
+    "rolling_xT": 0.038
+  },
+  {
+    "time": 5.3587,
+    "type": "Pass",
+    "x": 106.6,
+    "y": 39.2,
+    "rolling_xT": 0.082
+  },
+  {
+    "time": 5.445,
+    "type": "Pass",
+    "x": 96.2,
+    "y": 56.1,
+    "rolling_xT": 0.042
+  },
+  {
+    "time": 5.5611,
+    "type": "Pass",
+    "x": 105.2,
+    "y": 51.0,
+    "rolling_xT": 0.137
+  },
+  {
+    "time": 5.869,
+    "type": "Pass",
+    "x": 100.3,
+    "y": 45.7,
+    "rolling_xT": 0.04
+  },
+  {
+    "time": 5.9586,
+    "type": "Pass",
+    "x": 104.6,
+    "y": 30.8,
+    "rolling_xT": 0.12
+  },
+  {
+    "time": 6.2509,
+    "type": "Pass",
+    "x": 96.3,
+    "y": 47.6,
+    "rolling_xT": 0.069
+  },
+  {
+    "time": 6.441,
+    "type": "Pass",
+    "x": 93.4,
+    "y": 13.3,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 6.6118,
+    "type": "Pass",
+    "x": 86.5,
+    "y": 70.3,
+    "rolling_xT": 0.037
+  },
+  {
+    "time": 6.7964,
+    "type": "Pass",
+    "x": 89.3,
+    "y": 46.9,
+    "rolling_xT": 0.139
+  },
+  {
+    "time": 6.9793,
+    "type": "Pass",
+    "x": 101.5,
+    "y": 22.6,
+    "rolling_xT": 0.15
+  },
+  {
+    "time": 7.2801,
+    "type": "Pass",
+    "x": 112.9,
+    "y": 32.0,
+    "rolling_xT": 0.033
+  },
+  {
+    "time": 7.4758,
+    "type": "Pass",
+    "x": 96.8,
+    "y": 57.8,
+    "rolling_xT": 0.063
+  },
+  {
+    "time": 7.8214,
+    "type": "Pass",
+    "x": 93.7,
+    "y": 71.4,
+    "rolling_xT": 0.069
+  },
+  {
+    "time": 8.1586,
+    "type": "Pass",
+    "x": 105.2,
+    "y": 39.3,
+    "rolling_xT": 0.032
+  },
+  {
+    "time": 8.2976,
+    "type": "Pass",
+    "x": 105.3,
+    "y": 35.4,
+    "rolling_xT": 0.115
+  },
+  {
+    "time": 8.3648,
+    "type": "Pass",
+    "x": 86.8,
+    "y": 29.3,
+    "rolling_xT": 0.032
+  },
+  {
+    "time": 8.703,
+    "type": "Pass",
+    "x": 99.5,
+    "y": 45.6,
+    "rolling_xT": 0.105
+  },
+  {
+    "time": 8.8236,
+    "type": "Pass",
+    "x": 107.3,
+    "y": 65.9,
+    "rolling_xT": 0.093
+  },
+  {
+    "time": 9.0594,
+    "type": "Pass",
+    "x": 85.7,
+    "y": 51.6,
+    "rolling_xT": 0.141
+  },
+  {
+    "time": 9.1707,
+    "type": "Pass",
+    "x": 93.8,
+    "y": 27.0,
+    "rolling_xT": 0.104
+  },
+  {
+    "time": 9.3106,
+    "type": "Pass",
+    "x": 89.6,
+    "y": 67.5,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 9.6602,
+    "type": "Pass",
+    "x": 98.1,
+    "y": 39.8,
+    "rolling_xT": 0.047
+  },
+  {
+    "time": 9.9902,
+    "type": "Pass",
+    "x": 107.1,
+    "y": 14.8,
+    "rolling_xT": 0.032
+  },
+  {
+    "time": 10.2903,
+    "type": "Pass",
+    "x": 91.8,
+    "y": 16.3,
+    "rolling_xT": 0.102
+  },
+  {
+    "time": 10.3426,
+    "type": "Pass",
+    "x": 97.8,
+    "y": 26.1,
+    "rolling_xT": 0.141
+  },
+  {
+    "time": 10.4329,
+    "type": "Pass",
+    "x": 97.8,
+    "y": 45.7,
+    "rolling_xT": 0.048
+  },
+  {
+    "time": 10.6644,
+    "type": "Pass",
+    "x": 93.9,
+    "y": 28.1,
+    "rolling_xT": 0.047
+  },
+  {
+    "time": 10.8609,
+    "type": "Pass",
+    "x": 107.8,
+    "y": 20.5,
+    "rolling_xT": 0.069
+  },
+  {
+    "time": 10.9939,
+    "type": "Pass",
+    "x": 108.7,
+    "y": 40.7,
+    "rolling_xT": 0.047
+  },
+  {
+    "time": 11.2663,
+    "type": "Shot",
+    "x": 87.0,
+    "y": 33.9,
+    "rolling_xT": 0.036
+  },
+  {
+    "time": 11.5812,
+    "type": "Pass",
+    "x": 103.3,
+    "y": 27.2,
+    "rolling_xT": 0.092
+  },
+  {
+    "time": 11.6757,
+    "type": "Pass",
+    "x": 99.8,
+    "y": 51.1,
+    "rolling_xT": 0.121
+  },
+  {
+    "time": 11.9839,
+    "type": "Pass",
+    "x": 99.4,
+    "y": 32.7,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 12.2679,
+    "type": "Pass",
+    "x": 101.1,
+    "y": 27.8,
+    "rolling_xT": 0.032
+  },
+  {
+    "time": 12.5969,
+    "type": "Pass",
+    "x": 109.4,
+    "y": 3.0,
+    "rolling_xT": 0.133
+  },
+  {
+    "time": 12.6543,
+    "type": "Pass",
+    "x": 94.4,
+    "y": 23.9,
+    "rolling_xT": 0.122
+  },
+  {
+    "time": 12.9635,
+    "type": "Pass",
+    "x": 97.3,
+    "y": 26.8,
+    "rolling_xT": 0.025
+  },
+  {
+    "time": 13.2752,
+    "type": "Pass",
+    "x": 98.6,
+    "y": 30.1,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 13.4167,
+    "type": "Shot",
+    "x": 96.6,
+    "y": 27.6,
+    "rolling_xT": 0.076
+  },
+  {
+    "time": 13.5652,
+    "type": "Pass",
+    "x": 108.7,
+    "y": 4.6,
+    "rolling_xT": 0.1
+  },
+  {
+    "time": 13.7351,
+    "type": "Pass",
+    "x": 104.8,
+    "y": 37.4,
+    "rolling_xT": 0.026
+  },
+  {
+    "time": 14.0762,
+    "type": "Pass",
+    "x": 103.9,
+    "y": 79.5,
+    "rolling_xT": 0.025
+  },
+  {
+    "time": 14.2566,
+    "type": "Pass",
+    "x": 94.1,
+    "y": 24.5,
+    "rolling_xT": 0.082
+  },
+  {
+    "time": 14.4222,
+    "type": "Pass",
+    "x": 89.6,
+    "y": 33.6,
+    "rolling_xT": 0.01
+  },
+  {
+    "time": 14.7498,
+    "type": "Pass",
+    "x": 82.6,
+    "y": 33.1,
+    "rolling_xT": 0.104
+  },
+  {
+    "time": 14.9091,
+    "type": "Pass",
+    "x": 105.7,
+    "y": 51.3,
+    "rolling_xT": 0.054
+  },
+  {
+    "time": 15.2135,
+    "type": "Pass",
+    "x": 93.7,
+    "y": 25.1,
+    "rolling_xT": 0.067
+  },
+  {
+    "time": 15.3842,
+    "type": "Pass",
+    "x": 93.8,
+    "y": 49.0,
+    "rolling_xT": 0.142
+  },
+  {
+    "time": 15.6374,
+    "type": "Pass",
+    "x": 104.1,
+    "y": 25.7,
+    "rolling_xT": 0.087
+  },
+  {
+    "time": 15.6875,
+    "type": "Pass",
+    "x": 93.1,
+    "y": 58.6,
+    "rolling_xT": 0.102
+  },
+  {
+    "time": 15.877,
+    "type": "Pass",
+    "x": 89.8,
+    "y": 44.4,
+    "rolling_xT": 0.136
+  },
+  {
+    "time": 16.1659,
+    "type": "Pass",
+    "x": 96.6,
+    "y": 46.6,
+    "rolling_xT": 0.099
+  },
+  {
+    "time": 16.3164,
+    "type": "Pass",
+    "x": 100.6,
+    "y": 12.7,
+    "rolling_xT": 0.041
+  },
+  {
+    "time": 16.4261,
+    "type": "Pass",
+    "x": 100.9,
+    "y": 42.1,
+    "rolling_xT": 0.129
+  },
+  {
+    "time": 16.498,
+    "type": "Pass",
+    "x": 85.3,
+    "y": 53.0,
+    "rolling_xT": 0.107
+  },
+  {
+    "time": 16.6963,
+    "type": "Shot",
+    "x": 95.4,
+    "y": 66.3,
+    "rolling_xT": 0.265
+  },
+  {
+    "time": 16.9773,
+    "type": "Pass",
+    "x": 101.6,
+    "y": 51.8,
+    "rolling_xT": 0.144
+  },
+  {
+    "time": 17.1827,
+    "type": "Pass",
+    "x": 100.8,
+    "y": 44.2,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 17.4731,
+    "type": "Pass",
+    "x": 83.2,
+    "y": 0.5,
+    "rolling_xT": 0.143
+  },
+  {
+    "time": 17.7906,
+    "type": "Pass",
+    "x": 85.3,
+    "y": 21.3,
+    "rolling_xT": 0.126
+  },
+  {
+    "time": 18.0049,
+    "type": "Pass",
+    "x": 105.5,
+    "y": 22.1,
+    "rolling_xT": 0.046
+  },
+  {
+    "time": 18.1291,
+    "type": "Pass",
+    "x": 86.2,
+    "y": 16.7,
+    "rolling_xT": 0.098
+  },
+  {
+    "time": 18.2615,
+    "type": "Pass",
+    "x": 100.8,
+    "y": 46.9,
+    "rolling_xT": 0.055
+  },
+  {
+    "time": 18.4735,
+    "type": "Pass",
+    "x": 98.7,
+    "y": 50.0,
+    "rolling_xT": 0.109
+  },
+  {
+    "time": 18.5428,
+    "type": "Pass",
+    "x": 86.6,
+    "y": 52.3,
+    "rolling_xT": 0.039
+  },
+  {
+    "time": 18.7188,
+    "type": "Pass",
+    "x": 103.8,
+    "y": 26.6,
+    "rolling_xT": 0.13
+  },
+  {
+    "time": 18.9985,
+    "type": "Pass",
+    "x": 94.4,
+    "y": 41.3,
+    "rolling_xT": 0.115
+  },
+  {
+    "time": 19.3045,
+    "type": "Pass",
+    "x": 103.0,
+    "y": 34.6,
+    "rolling_xT": 0.086
+  },
+  {
+    "time": 19.5355,
+    "type": "Pass",
+    "x": 96.0,
+    "y": 52.5,
+    "rolling_xT": 0.014
+  },
+  {
+    "time": 19.6864,
+    "type": "Pass",
+    "x": 91.5,
+    "y": 23.5,
+    "rolling_xT": 0.075
+  },
+  {
+    "time": 19.7746,
+    "type": "Pass",
+    "x": 93.7,
+    "y": 37.1,
+    "rolling_xT": 0.089
+  },
+  {
+    "time": 19.8328,
+    "type": "Pass",
+    "x": 92.3,
+    "y": 32.4,
+    "rolling_xT": 0.017
+  },
+  {
+    "time": 19.9965,
+    "type": "Pass",
+    "x": 96.7,
+    "y": 55.6,
+    "rolling_xT": 0.063
+  },
+  {
+    "time": 20,
+    "type": "Pass",
+    "x": 70.6,
+    "y": 26.7,
+    "rolling_xT": 0.013
+  },
+  {
+    "time": 20.2118,
+    "type": "Pass",
+    "x": 78.9,
+    "y": 40.0,
+    "rolling_xT": 0.119
+  },
+  {
+    "time": 20.4574,
+    "type": "Pass",
+    "x": 66.0,
+    "y": 0.5,
+    "rolling_xT": 0.013
+  },
+  {
+    "time": 20.5531,
+    "type": "Pass",
+    "x": 80.7,
+    "y": 61.2,
+    "rolling_xT": 0.041
+  },
+  {
+    "time": 20.8129,
+    "type": "Pass",
+    "x": 66.0,
+    "y": 27.9,
+    "rolling_xT": 0.115
+  },
+  {
+    "time": 20.8973,
+    "type": "Pass",
+    "x": 81.4,
+    "y": 0.5,
+    "rolling_xT": 0.014
+  },
+  {
+    "time": 21.0409,
+    "type": "Pass",
+    "x": 48.3,
+    "y": 0.5,
+    "rolling_xT": 0.11
+  },
+  {
+    "time": 21.1137,
+    "type": "Pass",
+    "x": 57.3,
+    "y": 13.8,
+    "rolling_xT": 0.118
+  },
+  {
+    "time": 21.4187,
+    "type": "Pass",
+    "x": 58.8,
+    "y": 34.0,
+    "rolling_xT": 0.12
+  },
+  {
+    "time": 21.5729,
+    "type": "Pass",
+    "x": 52.0,
+    "y": 48.4,
+    "rolling_xT": 0.058
+  },
+  {
+    "time": 21.8778,
+    "type": "Pass",
+    "x": 68.1,
+    "y": 31.5,
+    "rolling_xT": 0.099
+  },
+  {
+    "time": 22.1764,
+    "type": "Pass",
+    "x": 60.7,
+    "y": 19.4,
+    "rolling_xT": 0.145
+  },
+  {
+    "time": 22.3074,
+    "type": "Pass",
+    "x": 71.7,
+    "y": 16.8,
+    "rolling_xT": 0.071
+  },
+  {
+    "time": 22.5767,
+    "type": "Pass",
+    "x": 61.6,
+    "y": 78.8,
+    "rolling_xT": 0.022
+  },
+  {
+    "time": 22.8912,
+    "type": "Pass",
+    "x": 65.6,
+    "y": 62.3,
+    "rolling_xT": 0.063
+  },
+  {
+    "time": 22.9498,
+    "type": "Pass",
+    "x": 70.6,
+    "y": 29.8,
+    "rolling_xT": 0.122
+  },
+  {
+    "time": 23.1019,
+    "type": "Pass",
+    "x": 82.0,
+    "y": 18.8,
+    "rolling_xT": 0.011
+  },
+  {
+    "time": 23.4363,
+    "type": "Pass",
+    "x": 85.6,
+    "y": 56.4,
+    "rolling_xT": 0.116
+  },
+  {
+    "time": 23.6935,
+    "type": "Pass",
+    "x": 54.4,
+    "y": 21.6,
+    "rolling_xT": 0.023
+  },
+  {
+    "time": 23.81,
+    "type": "Pass",
+    "x": 60.4,
+    "y": 24.0,
+    "rolling_xT": 0.076
+  },
+  {
+    "time": 24.0193,
+    "type": "Pass",
+    "x": 42.8,
+    "y": 54.9,
+    "rolling_xT": 0.108
+  },
+  {
+    "time": 24.1506,
+    "type": "Pass",
+    "x": 64.9,
+    "y": 50.1,
+    "rolling_xT": 0.027
+  },
+  {
+    "time": 24.3613,
+    "type": "Pass",
+    "x": 65.7,
+    "y": 27.2,
+    "rolling_xT": 0.078
+  },
+  {
+    "time": 24.6287,
+    "type": "Pass",
+    "x": 83.1,
+    "y": 36.4,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 24.7369,
+    "type": "Shot",
+    "x": 66.3,
+    "y": 52.5,
+    "rolling_xT": 0.192
+  },
+  {
+    "time": 24.8692,
+    "type": "Pass",
+    "x": 83.8,
+    "y": 35.9,
+    "rolling_xT": 0.028
+  },
+  {
+    "time": 25.1798,
+    "type": "Pass",
+    "x": 34.6,
+    "y": 42.3,
+    "rolling_xT": 0.076
+  },
+  {
+    "time": 25.3619,
+    "type": "Pass",
+    "x": 67.0,
+    "y": 46.0,
+    "rolling_xT": 0.077
+  },
+  {
+    "time": 25.6585,
+    "type": "Pass",
+    "x": 60.2,
+    "y": 44.6,
+    "rolling_xT": 0.018
+  },
+  {
+    "time": 25.7533,
+    "type": "Pass",
+    "x": 53.2,
+    "y": 33.5,
+    "rolling_xT": 0.027
+  },
+  {
+    "time": 26.0326,
+    "type": "Pass",
+    "x": 44.2,
+    "y": 18.1,
+    "rolling_xT": 0.083
+  },
+  {
+    "time": 26.2178,
+    "type": "Pass",
+    "x": 37.2,
+    "y": 54.0,
+    "rolling_xT": 0.053
+  },
+  {
+    "time": 26.4541,
+    "type": "Pass",
+    "x": 46.0,
+    "y": 19.1,
+    "rolling_xT": 0.039
+  },
+  {
+    "time": 26.5674,
+    "type": "Pass",
+    "x": 60.3,
+    "y": 30.1,
+    "rolling_xT": 0.021
+  },
+  {
+    "time": 26.6182,
+    "type": "Pass",
+    "x": 45.8,
+    "y": 48.2,
+    "rolling_xT": 0.042
+  },
+  {
+    "time": 26.8803,
+    "type": "Pass",
+    "x": 60.2,
+    "y": 18.9,
+    "rolling_xT": 0.139
+  },
+  {
+    "time": 27.1666,
+    "type": "Pass",
+    "x": 49.4,
+    "y": 19.2,
+    "rolling_xT": 0.07
+  },
+  {
+    "time": 27.38,
+    "type": "Pass",
+    "x": 45.3,
+    "y": 5.0,
+    "rolling_xT": 0.02
+  },
+  {
+    "time": 27.4798,
+    "type": "Pass",
+    "x": 56.2,
+    "y": 71.1,
+    "rolling_xT": 0.05
+  },
+  {
+    "time": 27.5671,
+    "type": "Pass",
+    "x": 56.3,
+    "y": 11.3,
+    "rolling_xT": 0.08
+  },
+  {
+    "time": 27.7652,
+    "type": "Pass",
+    "x": 68.7,
+    "y": 42.8,
+    "rolling_xT": 0.055
+  },
+  {
+    "time": 27.8903,
+    "type": "Pass",
+    "x": 97.2,
+    "y": 67.8,
+    "rolling_xT": 0.091
+  },
+  {
+    "time": 28.2256,
+    "type": "Pass",
+    "x": 87.4,
+    "y": 39.9,
+    "rolling_xT": 0.016
+  },
+  {
+    "time": 28.5024,
+    "type": "Pass",
+    "x": 43.6,
+    "y": 45.4,
+    "rolling_xT": 0.035
+  },
+  {
+    "time": 28.728,
+    "type": "Pass",
+    "x": 53.4,
+    "y": 22.6,
+    "rolling_xT": 0.059
+  },
+  {
+    "time": 28.878,
+    "type": "Pass",
+    "x": 50.8,
+    "y": 5.4,
+    "rolling_xT": 0.107
+  },
+  {
+    "time": 29.0145,
+    "type": "Pass",
+    "x": 90.9,
+    "y": 27.6,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 29.1589,
+    "type": "Pass",
+    "x": 47.3,
+    "y": 79.5,
+    "rolling_xT": 0.082
+  },
+  {
+    "time": 29.5053,
+    "type": "Pass",
+    "x": 54.7,
+    "y": 19.1,
+    "rolling_xT": 0.036
+  },
+  {
+    "time": 29.6638,
+    "type": "Pass",
+    "x": 65.9,
+    "y": 12.0,
+    "rolling_xT": 0.038
+  },
+  {
+    "time": 29.8786,
+    "type": "Pass",
+    "x": 79.5,
+    "y": 30.6,
+    "rolling_xT": 0.027
+  },
+  {
+    "time": 30.2205,
+    "type": "Pass",
+    "x": 56.4,
+    "y": 30.7,
+    "rolling_xT": 0.087
+  },
+  {
+    "time": 30.4362,
+    "type": "Pass",
+    "x": 104.0,
+    "y": 74.5,
+    "rolling_xT": 0.075
+  },
+  {
+    "time": 30.5215,
+    "type": "Pass",
+    "x": 73.7,
+    "y": 19.6,
+    "rolling_xT": 0.081
+  },
+  {
+    "time": 30.6535,
+    "type": "Pass",
+    "x": 86.3,
+    "y": 0.5,
+    "rolling_xT": 0.087
+  },
+  {
+    "time": 30.8186,
+    "type": "Pass",
+    "x": 80.8,
+    "y": 28.8,
+    "rolling_xT": 0.131
+  },
+  {
+    "time": 30.9514,
+    "type": "Pass",
+    "x": 68.9,
+    "y": 19.9,
+    "rolling_xT": 0.081
+  },
+  {
+    "time": 31.2476,
+    "type": "Pass",
+    "x": 62.4,
+    "y": 56.5,
+    "rolling_xT": 0.15
+  },
+  {
+    "time": 31.4445,
+    "type": "Pass",
+    "x": 76.1,
+    "y": 60.0,
+    "rolling_xT": 0.087
+  },
+  {
+    "time": 31.6575,
+    "type": "Pass",
+    "x": 52.3,
+    "y": 44.9,
+    "rolling_xT": 0.108
+  },
+  {
+    "time": 31.8791,
+    "type": "Pass",
+    "x": 67.7,
+    "y": 74.4,
+    "rolling_xT": 0.114
+  },
+  {
+    "time": 32.1406,
+    "type": "Pass",
+    "x": 70.6,
+    "y": 21.7,
+    "rolling_xT": 0.125
+  },
+  {
+    "time": 32.4849,
+    "type": "Pass",
+    "x": 60.9,
+    "y": 40.2,
+    "rolling_xT": 0.093
+  },
+  {
+    "time": 32.7958,
+    "type": "Pass",
+    "x": 76.4,
+    "y": 24.7,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 33.0625,
+    "type": "Pass",
+    "x": 46.5,
+    "y": 55.6,
+    "rolling_xT": 0.076
+  },
+  {
+    "time": 33.4033,
+    "type": "Pass",
+    "x": 52.8,
+    "y": 66.1,
+    "rolling_xT": 0.129
+  },
+  {
+    "time": 33.709,
+    "type": "Pass",
+    "x": 74.3,
+    "y": 24.9,
+    "rolling_xT": 0.111
+  },
+  {
+    "time": 33.9868,
+    "type": "Pass",
+    "x": 67.8,
+    "y": 36.1,
+    "rolling_xT": 0.098
+  },
+  {
+    "time": 34.3131,
+    "type": "Pass",
+    "x": 89.9,
+    "y": 39.5,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 34.5532,
+    "type": "Pass",
+    "x": 76.3,
+    "y": 24.5,
+    "rolling_xT": 0.136
+  },
+  {
+    "time": 34.617,
+    "type": "Pass",
+    "x": 68.6,
+    "y": 24.0,
+    "rolling_xT": 0.03
+  },
+  {
+    "time": 34.8263,
+    "type": "Pass",
+    "x": 40.6,
+    "y": 25.7,
+    "rolling_xT": 0.021
+  },
+  {
+    "time": 35,
+    "type": "Pass",
+    "x": 23.5,
+    "y": 30.9,
+    "rolling_xT": 0.03
+  },
+  {
+    "time": 35.1883,
+    "type": "Shot",
+    "x": 29.8,
+    "y": 53.8,
+    "rolling_xT": 0.284
+  },
+  {
+    "time": 35.5087,
+    "type": "Pass",
+    "x": 26.9,
+    "y": 30.5,
+    "rolling_xT": 0.058
+  },
+  {
+    "time": 35.735,
+    "type": "Pass",
+    "x": 21.9,
+    "y": 25.5,
+    "rolling_xT": 0.128
+  },
+  {
+    "time": 35.8447,
+    "type": "Pass",
+    "x": 19.7,
+    "y": 53.7,
+    "rolling_xT": 0.09
+  },
+  {
+    "time": 36.0672,
+    "type": "Pass",
+    "x": 40.0,
+    "y": 39.3,
+    "rolling_xT": 0.102
+  },
+  {
+    "time": 36.1995,
+    "type": "Pass",
+    "x": 13.3,
+    "y": 29.0,
+    "rolling_xT": 0.017
+  },
+  {
+    "time": 36.4315,
+    "type": "Pass",
+    "x": 4.0,
+    "y": 40.8,
+    "rolling_xT": 0.122
+  },
+  {
+    "time": 36.6636,
+    "type": "Pass",
+    "x": 19.8,
+    "y": 60.5,
+    "rolling_xT": 0.105
+  },
+  {
+    "time": 36.9299,
+    "type": "Pass",
+    "x": 17.6,
+    "y": 11.1,
+    "rolling_xT": 0.136
+  },
+  {
+    "time": 37.1738,
+    "type": "Pass",
+    "x": 25.3,
+    "y": 58.1,
+    "rolling_xT": 0.113
+  },
+  {
+    "time": 37.2508,
+    "type": "Pass",
+    "x": 24.4,
+    "y": 68.7,
+    "rolling_xT": 0.029
+  },
+  {
+    "time": 37.4626,
+    "type": "Pass",
+    "x": 44.5,
+    "y": 36.1,
+    "rolling_xT": 0.126
+  },
+  {
+    "time": 37.5897,
+    "type": "Pass",
+    "x": 36.2,
+    "y": 21.6,
+    "rolling_xT": 0.115
+  },
+  {
+    "time": 37.7413,
+    "type": "Pass",
+    "x": 53.1,
+    "y": 70.6,
+    "rolling_xT": 0.145
+  },
+  {
+    "time": 38.0494,
+    "type": "Pass",
+    "x": 24.6,
+    "y": 0.5,
+    "rolling_xT": 0.123
+  },
+  {
+    "time": 38.2091,
+    "type": "Pass",
+    "x": 30.5,
+    "y": 37.1,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 38.4609,
+    "type": "Pass",
+    "x": 22.5,
+    "y": 18.9,
+    "rolling_xT": 0.142
+  },
+  {
+    "time": 38.5434,
+    "type": "Pass",
+    "x": 30.3,
+    "y": 44.0,
+    "rolling_xT": 0.089
+  },
+  {
+    "time": 38.868,
+    "type": "Pass",
+    "x": 30.8,
+    "y": 46.4,
+    "rolling_xT": 0.137
+  },
+  {
+    "time": 39.0087,
+    "type": "Pass",
+    "x": 24.5,
+    "y": 45.4,
+    "rolling_xT": 0.053
+  },
+  {
+    "time": 39.2065,
+    "type": "Pass",
+    "x": 50.5,
+    "y": 61.6,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 39.4576,
+    "type": "Pass",
+    "x": 28.8,
+    "y": 0.5,
+    "rolling_xT": 0.114
+  },
+  {
+    "time": 39.554,
+    "type": "Pass",
+    "x": 25.3,
+    "y": 44.2,
+    "rolling_xT": 0.067
+  },
+  {
+    "time": 39.8894,
+    "type": "Pass",
+    "x": 41.3,
+    "y": 43.5,
+    "rolling_xT": 0.143
+  },
+  {
+    "time": 40.1961,
+    "type": "Pass",
+    "x": 44.8,
+    "y": 56.0,
+    "rolling_xT": 0.147
+  },
+  {
+    "time": 40.3537,
+    "type": "Pass",
+    "x": 23.8,
+    "y": 47.0,
+    "rolling_xT": 0.129
+  },
+  {
+    "time": 40.5401,
+    "type": "Pass",
+    "x": 21.0,
+    "y": 18.0,
+    "rolling_xT": 0.013
+  },
+  {
+    "time": 40.8261,
+    "type": "Pass",
+    "x": 30.3,
+    "y": 49.3,
+    "rolling_xT": 0.02
+  },
+  {
+    "time": 41.1057,
+    "type": "Pass",
+    "x": 32.2,
+    "y": 52.1,
+    "rolling_xT": 0.056
+  },
+  {
+    "time": 41.1999,
+    "type": "Pass",
+    "x": 30.7,
+    "y": 39.2,
+    "rolling_xT": 0.03
+  },
+  {
+    "time": 41.2889,
+    "type": "Pass",
+    "x": 30.0,
+    "y": 51.1,
+    "rolling_xT": 0.014
+  },
+  {
+    "time": 41.3434,
+    "type": "Pass",
+    "x": 32.2,
+    "y": 27.1,
+    "rolling_xT": 0.034
+  },
+  {
+    "time": 41.4091,
+    "type": "Pass",
+    "x": 29.2,
+    "y": 18.0,
+    "rolling_xT": 0.077
+  },
+  {
+    "time": 41.6925,
+    "type": "Pass",
+    "x": 24.3,
+    "y": 39.3,
+    "rolling_xT": 0.142
+  },
+  {
+    "time": 41.7555,
+    "type": "Pass",
+    "x": 35.0,
+    "y": 4.6,
+    "rolling_xT": 0.074
+  },
+  {
+    "time": 42.0947,
+    "type": "Pass",
+    "x": 42.7,
+    "y": 47.7,
+    "rolling_xT": 0.106
+  },
+  {
+    "time": 42.2918,
+    "type": "Pass",
+    "x": 34.0,
+    "y": 36.2,
+    "rolling_xT": 0.095
+  },
+  {
+    "time": 42.3615,
+    "type": "Pass",
+    "x": 27.3,
+    "y": 65.2,
+    "rolling_xT": 0.056
+  },
+  {
+    "time": 42.7099,
+    "type": "Pass",
+    "x": 17.0,
+    "y": 36.2,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 42.9704,
+    "type": "Pass",
+    "x": 40.5,
+    "y": 19.1,
+    "rolling_xT": 0.111
+  },
+  {
+    "time": 43.0849,
+    "type": "Pass",
+    "x": 21.8,
+    "y": 43.9,
+    "rolling_xT": 0.073
+  },
+  {
+    "time": 43.2597,
+    "type": "Pass",
+    "x": 40.5,
+    "y": 50.7,
+    "rolling_xT": 0.062
+  },
+  {
+    "time": 43.3555,
+    "type": "Pass",
+    "x": 34.0,
+    "y": 36.9,
+    "rolling_xT": 0.023
+  },
+  {
+    "time": 43.4345,
+    "type": "Pass",
+    "x": 28.5,
+    "y": 7.2,
+    "rolling_xT": 0.092
+  },
+  {
+    "time": 43.653,
+    "type": "Pass",
+    "x": 27.1,
+    "y": 48.1,
+    "rolling_xT": 0.103
+  },
+  {
+    "time": 43.9281,
+    "type": "Pass",
+    "x": 43.0,
+    "y": 18.8,
+    "rolling_xT": 0.094
+  },
+  {
+    "time": 44.0836,
+    "type": "Pass",
+    "x": 22.7,
+    "y": 34.1,
+    "rolling_xT": 0.041
+  },
+  {
+    "time": 44.166,
+    "type": "Pass",
+    "x": 36.5,
+    "y": 25.8,
+    "rolling_xT": 0.09
+  },
+  {
+    "time": 44.4582,
+    "type": "Pass",
+    "x": 48.3,
+    "y": 0.5,
+    "rolling_xT": 0.096
+  },
+  {
+    "time": 44.701,
+    "type": "Pass",
+    "x": 57.2,
+    "y": 46.8,
+    "rolling_xT": 0.047
+  },
+  {
+    "time": 44.8051,
+    "type": "Pass",
+    "x": 27.0,
+    "y": 25.2,
+    "rolling_xT": 0.011
+  },
+  {
+    "time": 45,
+    "type": "Pass",
+    "x": 51.1,
+    "y": 31.8,
+    "rolling_xT": 0.099
+  },
+  {
+    "time": 45.0592,
+    "type": "Pass",
+    "x": 64.7,
+    "y": 26.1,
+    "rolling_xT": 0.058
+  },
+  {
+    "time": 45.2202,
+    "type": "Pass",
+    "x": 60.4,
+    "y": 5.9,
+    "rolling_xT": 0.022
+  },
+  {
+    "time": 45.286,
+    "type": "Pass",
+    "x": 76.4,
+    "y": 63.2,
+    "rolling_xT": 0.048
+  },
+  {
+    "time": 45.5346,
+    "type": "Pass",
+    "x": 48.9,
+    "y": 41.9,
+    "rolling_xT": 0.116
+  },
+  {
+    "time": 45.6187,
+    "type": "Pass",
+    "x": 53.9,
+    "y": 47.0,
+    "rolling_xT": 0.078
+  },
+  {
+    "time": 45.8689,
+    "type": "Pass",
+    "x": 79.4,
+    "y": 45.6,
+    "rolling_xT": 0.011
+  },
+  {
+    "time": 46.0093,
+    "type": "Pass",
+    "x": 67.0,
+    "y": 50.5,
+    "rolling_xT": 0.056
+  },
+  {
+    "time": 46.0616,
+    "type": "Pass",
+    "x": 64.8,
+    "y": 27.6,
+    "rolling_xT": 0.109
+  },
+  {
+    "time": 46.2617,
+    "type": "Pass",
+    "x": 78.6,
+    "y": 8.6,
+    "rolling_xT": 0.131
+  },
+  {
+    "time": 46.3244,
+    "type": "Pass",
+    "x": 98.6,
+    "y": 45.3,
+    "rolling_xT": 0.091
+  },
+  {
+    "time": 46.5464,
+    "type": "Pass",
+    "x": 61.1,
+    "y": 19.9,
+    "rolling_xT": 0.013
+  },
+  {
+    "time": 46.6938,
+    "type": "Pass",
+    "x": 71.6,
+    "y": 13.7,
+    "rolling_xT": 0.139
+  },
+  {
+    "time": 46.7703,
+    "type": "Pass",
+    "x": 71.3,
+    "y": 27.6,
+    "rolling_xT": 0.083
+  },
+  {
+    "time": 46.939,
+    "type": "Pass",
+    "x": 59.9,
+    "y": 56.9,
+    "rolling_xT": 0.034
+  },
+  {
+    "time": 47.1421,
+    "type": "Pass",
+    "x": 78.5,
+    "y": 55.7,
+    "rolling_xT": 0.059
+  },
+  {
+    "time": 47.4104,
+    "type": "Pass",
+    "x": 76.6,
+    "y": 6.7,
+    "rolling_xT": 0.031
+  },
+  {
+    "time": 47.5195,
+    "type": "Pass",
+    "x": 44.7,
+    "y": 19.7,
+    "rolling_xT": 0.035
+  },
+  {
+    "time": 47.8014,
+    "type": "Pass",
+    "x": 39.9,
+    "y": 41.2,
+    "rolling_xT": 0.073
+  },
+  {
+    "time": 48,
+    "type": "Pass",
+    "x": 60.4,
+    "y": 31.6,
+    "rolling_xT": 0.131
+  },
+  {
+    "time": 48.2382,
+    "type": "Pass",
+    "x": 83.3,
+    "y": 44.6,
+    "rolling_xT": 0.052
+  },
+  {
+    "time": 48.3706,
+    "type": "Pass",
+    "x": 96.7,
+    "y": 46.2,
+    "rolling_xT": 0.073
+  },
+  {
+    "time": 48.4376,
+    "type": "Pass",
+    "x": 82.9,
+    "y": 34.8,
+    "rolling_xT": 0.13
+  },
+  {
+    "time": 48.6721,
+    "type": "Pass",
+    "x": 63.3,
+    "y": 39.3,
+    "rolling_xT": 0.121
+  },
+  {
+    "time": 48.9909,
+    "type": "Pass",
+    "x": 54.0,
+    "y": 48.5,
+    "rolling_xT": 0.055
+  },
+  {
+    "time": 49,
+    "type": "Pass",
+    "x": 68.1,
+    "y": 45.8,
+    "rolling_xT": 0.136
+  },
+  {
+    "time": 49.153,
+    "type": "Pass",
+    "x": 61.0,
+    "y": 16.9,
+    "rolling_xT": 0.045
+  },
+  {
+    "time": 49.3344,
+    "type": "Pass",
+    "x": 48.1,
+    "y": 49.0,
+    "rolling_xT": 0.062
+  },
+  {
+    "time": 49.4692,
+    "type": "Pass",
+    "x": 53.5,
+    "y": 49.9,
+    "rolling_xT": 0.12
+  },
+  {
+    "time": 49.7134,
+    "type": "Pass",
+    "x": 71.1,
+    "y": 43.6,
+    "rolling_xT": 0.05
+  },
+  {
+    "time": 49.9805,
+    "type": "Pass",
+    "x": 46.9,
+    "y": 3.8,
+    "rolling_xT": 0.057
+  },
+  {
+    "time": 50.2054,
+    "type": "Pass",
+    "x": 73.8,
+    "y": 54.4,
+    "rolling_xT": 0.108
+  },
+  {
+    "time": 50.3729,
+    "type": "Pass",
+    "x": 35.7,
+    "y": 13.5,
+    "rolling_xT": 0.063
+  },
+  {
+    "time": 50.6604,
+    "type": "Pass",
+    "x": 73.6,
+    "y": 12.5,
+    "rolling_xT": 0.113
+  },
+  {
+    "time": 50.9161,
+    "type": "Pass",
+    "x": 43.7,
+    "y": 35.2,
+    "rolling_xT": 0.061
+  },
+  {
+    "time": 51.0749,
+    "type": "Pass",
+    "x": 69.4,
+    "y": 52.6,
+    "rolling_xT": 0.078
+  },
+  {
+    "time": 51.1928,
+    "type": "Pass",
+    "x": 68.9,
+    "y": 46.1,
+    "rolling_xT": 0.024
+  },
+  {
+    "time": 51.4741,
+    "type": "Pass",
+    "x": 80.9,
+    "y": 4.3,
+    "rolling_xT": 0.057
+  },
+  {
+    "time": 51.754,
+    "type": "Pass",
+    "x": 74.9,
+    "y": 54.3,
+    "rolling_xT": 0.126
+  },
+  {
+    "time": 52.0353,
+    "type": "Pass",
+    "x": 68.3,
+    "y": 28.8,
+    "rolling_xT": 0.068
+  },
+  {
+    "time": 52.2882,
+    "type": "Pass",
+    "x": 66.3,
+    "y": 61.6,
+    "rolling_xT": 0.115
+  },
+  {
+    "time": 52.4729,
+    "type": "Pass",
+    "x": 52.4,
+    "y": 36.3,
+    "rolling_xT": 0.076
+  },
+  {
+    "time": 52.7734,
+    "type": "Pass",
+    "x": 40.5,
+    "y": 75.8,
+    "rolling_xT": 0.075
+  },
+  {
+    "time": 52.9079,
+    "type": "Pass",
+    "x": 51.5,
+    "y": 56.6,
+    "rolling_xT": 0.124
+  },
+  {
+    "time": 53,
+    "type": "Pass",
+    "x": 87.3,
+    "y": 48.7,
+    "rolling_xT": 0.132
+  },
+  {
+    "time": 53.2164,
+    "type": "Pass",
+    "x": 103.2,
+    "y": 57.4,
+    "rolling_xT": 0.05
+  },
+  {
+    "time": 53.4953,
+    "type": "Pass",
+    "x": 75.4,
+    "y": 72.2,
+    "rolling_xT": 0.071
+  },
+  {
+    "time": 53.8292,
+    "type": "Pass",
+    "x": 82.9,
+    "y": 56.2,
+    "rolling_xT": 0.014
+  },
+  {
+    "time": 53.8952,
+    "type": "Pass",
+    "x": 69.0,
+    "y": 39.9,
+    "rolling_xT": 0.062
+  },
+  {
+    "time": 53.9537,
+    "type": "Pass",
+    "x": 106.0,
+    "y": 27.9,
+    "rolling_xT": 0.121
+  },
+  {
+    "time": 54,
+    "type": "Pass",
+    "x": 91.5,
+    "y": 73.0,
+    "rolling_xT": 0.029
+  },
+  {
+    "time": 54.2617,
+    "type": "Pass",
+    "x": 94.2,
+    "y": 40.6,
+    "rolling_xT": 0.046
+  },
+  {
+    "time": 54.5621,
+    "type": "Pass",
+    "x": 82.7,
+    "y": 31.2,
+    "rolling_xT": 0.026
+  },
+  {
+    "time": 54.6986,
+    "type": "Pass",
+    "x": 94.2,
+    "y": 45.3,
+    "rolling_xT": 0.121
+  },
+  {
+    "time": 54.8857,
+    "type": "Pass",
+    "x": 108.3,
+    "y": 65.1,
+    "rolling_xT": 0.012
+  }
+]
