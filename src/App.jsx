@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const CODE_SNIPPETS = {
   '2022': {
@@ -126,6 +126,8 @@ export default function App() {
   const [manualMinute, setManualMinute] = useState(null);
   const manualMinuteRef = useRef(null);
   const canvasRef = useRef(null);
+  const [glowKey, setGlowKey] = useState(0);
+  const glowCoolingRef = useRef(false);
 
   useEffect(() => {
     if (!activeCase) return;
@@ -155,6 +157,26 @@ export default function App() {
     document.querySelectorAll('.step-container').forEach((step) => observer.observe(step));
     return () => observer.disconnect();
   }, [activeCase, matchData]);
+
+  // ── Logo reactive glow ──────────────────────────────────────
+  const triggerGlow = useCallback(() => {
+    if (glowCoolingRef.current) return;
+    glowCoolingRef.current = true;
+    setGlowKey(k => k + 1);
+    setTimeout(() => { glowCoolingRef.current = false; }, 1500);
+  }, []);
+
+  useEffect(() => {
+    if (activeCase) return; // only animate on home screen
+    window.addEventListener('wheel',        triggerGlow, { passive: true });
+    window.addEventListener('touchstart',   triggerGlow, { passive: true });
+    window.addEventListener('pointerdown',  triggerGlow, { passive: true });
+    return () => {
+      window.removeEventListener('wheel',       triggerGlow);
+      window.removeEventListener('touchstart',  triggerGlow);
+      window.removeEventListener('pointerdown', triggerGlow);
+    };
+  }, [activeCase, triggerGlow]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -270,11 +292,21 @@ export default function App() {
 
         <div className="z-10 flex flex-col items-center w-full max-w-5xl mx-auto text-center px-4 sm:px-6 mt-10 sm:mt-16 md:mt-20">
           {/* Logo + Hero */}
-          <img
-            src="/86f51b48a_generated_image.png"
-            alt="PitchAleph Logo"
-            className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 mb-4 md:mb-6 rounded-full shadow-[0_0_60px_rgba(16,185,129,0.3)] border border-emerald-500/30"
-          />
+          <div className="relative mb-4 md:mb-6 inline-flex items-center justify-center">
+            {/* Reactive glow ring — remounts on each trigger to restart animation */}
+            {glowKey > 0 && (
+              <div
+                key={glowKey}
+                className="logo-glow-ring absolute rounded-full pointer-events-none"
+                style={{ inset: '-12px' }}
+              />
+            )}
+            <img
+              src="/86f51b48a_generated_image.png"
+              alt="PitchAleph Logo"
+              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full shadow-[0_0_60px_rgba(16,185,129,0.25)] border border-emerald-500/30 relative z-10"
+            />
+          </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3 md:mb-4 text-white">
             Pitch<span className="text-emerald-400">Aleph</span>
           </h1>

@@ -9,3 +9,15 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Logo reactive glow pulse */
+@keyframes logo-glow-pulse {
+  0%   { box-shadow: 0 0  0px  0px rgba(134, 239, 172, 0);    opacity: 1; }
+  20%  { box-shadow: 0 0 55px 18px rgba(134, 239, 172, 0.65); opacity: 1; }
+  55%  { box-shadow: 0 0 90px 30px rgba(52,  211, 153, 0.30); opacity: 1; }
+  100% { box-shadow: 0 0 40px  6px rgba(52,  211, 153, 0);    opacity: 0; }
+}
+
+.logo-glow-ring {
+  animation: logo-glow-pulse 1.5s ease-out forwards;
+}
