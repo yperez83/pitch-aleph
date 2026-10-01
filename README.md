@@ -1,16 +1,98 @@
-# React + Vite
+# ⚽ PitchAleph (ℵ)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Quantitative sports simulation & live predictive market engine.**  
+> Mapping **ℵ₀** discrete spatial pitch data to predict **ℵ₁** continuous market states.
 
-Currently, two official plugins are available:
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-pitch--aleph.vercel.app-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://pitch-aleph.vercel.app)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![RepNix](https://img.shields.io/badge/Guardrails-RepNix-emerald?style=for-the-badge)](https://github.com/zakaihamilton/repnix)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Experience the full interactive simulation directly in your browser:
 
-## Expanding the ESLint configuration
+### 🔗 **[https://pitch-aleph.vercel.app](https://pitch-aleph.vercel.app)**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+*Tested and optimized for desktop, tablet, and mobile handheld devices.*
+
+---
+
+## 📌 Overview
+
+**PitchAleph** models high-frequency spatial soccer match events into continuous predictive probability states, highlighting market inefficiencies and identifying positive expected value (+EV) betting windows before sportsbooks adjust.
+
+Traditional models look at box scores and lagged match stats. PitchAleph consumes granular, discrete event streams (ℵ₀)—passes, shots, defensive blocks, spatial threat (xT)—and projects continuous probability surfaces (ℵ₁) to exploit odds distortions in real time.
+
+---
+
+## 🧪 Interactive Case Studies
+
+Explore four backtested World Cup match scenarios directly inside the engine:
+
+1. **TEST 01: Alpha Generation — ARG vs FRA (2022 Final)**
+   - *The 25% Backtest*: Blinding the model to detect territorial imbalances before market awareness, locking in a +25.0% EV buy order before Argentina's breakthrough.
+2. **TEST 02: Tail Risk & Variance — GER vs KOR (2018 Group Stage)**
+   - *Managing Inevitable Outliers*: Extreme sustained siege pressure creates a statistical edge that fails on black-swan counter-attacks. Surviving downside risk via Fractional Kelly Criterion sizing (capped at 2%).
+3. **TEST 03: Underdog Inefficiency — KSA vs ARG (2022 Group Stage)**
+   - *Neutralizing ℵ₀*: Identifying tactical anomalies where Saudi Arabia's synchronized high defensive line dismantled spatial threat, buying massive +1200 underdog undervaluation.
+4. **TEST 04: Dynamic Hedging — NED vs ARG (2022 Quarter-Final)**
+   - *Regime Change Detection*: When long-ball aerial chaos nullified predictive models at minute 75, PitchAleph triggered an automated cash-out hedge, locking in +8.5 Units of profit before the 90+11' equalizer.
+
+---
+
+## ⚡ Key Features
+
+- **🎮 2D Canvas Pitch Visualizer**: High-performance real-time simulation rendering discrete player events, threat paths, shot trajectories, and rolling xT momentum.
+- **⏱️ Match Timeline Scrubber**: Scrub back and forth across every minute of the match or resume automatic simulation playback with a single tap.
+- **📱 Fully Responsive UI**: Seamlessly adapts to handheld devices and wide monitors, featuring dedicated mobile analysis/pitch views and reactive touch feedback.
+- **💡 PitchAleph Edge Calculator**: Interactive stake-sizing tool comparing conventional bettor outcomes vs. PitchAleph mathematical bankroll outcomes.
+- **🛡️ Guardrails with RepNix**: Enforced repository health verification including zero-dead-code checks (Knip), code duplication detection (jscpd), and strict linting.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+- **Frontend**: React 19, Vite, Tailwind CSS
+- **Visualization**: HTML5 2D Canvas Engine
+- **Quality & Guardrails**: [RepNix](https://github.com/zakaihamilton/repnix), ESLint, Knip, jscpd
+- **Hosting & CI/CD**: [Vercel](https://pitch-aleph.vercel.app)
+
+---
+
+## 💻 Local Development
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/yperez83/pitch-aleph.git
+cd pitch-aleph
+npm install
+```
+
+Start the Vite development server:
+
+```bash
+npm run dev
+```
+
+Run repository health checks (RepNix guardrails):
+
+```bash
+npm run health
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
