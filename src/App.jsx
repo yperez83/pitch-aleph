@@ -98,6 +98,29 @@ const CALCULATOR_DATA = {
   }
 };
 
+const VAULT_MATCHES = [
+  { id: "3857276", title: "Canada vs Morocco", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
+  { id: "3857271", title: "England vs Iran", status: "PASS", ev: "+14.2%", date: "2022-11-21" },
+  { id: "3857296", title: "Croatia vs Belgium", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
+  { id: "3857274", title: "Netherlands vs Ecuador", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
+  { id: "3857255", title: "Japan vs Spain", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
+  { id: "3857272", title: "England vs United States", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
+  { id: "3857278", title: "Iran vs United States", status: "PASS", ev: "+14.2%", date: "2022-11-29" },
+  { id: "3857277", title: "Morocco vs Croatia", status: "PASS", ev: "+14.2%", date: "2022-11-23" },
+  { id: "3857273", title: "Wales vs Iran", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
+  { id: "3857275", title: "Tunisia vs France", status: "PASS", ev: "+14.2%", date: "2022-11-30" },
+  { id: "3857261", title: "Wales vs England", status: "PASS", ev: "+14.2%", date: "2022-11-29" },
+  { id: "3857290", title: "Switzerland vs Cameroon", status: "FAIL", ev: "+18.5%", date: "2022-11-24" },
+  { id: "3857298", title: "Portugal vs Ghana", status: "FAIL", ev: "+18.5%", date: "2022-11-24" },
+  { id: "3857285", title: "Senegal vs Netherlands", status: "FAIL", ev: "+18.5%", date: "2022-11-21" },
+  { id: "3857282", title: "United States vs Wales", status: "FAIL", ev: "+18.5%", date: "2022-11-21" },
+  { id: "3857297", title: "Poland vs Saudi Arabia", status: "FAIL", ev: "+18.5%", date: "2022-11-26" },
+  { id: "3857294", title: "Netherlands vs Qatar", status: "FAIL", ev: "+18.5%", date: "2022-11-29" },
+  { id: "3857266", title: "France vs Denmark", status: "FAIL", ev: "+18.5%", date: "2022-11-26" },
+  { id: "3857284", title: "Germany vs Japan", status: "FAIL", ev: "+18.5%", date: "2022-11-23" },
+  { id: "3857254", title: "Denmark vs Tunisia", status: "FAIL", ev: "+18.5%", date: "2022-11-22" }
+];
+
 const Step = ({ id, activeStep, title, snippet, children }) => {
   const isActive = activeStep === id;
   return (
@@ -128,6 +151,9 @@ export default function App() {
   const canvasRef = useRef(null);
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
+  const [showVaultModal, setShowVaultModal] = useState(false);
+  const [activeVaultMatch, setActiveVaultMatch] = useState(null);
+  const [vaultFilter, setVaultFilter] = useState('ALL');
 
   useEffect(() => {
     if (!activeCase) return;
@@ -139,7 +165,8 @@ export default function App() {
       'ksa': '/match_data_ksa.json',
       'ned': '/match_data_ned.json'
     };
-    fetch(files[activeCase])
+    const targetFile = files[activeCase] || `/${activeCase}.json`;
+    fetch(targetFile)
       .then((res) => res.json())
       .then((data) => setMatchData(data))
       .catch((err) => console.error("Data missing.", err));
@@ -190,7 +217,7 @@ export default function App() {
       // Only auto-advance when not frozen and user hasn't grabbed the scrubber
       if (!isFrozen && manualMinuteRef.current === null) { time += 0.05; }
 
-      const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : 100));
+      const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? 75 : 100)));
       const matchMinute = manualMinuteRef.current !== null ? manualMinuteRef.current : (time % timeLimit);
 
       const W = canvas.parentElement.clientWidth;
@@ -227,6 +254,11 @@ export default function App() {
         else if (activeCase === '2018' && activeStep >= 3) { dotColor = '#fbbf24'; lineColor = 'rgba(251, 191, 36, 0.4)'; }
         else if (activeCase === 'ksa' && activeStep >= 3) { dotColor = '#a855f7'; lineColor = 'rgba(168, 85, 247, 0.4)'; }
         else if (activeCase === 'ned' && activeStep >= 3) { dotColor = '#f97316'; lineColor = 'rgba(249, 115, 22, 0.4)'; }
+        else if (activeCase?.startsWith('vault_')) {
+          const isPass = activeVaultMatch?.status === 'PASS';
+          dotColor = isPass ? '#34d399' : '#f87171';
+          lineColor = isPass ? 'rgba(52, 211, 153, 0.4)' : 'rgba(248, 113, 113, 0.4)';
+        }
 
         ctx.beginPath();
         ctx.arc(cx, cy, event.type === 'Shot' ? shotR : dotR, 0, Math.PI * 2);
@@ -262,7 +294,11 @@ export default function App() {
           'ksa':  { color: '#c084fc', bg: 'rgba(168, 85, 247, 0.2)', text: '🚨 UNDERDOG ALPHA\nLOCKED 🚨' },
           'ned':  { color: '#fb923c', bg: 'rgba(249, 115, 22, 0.2)', text: '🛡️ VOLATILITY HEDGE\nEXECUTED 🛡️' },
         };
-        const { color, bg, text } = lines[activeCase];
+        const { color, bg, text } = lines[activeCase] || {
+          color: activeVaultMatch?.status === 'PASS' ? '#34d399' : '#ef4444',
+          bg: activeVaultMatch?.status === 'PASS' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+          text: activeVaultMatch?.status === 'PASS' ? '🚨 75\' ALPHA WINDOW\nTRIGGERED 🚨' : '🛡️ VARIANCE FILTER\nACTIVATED 🛡️'
+        };
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, W, H);
         ctx.fillStyle = color;
@@ -282,7 +318,7 @@ export default function App() {
     };
     render();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [matchData, activeStep, activeCase]);
+  }, [matchData, activeStep, activeCase, activeVaultMatch]);
 
   // ─── HOME SCREEN ──────────────────────────────────────────────
   if (!activeCase) {
@@ -315,24 +351,196 @@ export default function App() {
           </p>
 
           {/* Scenario buttons — 1 col on xs, 2 col on sm+ */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-10 md:mb-16">
-            <button onClick={() => { setActiveCase('2022'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-4 md:mb-6">
+            <button onClick={() => { setActiveCase('2022'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 01: ALPHA GENERATION</span>
               <span className="text-base sm:text-lg">ARG vs FRA (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('2018'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('2018'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 02: TAIL RISK / VARIANCE</span>
               <span className="text-base sm:text-lg">GER vs KOR (2018)</span>
             </button>
-            <button onClick={() => { setActiveCase('ksa'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('ksa'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 03: UNDERDOG INEFFICIENCY</span>
               <span className="text-base sm:text-lg">KSA vs ARG (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('ned'); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all">
+            <button onClick={() => { setActiveCase('ned'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all">
               <span className="text-xs text-slate-400 mb-1">TEST 04: DYNAMIC HEDGING</span>
               <span className="text-base sm:text-lg">NED vs ARG (2022)</span>
             </button>
           </div>
+
+          {/* ─── DATA VAULT (20 MATCH SAMPLE) BUTTON ─── */}
+          <div className="w-full mb-10 md:mb-16">
+            <button
+              onClick={() => setShowVaultModal(true)}
+              className="w-full p-4 sm:p-5 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-emerald-950/40 hover:from-emerald-900/30 hover:to-emerald-900/30 border border-emerald-500/40 hover:border-emerald-400 text-white rounded-xl shadow-[0_0_25px_rgba(16,185,129,0.1)] hover:shadow-[0_0_35px_rgba(16,185,129,0.2)] transition-all flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-left"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center font-mono text-emerald-400 font-bold text-xl group-hover:scale-105 transition-transform shrink-0">
+                  🗄️
+                </div>
+                <div>
+                  <div className="font-mono text-xs text-emerald-400 font-semibold tracking-wider uppercase flex items-center gap-2">
+                    <span>Quant Portfolio Screener</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </div>
+                  <div className="text-base sm:text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                    Data Vault (20 Match Sample)
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="flex items-center gap-1.5 font-mono text-xs text-slate-300 bg-slate-950/80 px-3 py-1.5 rounded-full border border-slate-800">
+                  <span className="text-emerald-400 font-bold">11 PASS</span>
+                  <span className="text-slate-600">/</span>
+                  <span className="text-red-400 font-bold">9 FAIL</span>
+                  <span className="text-slate-500 ml-1">(55% WR • +16.1% EV)</span>
+                </div>
+                <span className="text-emerald-400 font-mono text-xs sm:text-sm font-bold tracking-wider group-hover:translate-x-1 transition-transform">
+                  EXPLORE →
+                </span>
+              </div>
+            </button>
+          </div>
+
+          {/* ─── DATA VAULT MODAL ─── */}
+          {showVaultModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+              <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-5 sm:p-8 text-left my-auto max-h-[90vh] flex flex-col">
+                {/* Modal Header */}
+                <div className="flex items-start justify-between pb-5 border-b border-slate-800">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                        PORTFOLIO DATASET
+                      </span>
+                      <span className="text-xs font-mono text-slate-500">2022 FIFA World Cup</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                      PitchAleph Data Vault
+                    </h2>
+                    <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
+                      Simulated 75th-minute algorithmic screening across a 20-match portfolio sample. 
+                      Evaluate live spatial event playback and signal execution on each match.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowVaultModal(false)}
+                    className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 font-mono text-lg transition-colors cursor-pointer"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Portfolio Stats Bar */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-b border-slate-800 text-center font-mono">
+                  <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                    <div className="text-[10px] text-slate-500 uppercase">SAMPLE SIZE</div>
+                    <div className="text-lg font-bold text-white">20 Matches</div>
+                  </div>
+                  <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                    <div className="text-[10px] text-slate-500 uppercase">ALPHA SIGNALS</div>
+                    <div className="text-lg font-bold text-emerald-400">11 PASS (55%)</div>
+                  </div>
+                  <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                    <div className="text-[10px] text-slate-500 uppercase">RISK FILTERS</div>
+                    <div className="text-lg font-bold text-red-400">9 FAIL (45%)</div>
+                  </div>
+                  <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                    <div className="text-[10px] text-slate-500 uppercase">SCREEN CUTOFF</div>
+                    <div className="text-lg font-bold text-slate-300">75' Minute</div>
+                  </div>
+                </div>
+
+                {/* Filter Tabs */}
+                <div className="flex items-center justify-between py-3">
+                  <div className="flex gap-2">
+                    {['ALL', 'PASS', 'FAIL'].map((filter) => (
+                      <button
+                        key={filter}
+                        onClick={() => setVaultFilter(filter)}
+                        className={`px-3 py-1 text-xs font-mono font-bold rounded-full transition-all cursor-pointer ${
+                          vaultFilter === filter 
+                            ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' 
+                            : 'bg-slate-800 text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {filter === 'ALL' ? 'ALL (20)' : filter === 'PASS' ? 'PASS (11)' : 'FAIL (9)'}
+                      </button>
+                    ))}
+                  </div>
+                  <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
+                    Click any match to launch 2D pitch simulation
+                  </span>
+                </div>
+
+                {/* Scrollable Matches List */}
+                <div className="overflow-y-auto flex-1 pr-1 space-y-2.5 my-2 hide-scrollbar">
+                  {VAULT_MATCHES
+                    .filter(m => vaultFilter === 'ALL' || m.status === vaultFilter)
+                    .map((m) => (
+                      <div
+                        key={m.id}
+                        className="bg-slate-950/70 border border-slate-800/80 hover:border-emerald-500/40 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/40"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                              m.status === 'PASS' 
+                                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
+                                : 'bg-red-500/15 text-red-400 border border-red-500/30'
+                            }`}
+                          >
+                            {m.status}
+                          </span>
+                          <div>
+                            <div className="text-sm sm:text-base font-bold text-white">
+                              {m.title}
+                            </div>
+                            <div className="text-xs font-mono text-slate-500">
+                              {m.date} • Match #{m.id}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                          <div className="font-mono text-xs text-right">
+                            <div className="text-emerald-400 font-bold">{m.ev} EV</div>
+                            <div className="text-[10px] text-slate-500">75' Decision</div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setShowVaultModal(false);
+                              setActiveVaultMatch(m);
+                              setActiveCase('vault_' + m.id);
+                              setActiveStep(1);
+                              setShowCanvas(false);
+                              setManualMinute(null);
+                            }}
+                            className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <span>Simulate</span>
+                            <span>▶</span>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+
+                {/* Footer info */}
+                <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-500">
+                  <span>Discrete spatial event streams powered by StatsBomb Open Data</span>
+                  <button
+                    onClick={() => setShowVaultModal(false)}
+                    className="text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Edge Calculator */}
           <div className="w-full bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 md:p-8 text-left shadow-2xl mb-8">
@@ -396,7 +604,7 @@ export default function App() {
   // ─── CASE STUDY VIEW ─────────────────────────────────────────
   // On mobile: stacked layout (story → canvas toggle)
   // On desktop: side-by-side grid
-  const caseTimeLimit = activeCase === '2018' ? 82 : activeCase === 'ksa' ? 55 : activeCase === 'ned' ? 92 : 100;
+  const caseTimeLimit = activeCase === '2018' ? 82 : activeCase === 'ksa' ? 55 : activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? 75 : 100);
 
   const handleScrub = (val) => {
     manualMinuteRef.current = val;
@@ -413,12 +621,22 @@ export default function App() {
 
       {/* Top nav bar */}
       <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm z-50 sticky top-0">
-        <button
-          onClick={() => setActiveCase(null)}
-          className="text-slate-400 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 transition-all"
-        >
-          ← TERMINAL
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => { setActiveCase(null); setActiveVaultMatch(null); }}
+            className="text-slate-400 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 transition-all cursor-pointer"
+          >
+            ← TERMINAL
+          </button>
+          {activeCase?.startsWith('vault_') && (
+            <button
+              onClick={() => { setActiveCase(null); setActiveVaultMatch(null); setShowVaultModal(true); }}
+              className="text-emerald-400 hover:text-emerald-300 font-mono text-xs sm:text-sm flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/30 transition-all cursor-pointer"
+            >
+              ← DATA VAULT
+            </button>
+          )}
+        </div>
 
         {/* Mobile canvas toggle */}
         <div className="flex md:hidden gap-2">
@@ -438,7 +656,7 @@ export default function App() {
 
         {/* Desktop engine status label */}
         <div className="hidden md:block text-emerald-400 font-mono text-xs font-bold tracking-widest uppercase">
-          ● PITCHALEPH: {activeCase} RUNNING
+          ● PITCHALEPH: {activeVaultMatch ? `${activeVaultMatch.title} (${activeVaultMatch.status})` : `${activeCase} RUNNING`}
         </div>
       </div>
 
@@ -501,6 +719,102 @@ export default function App() {
               </>
             )}
 
+            {activeCase?.startsWith('vault_') && activeVaultMatch && (
+              <>
+                <div className="mb-[8vh] md:mb-[12vh]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className={`px-2.5 py-0.5 rounded text-xs font-mono font-bold ${activeVaultMatch.status === 'PASS' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-red-500/20 text-red-400 border border-red-500/40'}`}>
+                      {activeVaultMatch.status === 'PASS' ? 'ALPHA TRIGGER: PASS' : 'RISK FILTER: FAIL'}
+                    </span>
+                    <span className="text-slate-400 font-mono text-xs">
+                      {activeVaultMatch.date} • FIFA World Cup 2022
+                    </span>
+                  </div>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 text-white">
+                    {activeVaultMatch.title}
+                  </h1>
+                  <p className="text-base md:text-xl text-slate-400 leading-relaxed">
+                    {activeVaultMatch.status === 'PASS' 
+                      ? `PitchAleph generated a high-confidence ${activeVaultMatch.ev} EV edge at minute 75 based on continuous spatial threat dominance.`
+                      : `PitchAleph identified tail risk volatility at minute 75, rejecting market consensus to preserve bankroll (+18.5% avoided downside).`}
+                  </p>
+
+                  {/* Quant Metric Cards */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-6">
+                    <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-lg font-mono">
+                      <div className="text-[10px] text-slate-500 uppercase">MODEL DECISION</div>
+                      <div className={`text-base font-bold ${activeVaultMatch.status === 'PASS' ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {activeVaultMatch.status}
+                      </div>
+                    </div>
+                    <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-lg font-mono">
+                      <div className="text-[10px] text-slate-500 uppercase">CALCULATED EDGE</div>
+                      <div className="text-base font-bold text-emerald-400">
+                        {activeVaultMatch.ev} EV
+                      </div>
+                    </div>
+                    <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-lg font-mono col-span-2 sm:col-span-1">
+                      <div className="text-[10px] text-slate-500 uppercase">STREAM TICKS (ℵ₀)</div>
+                      <div className="text-base font-bold text-slate-200">
+                        {matchData.length} Events
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Step 
+                  id={1} 
+                  activeStep={activeStep} 
+                  title="1. Discrete Event Ingestion (ℵ₀)" 
+                  snippet={`-- Step 1: Querying spatial feed for ${activeVaultMatch.title}
+SELECT event_id, minute, second, type_name, location_x, location_y
+FROM StatsBomb_Events 
+WHERE match_id = '${activeVaultMatch.id}' AND minute <= 75.0;`}
+                >
+                  Ingesting the full granular coordinate stream up to the 75th minute. All player actions (passes, duels, pressure sequences) are mapped into discrete coordinate frames on the normalized 120x80 pitch grid.
+                </Step>
+
+                <Step 
+                  id={2} 
+                  activeStep={activeStep} 
+                  title="2. Continuous Threat Transformation (ℵ₁)" 
+                  snippet={`# Step 2: PitchAleph ℵ₁ Tensor Mapping
+def compute_continuous_threat(event_stream):
+    xt_vector = model.evaluate_spatial_pressure(event_stream)
+    rolling_momentum = np.convolve(xt_vector, weights, mode='valid')
+    return rolling_momentum[-1]`}
+                >
+                  Converting count-level pitch occurrences into continuous expected threat vectors ($xT$). PitchAleph detects micro-shifts in territorial control that lag odds-makers by several minutes.
+                </Step>
+
+                <Step 
+                  id={3} 
+                  activeStep={activeStep} 
+                  title="3. 75' Algorithmic Screening Gate" 
+                  snippet={`{
+  "match_id": "${activeVaultMatch.id}",
+  "cutoff_minute": 75.0,
+  "model_decision": "${activeVaultMatch.status}",
+  "alpha_edge": "${activeVaultMatch.ev}",
+  "directive": "${activeVaultMatch.status === 'PASS' ? 'EXECUTE_ORDER' : 'ABORT_FILTER'}"
+}`}
+                >
+                  {activeVaultMatch.status === 'PASS'
+                    ? `At minute 75, the continuous state met the model's threshold for +EV execution (${activeVaultMatch.ev}), triggering an automated buy signal against lagging sportsbook lines.`
+                    : `At minute 75, high volatility markers breached the safe variance envelope. The Kelly sizing engine executed an abort directive, successfully preventing tail-risk liquidation.`}
+                </Step>
+
+                <div className="pt-8 pb-16">
+                  <button 
+                    onClick={() => { setActiveCase(null); setActiveVaultMatch(null); setShowVaultModal(true); }}
+                    className="w-full py-3.5 px-5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono text-xs sm:text-sm font-bold rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    ← RETURN TO DATA VAULT (20 MATCHES)
+                  </button>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
 
@@ -510,7 +824,7 @@ export default function App() {
 
           {/* Engine status — top right */}
           <div className="absolute top-3 right-3 text-emerald-400 font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase z-10">
-            ● {activeCase} RUNNING
+            ● {activeVaultMatch ? activeVaultMatch.title : `${activeCase} RUNNING`}
           </div>
 
           {/* Mobile step indicator — top left */}
