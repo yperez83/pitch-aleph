@@ -86,9 +86,46 @@ const VAULT_MATCHES = [
   { id: "3857254", title: "Denmark vs Tunisia", status: "FAIL", ev: "+18.5%", date: "2022-11-22" }
 ];
 
+const TEAM_CODES = {
+  'Canada': 'CAN',
+  'Morocco': 'MAR',
+  'England': 'ENG',
+  'Iran': 'IRN',
+  'Croatia': 'CRO',
+  'Belgium': 'BEL',
+  'Netherlands': 'NED',
+  'Ecuador': 'ECU',
+  'Japan': 'JPN',
+  'Spain': 'ESP',
+  'United States': 'USA',
+  'Wales': 'WAL',
+  'Tunisia': 'TUN',
+  'France': 'FRA',
+  'Switzerland': 'SUI',
+  'Cameroon': 'CMR',
+  'Portugal': 'POR',
+  'Ghana': 'GHA',
+  'Senegal': 'SEN',
+  'Poland': 'POL',
+  'Saudi Arabia': 'KSA',
+  'Qatar': 'QAT',
+  'Denmark': 'DEN',
+  'Germany': 'GER',
+  'Argentina': 'ARG',
+  'South Korea': 'KOR'
+};
+
+const toShortTitle = (title) => {
+  return title
+    .split(' vs ')
+    .map(team => TEAM_CODES[team] || team.slice(0, 3).toUpperCase())
+    .join(' vs ');
+};
+
 const CORE_CALCULATOR_DATA = {
   '2022': {
-    title: 'ARG vs FRA (Alpha Generation)',
+    title: 'ARG vs FRA (PASS)',
+    fullTitle: 'ARG vs FRA (2022 Final — Alpha Generation)',
     category: 'Core',
     marketOdds: '+150 (40% implied)',
     pitchAlephProb: '65.0%',
@@ -97,7 +134,8 @@ const CORE_CALCULATOR_DATA = {
     pitchAlephResult: stake => `Wins $${(stake * 1.5).toLocaleString()} (Secured massive +EV mathematical edge)`
   },
   'ksa': {
-    title: 'KSA vs ARG (Underdog Inefficiency)',
+    title: 'KSA vs ARG (PASS)',
+    fullTitle: 'KSA vs ARG (2022 Group — Underdog Inefficiency)',
     category: 'Core',
     marketOdds: '+1200 (7.7% implied)',
     pitchAlephProb: '22.0%',
@@ -106,7 +144,8 @@ const CORE_CALCULATOR_DATA = {
     pitchAlephResult: stake => `Wins $${(stake * 12).toLocaleString()} (Engine correctly bought massive KSA undervaluation)`
   },
   'ned': {
-    title: 'NED vs ARG (Volatility Hedging)',
+    title: 'NED vs ARG (HEDGE)',
+    fullTitle: 'NED vs ARG (2022 QF — Volatility Hedging)',
     category: 'Core',
     marketOdds: 'Argentina to win',
     pitchAlephProb: 'Chaotic State (Unmodelable)',
@@ -115,7 +154,8 @@ const CORE_CALCULATOR_DATA = {
     pitchAlephResult: stake => `Locks in $${(stake * 0.4).toLocaleString()} Profit (Engine automatically hedged/cashed out at 80')`
   },
   '2018': {
-    title: 'GER vs KOR (Risk Mitigation)',
+    title: 'GER vs KOR (FAIL)',
+    fullTitle: 'GER vs KOR (2018 Group — Risk Mitigation)',
     category: 'Core',
     marketOdds: '-400 (80% implied)',
     pitchAlephProb: '92.0%',
@@ -125,14 +165,16 @@ const CORE_CALCULATOR_DATA = {
   }
 };
 
-// Generate 20 tailored bet simulator cases from the Data Vault sample
+// Generate 20 tailored bet simulator cases from the Data Vault sample with 3-letter codes
 const VAULT_CALCULATOR_DATA = Object.fromEntries(
   VAULT_MATCHES.map(match => {
     const isPass = match.status === 'PASS';
+    const shortVs = toShortTitle(match.title);
     return [
       'vault_' + match.id,
       {
-        title: `${match.title} (${match.status})`,
+        title: `${shortVs} (${match.status})`,
+        fullTitle: `${match.title} (${match.status}) — ${match.date}`,
         category: isPass ? 'Vault Pass' : 'Vault Fail',
         marketOdds: isPass ? '+135 (42.5% implied)' : '-210 (67.7% implied)',
         pitchAlephProb: isPass ? '56.7%' : '49.2%',
@@ -759,7 +801,7 @@ export default function App() {
                 <div>
                   <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
                     <span className="text-sm font-bold text-white">
-                      {CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
+                      {CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
                     </span>
                     <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
                       EV: {CALCULATOR_DATA[calcCase]?.ev}
