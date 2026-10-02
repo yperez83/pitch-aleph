@@ -1,4 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import VAULT_MATCHES from './vault_index.json';
+
+const VAULT_PASS_COUNT = VAULT_MATCHES.filter(m => m.status === 'PASS').length;
+const VAULT_FAIL_COUNT = VAULT_MATCHES.filter(m => m.status === 'FAIL').length;
+const VAULT_PASS_PERCENT = Math.round((VAULT_PASS_COUNT / VAULT_MATCHES.length) * 100);
+const VAULT_FAIL_PERCENT = Math.round((VAULT_FAIL_COUNT / VAULT_MATCHES.length) * 100);
 
 const CODE_SNIPPETS = {
   '2022': {
@@ -63,28 +69,6 @@ if current_variance > historical_max:
   }
 };
 
-const VAULT_MATCHES = [
-  { id: "3857276", title: "Canada vs Morocco", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
-  { id: "3857271", title: "England vs Iran", status: "PASS", ev: "+14.2%", date: "2022-11-21" },
-  { id: "3857296", title: "Croatia vs Belgium", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
-  { id: "3857274", title: "Netherlands vs Ecuador", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
-  { id: "3857255", title: "Japan vs Spain", status: "PASS", ev: "+14.2%", date: "2022-12-01" },
-  { id: "3857272", title: "England vs United States", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
-  { id: "3857278", title: "Iran vs United States", status: "PASS", ev: "+14.2%", date: "2022-11-29" },
-  { id: "3857277", title: "Morocco vs Croatia", status: "PASS", ev: "+14.2%", date: "2022-11-23" },
-  { id: "3857273", title: "Wales vs Iran", status: "PASS", ev: "+14.2%", date: "2022-11-25" },
-  { id: "3857275", title: "Tunisia vs France", status: "PASS", ev: "+14.2%", date: "2022-11-30" },
-  { id: "3857261", title: "Wales vs England", status: "PASS", ev: "+14.2%", date: "2022-11-29" },
-  { id: "3857290", title: "Switzerland vs Cameroon", status: "FAIL", ev: "+18.5%", date: "2022-11-24" },
-  { id: "3857298", title: "Portugal vs Ghana", status: "FAIL", ev: "+18.5%", date: "2022-11-24" },
-  { id: "3857285", title: "Senegal vs Netherlands", status: "FAIL", ev: "+18.5%", date: "2022-11-21" },
-  { id: "3857282", title: "United States vs Wales", status: "FAIL", ev: "+18.5%", date: "2022-11-21" },
-  { id: "3857297", title: "Poland vs Saudi Arabia", status: "FAIL", ev: "+18.5%", date: "2022-11-26" },
-  { id: "3857294", title: "Netherlands vs Qatar", status: "FAIL", ev: "+18.5%", date: "2022-11-29" },
-  { id: "3857266", title: "France vs Denmark", status: "FAIL", ev: "+18.5%", date: "2022-11-26" },
-  { id: "3857284", title: "Germany vs Japan", status: "FAIL", ev: "+18.5%", date: "2022-11-23" },
-  { id: "3857254", title: "Denmark vs Tunisia", status: "FAIL", ev: "+18.5%", date: "2022-11-22" }
-];
 
 const TEAM_CODES = {
   'Canada': 'CAN',
@@ -170,21 +154,23 @@ const VAULT_CALCULATOR_DATA = Object.fromEntries(
   VAULT_MATCHES.map(match => {
     const isPass = match.status === 'PASS';
     const shortVs = toShortTitle(match.title);
+    const cleanEv = match.ev ? match.ev.trim() : '+14.2% EV';
+    const minuteLabel = match.minute || "75' Decision";
     return [
       'vault_' + match.id,
       {
         title: `${shortVs} (${match.status})`,
-        fullTitle: `${match.title} (${match.status}) — ${match.date}`,
+        fullTitle: `${match.title} (${match.status}) — ${match.date} (${minuteLabel})`,
         category: isPass ? 'Vault Pass' : 'Vault Fail',
         marketOdds: isPass ? '+135 (42.5% implied)' : '-210 (67.7% implied)',
         pitchAlephProb: isPass ? '56.7%' : '49.2%',
-        ev: match.ev,
+        ev: cleanEv.includes('EV') ? cleanEv : `${cleanEv} EV`,
         publicResult: stake => isPass
           ? `Wins $${Math.round(stake * 1.35).toLocaleString()} (Uncalibrated manual ticket; negative EV expectancy long-term)`
           : `Loses full $${stake.toLocaleString()} (Public forced heavy favorite that collapsed to defensive variance)`,
         pitchAlephResult: stake => isPass
-          ? `Wins $${Math.round(stake * 1.35).toLocaleString()} (PitchAleph algorithmic buy order at 75' captured +14.2% EV edge)`
-          : `Loses $0 / Hedged (Kelly risk filter blocked position at 75', preventing catastrophic loss)`
+          ? `Wins $${Math.round(stake * 1.35).toLocaleString()} (PitchAleph algorithmic buy order at ${minuteLabel} captured ${cleanEv} edge)`
+          : `Loses $0 / Hedged (Kelly risk filter blocked position at ${minuteLabel}, preventing catastrophic loss)`
       }
     ];
   })
@@ -293,7 +279,8 @@ export default function App() {
       // Only auto-advance when not frozen and user hasn't grabbed the scrubber
       if (!isFrozen && manualMinuteRef.current === null) { time += 0.05; }
 
-      const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? 75 : 100)));
+      const vaultCutoffMinute = activeVaultMatch?.minute ? parseInt(activeVaultMatch.minute, 10) : 75;
+      const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? (vaultCutoffMinute || 75) : 100)));
       const matchMinute = manualMinuteRef.current !== null ? manualMinuteRef.current : (time % timeLimit);
 
       const W = canvas.parentElement.clientWidth;
@@ -373,7 +360,7 @@ export default function App() {
         const { color, bg, text } = lines[activeCase] || {
           color: activeVaultMatch?.status === 'PASS' ? '#34d399' : '#ef4444',
           bg: activeVaultMatch?.status === 'PASS' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)',
-          text: activeVaultMatch?.status === 'PASS' ? '🚨 75\' ALPHA WINDOW\nTRIGGERED 🚨' : '🛡️ VARIANCE FILTER\nACTIVATED 🛡️'
+          text: activeVaultMatch?.status === 'PASS' ? `🚨 ${vaultCutoffMinute || 75}' ALPHA WINDOW\nTRIGGERED 🚨` : '🛡️ VARIANCE FILTER\nACTIVATED 🛡️'
         };
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, W, H);
@@ -548,13 +535,13 @@ export default function App() {
               >
                 <div className="flex items-center justify-between w-full mb-1">
                   <span className="text-xs text-emerald-400">DATA VAULT</span>
-                  <span className="text-xs text-slate-500 font-normal">11 PASS / 9 FAIL</span>
+                  <span className="text-xs text-slate-500 font-normal">{VAULT_PASS_COUNT} PASS / {VAULT_FAIL_COUNT} FAIL</span>
                 </div>
                 <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-                  20-Match Indexed Sample →
+                  {VAULT_MATCHES.length}-Match Indexed Sample →
                 </span>
                 <span className="text-xs font-normal text-slate-400 mt-1">
-                  Explore 75th-minute algorithmic signal screener across 20 FIFA World Cup matches
+                  Explore algorithmic signal screening across {VAULT_MATCHES.length} FIFA World Cup matches
                 </span>
               </button>
 
@@ -590,10 +577,10 @@ export default function App() {
                       <span className="text-xs font-mono text-slate-500">2022 FIFA World Cup</span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                      PitchAleph Data Vault (20 Match Sample)
+                      PitchAleph Data Vault ({VAULT_MATCHES.length} Match Sample)
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
-                      Simulated 75th-minute algorithmic screening across a 20-match portfolio sample. 
+                      Simulated algorithmic screening across a {VAULT_MATCHES.length}-match portfolio sample. 
                       Evaluate live spatial event playback and signal execution on each match.
                     </p>
                   </div>
@@ -609,19 +596,19 @@ export default function App() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-b border-slate-800 text-center font-mono">
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">SAMPLE SIZE</div>
-                    <div className="text-lg font-bold text-white">20 Matches</div>
+                    <div className="text-lg font-bold text-white">{VAULT_MATCHES.length} Matches</div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">ALPHA SIGNALS</div>
-                    <div className="text-lg font-bold text-emerald-400">11 PASS (55%)</div>
+                    <div className="text-lg font-bold text-emerald-400">{VAULT_PASS_COUNT} PASS ({VAULT_PASS_PERCENT}%)</div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">RISK FILTERS</div>
-                    <div className="text-lg font-bold text-red-400">9 FAIL (45%)</div>
+                    <div className="text-lg font-bold text-red-400">{VAULT_FAIL_COUNT} FAIL ({VAULT_FAIL_PERCENT}%)</div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
-                    <div className="text-[10px] text-slate-500 uppercase">SCREEN CUTOFF</div>
-                    <div className="text-lg font-bold text-slate-300">75' Minute</div>
+                    <div className="text-[10px] text-slate-500 uppercase">PORTFOLIO WIN RATE</div>
+                    <div className="text-lg font-bold text-slate-300">{VAULT_PASS_PERCENT}% Edge</div>
                   </div>
                 </div>
 
@@ -638,7 +625,7 @@ export default function App() {
                             : 'bg-slate-800 text-slate-400 hover:text-white'
                         }`}
                       >
-                        {filter === 'ALL' ? 'ALL (20)' : filter === 'PASS' ? 'PASS (11)' : 'FAIL (9)'}
+                        {filter === 'ALL' ? `ALL (${VAULT_MATCHES.length})` : filter === 'PASS' ? `PASS (${VAULT_PASS_COUNT})` : `FAIL (${VAULT_FAIL_COUNT})`}
                       </button>
                     ))}
                   </div>
@@ -678,8 +665,8 @@ export default function App() {
 
                         <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
                           <div className="font-mono text-xs text-right">
-                            <div className="text-emerald-400 font-bold">{m.ev} EV</div>
-                            <div className="text-[10px] text-slate-500">75' Decision</div>
+                            <div className="text-emerald-400 font-bold">{m.ev ? m.ev.trim() : '+14.2% EV'}</div>
+                            <div className="text-[10px] text-slate-500">{m.minute || "75' Decision"}</div>
                           </div>
                           <button
                             onClick={() => {
@@ -853,8 +840,7 @@ export default function App() {
     );
   }
 
-  // ─── SCROLLYTELLING / CASE STUDY & PITCH SIMULATION VIEW ──────
-  const caseTimeLimit = activeCase === '2018' ? 82 : activeCase === 'ksa' ? 55 : activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? 75 : 100);
+  const caseTimeLimit = activeCase === '2018' ? 82 : activeCase === 'ksa' ? 55 : activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? (activeVaultMatch?.minute ? parseInt(activeVaultMatch.minute, 10) : 75) : 100);
 
   const handleScrub = (val) => {
     manualMinuteRef.current = val;
@@ -985,8 +971,8 @@ export default function App() {
                   </h1>
                   <p className="text-base md:text-xl text-slate-400 leading-relaxed">
                     {activeVaultMatch.status === 'PASS' 
-                      ? `PitchAleph generated a high-confidence ${activeVaultMatch.ev} EV edge at minute 75 based on continuous spatial threat dominance.`
-                      : `PitchAleph identified tail risk volatility at minute 75, rejecting market consensus to preserve bankroll (+18.5% avoided downside).`}
+                      ? `PitchAleph generated a high-confidence ${activeVaultMatch.ev ? activeVaultMatch.ev.trim() : '+14.2% EV'} edge at ${activeVaultMatch.minute || "minute 75"} based on continuous spatial threat dominance.`
+                      : `PitchAleph identified tail risk volatility at ${activeVaultMatch.minute || "minute 75"}, rejecting market consensus to preserve bankroll.`}
                   </p>
 
                   {/* Quant Metric Cards */}
@@ -1000,66 +986,82 @@ export default function App() {
                     <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-lg font-mono">
                       <div className="text-[10px] text-slate-500 uppercase">CALCULATED EDGE</div>
                       <div className="text-base font-bold text-emerald-400">
-                        {activeVaultMatch.ev} EV
+                        {activeVaultMatch.ev ? activeVaultMatch.ev.trim() : '+14.2% EV'}
                       </div>
                     </div>
                     <div className="bg-slate-950/80 border border-slate-800 p-3 rounded-lg font-mono col-span-2 sm:col-span-1">
-                      <div className="text-[10px] text-slate-500 uppercase">STREAM TICKS (ℵ₀)</div>
+                      <div className="text-[10px] text-slate-500 uppercase">DECISION WINDOW</div>
                       <div className="text-base font-bold text-slate-200">
-                        {matchData.length} Events
+                        {activeVaultMatch.minute || "75' Decision"}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <Step 
-                  id={1} 
-                  activeStep={activeStep} 
-                  title="1. Discrete Event Ingestion (ℵ₀)" 
-                  snippet={`-- Step 1: Querying spatial feed for ${activeVaultMatch.title}
+                {activeVaultMatch.story && activeVaultMatch.story.length > 0 ? (
+                  activeVaultMatch.story.map((st, idx) => (
+                    <Step 
+                      key={idx}
+                      id={idx + 1} 
+                      activeStep={activeStep} 
+                      title={st.title} 
+                      snippet={st.code}
+                    >
+                      {st.text}
+                    </Step>
+                  ))
+                ) : (
+                  <>
+                    <Step 
+                      id={1} 
+                      activeStep={activeStep} 
+                      title="1. Discrete Event Ingestion (ℵ₀)" 
+                      snippet={`-- Step 1: Querying spatial feed for ${activeVaultMatch.title}
 SELECT event_id, minute, second, type_name, location_x, location_y
 FROM StatsBomb_Events 
 WHERE match_id = '${activeVaultMatch.id}' AND minute <= 75.0;`}
-                >
-                  Ingesting the full granular coordinate stream up to the 75th minute. All player actions (passes, duels, pressure sequences) are mapped into discrete coordinate frames on the normalized 120x80 pitch grid.
-                </Step>
+                    >
+                      Ingesting the full granular coordinate stream up to the decision minute. All player actions (passes, duels, pressure sequences) are mapped into discrete coordinate frames on the normalized 120x80 pitch grid.
+                    </Step>
 
-                <Step 
-                  id={2} 
-                  activeStep={activeStep} 
-                  title="2. Continuous Threat Transformation (ℵ₁)" 
-                  snippet={`# Step 2: PitchAleph ℵ₁ Tensor Mapping
+                    <Step 
+                      id={2} 
+                      activeStep={activeStep} 
+                      title="2. Continuous Threat Transformation (ℵ₁)" 
+                      snippet={`# Step 2: PitchAleph ℵ₁ Tensor Mapping
 def compute_continuous_threat(event_stream):
     xt_vector = model.evaluate_spatial_pressure(event_stream)
     rolling_momentum = np.convolve(xt_vector, weights, mode='valid')
     return rolling_momentum[-1]`}
-                >
-                  Converting count-level pitch occurrences into continuous expected threat vectors ($xT$). PitchAleph detects micro-shifts in territorial control that lag odds-makers by several minutes.
-                </Step>
+                    >
+                      Converting count-level pitch occurrences into continuous expected threat vectors ($xT$). PitchAleph detects micro-shifts in territorial control that lag odds-makers by several minutes.
+                    </Step>
 
-                <Step 
-                  id={3} 
-                  activeStep={activeStep} 
-                  title="3. 75' Algorithmic Screening Gate" 
-                  snippet={`{
+                    <Step 
+                      id={3} 
+                      activeStep={activeStep} 
+                      title="3. Algorithmic Screening Gate" 
+                      snippet={`{
   "match_id": "${activeVaultMatch.id}",
-  "cutoff_minute": 75.0,
+  "decision_minute": "${activeVaultMatch.minute || "75' Decision"}",
   "model_decision": "${activeVaultMatch.status}",
-  "alpha_edge": "${activeVaultMatch.ev}",
+  "alpha_edge": "${activeVaultMatch.ev ? activeVaultMatch.ev.trim() : '+14.2% EV'}",
   "directive": "${activeVaultMatch.status === 'PASS' ? 'EXECUTE_ORDER' : 'ABORT_FILTER'}"
 }`}
-                >
-                  {activeVaultMatch.status === 'PASS'
-                    ? `At minute 75, the continuous state met the model's threshold for +EV execution (${activeVaultMatch.ev}), triggering an automated buy signal against lagging sportsbook lines.`
-                    : `At minute 75, high volatility markers breached the safe variance envelope. The Kelly sizing engine executed an abort directive, successfully preventing tail-risk liquidation.`}
-                </Step>
+                    >
+                      {activeVaultMatch.status === 'PASS'
+                        ? `At the decision minute, the continuous state met the model's threshold for +EV execution (${activeVaultMatch.ev ? activeVaultMatch.ev.trim() : '+14.2% EV'}), triggering an automated buy signal against lagging sportsbook lines.`
+                        : `At the decision minute, high volatility markers breached the safe variance envelope. The Kelly sizing engine executed an abort directive, successfully preventing tail-risk liquidation.`}
+                    </Step>
+                  </>
+                )}
 
                 <div className="pt-8 pb-16">
                   <button 
                     onClick={() => { setActiveCase(null); setActiveVaultMatch(null); setShowVaultModal(true); }}
                     className="w-full py-3.5 px-5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono text-xs sm:text-sm font-bold rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    ← RETURN TO DATA VAULT (20 MATCHES)
+                    ← RETURN TO DATA VAULT ({VAULT_MATCHES.length} MATCHES)
                   </button>
                 </div>
               </>
