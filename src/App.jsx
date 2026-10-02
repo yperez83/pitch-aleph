@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import VAULT_MATCHES from './vault_index.json';
+import CHART_DATA from './backtest_chart_data.json';
 
 const VAULT_PASS_COUNT = VAULT_MATCHES.filter(m => m.status === 'PASS').length;
 const VAULT_FAIL_COUNT = VAULT_MATCHES.filter(m => m.status === 'FAIL').length;
@@ -454,18 +456,46 @@ export default function App() {
               </ul>
             </div>
             
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 flex flex-col justify-center items-center text-center shadow-xl">
-              <div className="w-16 h-16 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 flex flex-col h-full min-h-[400px]">
+              <h4 className="text-xl font-bold text-white mb-2">Cumulative Bankroll (P&L)</h4>
+              <p className="text-slate-400 text-sm mb-6">Interactive execution ledger across 522 constrained market conditions.</p>
+              
+              <div className="flex-grow w-full h-full min-h-[280px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={CHART_DATA} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                    <XAxis 
+                      dataKey="trade" 
+                      stroke="#64748b" 
+                      tick={{fill: '#64748b', fontSize: 12}} 
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis 
+                      stroke="#64748b" 
+                      tick={{fill: '#64748b', fontSize: 12}}
+                      tickLine={false}
+                      axisLine={false}
+                      tickFormatter={(value) => `$${value / 1000}k`}
+                    />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px', color: '#f8fafc' }}
+                      itemStyle={{ color: '#34d399', fontWeight: 'bold' }}
+                      formatter={(value) => [`$${value.toLocaleString()}`, 'Bankroll']}
+                      labelStyle={{ color: '#64748b', marginBottom: '4px' }}
+                      labelFormatter={(label) => `Trade Execution #${label}`}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="bankroll" 
+                      stroke="#34d399" 
+                      strokeWidth={3}
+                      dot={false}
+                      activeDot={{ r: 6, fill: '#10b981', stroke: '#0f172a', strokeWidth: 2 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
-              <h4 className="text-xl font-bold text-white mb-2">BI Integration Ready</h4>
-              <p className="text-slate-400 text-sm mb-6 max-w-sm">The complete simulation ledger has been optimized and exported for external Business Intelligence visualization.</p>
-              <button 
-                onClick={() => alert("Looker Studio Dashboard integration payload ready. Check data lake exports.")}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-mono text-xs font-bold rounded-lg transition-all cursor-pointer shadow-lg shadow-blue-500/20"
-              >
-                VIEW LOOKER STUDIO DASHBOARD
-              </button>
             </div>
           </div>
         </div>

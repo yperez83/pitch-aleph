@@ -1,0 +1,2090 @@
+[
+  {
+    "trade": 1,
+    "bankroll": 9906
+  },
+  {
+    "trade": 2,
+    "bankroll": 9798
+  },
+  {
+    "trade": 3,
+    "bankroll": 9688
+  },
+  {
+    "trade": 4,
+    "bankroll": 9596
+  },
+  {
+    "trade": 5,
+    "bankroll": 9819
+  },
+  {
+    "trade": 6,
+    "bankroll": 9713
+  },
+  {
+    "trade": 7,
+    "bankroll": 9577
+  },
+  {
+    "trade": 8,
+    "bankroll": 9834
+  },
+  {
+    "trade": 9,
+    "bankroll": 9730
+  },
+  {
+    "trade": 10,
+    "bankroll": 9598
+  },
+  {
+    "trade": 11,
+    "bankroll": 9485
+  },
+  {
+    "trade": 12,
+    "bankroll": 9349
+  },
+  {
+    "trade": 13,
+    "bankroll": 9213
+  },
+  {
+    "trade": 14,
+    "bankroll": 9375
+  },
+  {
+    "trade": 15,
+    "bankroll": 9645
+  },
+  {
+    "trade": 16,
+    "bankroll": 9520
+  },
+  {
+    "trade": 17,
+    "bankroll": 9430
+  },
+  {
+    "trade": 18,
+    "bankroll": 9298
+  },
+  {
+    "trade": 19,
+    "bankroll": 9174
+  },
+  {
+    "trade": 20,
+    "bankroll": 9043
+  },
+  {
+    "trade": 21,
+    "bankroll": 9315
+  },
+  {
+    "trade": 22,
+    "bankroll": 9564
+  },
+  {
+    "trade": 23,
+    "bankroll": 9799
+  },
+  {
+    "trade": 24,
+    "bankroll": 9687
+  },
+  {
+    "trade": 25,
+    "bankroll": 9552
+  },
+  {
+    "trade": 26,
+    "bankroll": 9439
+  },
+  {
+    "trade": 27,
+    "bankroll": 9339
+  },
+  {
+    "trade": 28,
+    "bankroll": 9242
+  },
+  {
+    "trade": 29,
+    "bankroll": 9113
+  },
+  {
+    "trade": 30,
+    "bankroll": 9392
+  },
+  {
+    "trade": 31,
+    "bankroll": 9276
+  },
+  {
+    "trade": 32,
+    "bankroll": 9159
+  },
+  {
+    "trade": 33,
+    "bankroll": 9027
+  },
+  {
+    "trade": 34,
+    "bankroll": 9242
+  },
+  {
+    "trade": 35,
+    "bankroll": 9465
+  },
+  {
+    "trade": 36,
+    "bankroll": 9370
+  },
+  {
+    "trade": 37,
+    "bankroll": 9567
+  },
+  {
+    "trade": 38,
+    "bankroll": 9459
+  },
+  {
+    "trade": 39,
+    "bankroll": 9330
+  },
+  {
+    "trade": 40,
+    "bankroll": 9194
+  },
+  {
+    "trade": 41,
+    "bankroll": 9095
+  },
+  {
+    "trade": 42,
+    "bankroll": 8959
+  },
+  {
+    "trade": 43,
+    "bankroll": 9336
+  },
+  {
+    "trade": 44,
+    "bankroll": 9238
+  },
+  {
+    "trade": 45,
+    "bankroll": 9100
+  },
+  {
+    "trade": 46,
+    "bankroll": 9328
+  },
+  {
+    "trade": 47,
+    "bankroll": 9226
+  },
+  {
+    "trade": 48,
+    "bankroll": 9128
+  },
+  {
+    "trade": 49,
+    "bankroll": 9359
+  },
+  {
+    "trade": 50,
+    "bankroll": 9251
+  },
+  {
+    "trade": 51,
+    "bankroll": 9125
+  },
+  {
+    "trade": 52,
+    "bankroll": 9325
+  },
+  {
+    "trade": 53,
+    "bankroll": 9546
+  },
+  {
+    "trade": 54,
+    "bankroll": 9452
+  },
+  {
+    "trade": 55,
+    "bankroll": 9652
+  },
+  {
+    "trade": 56,
+    "bankroll": 9853
+  },
+  {
+    "trade": 57,
+    "bankroll": 10079
+  },
+  {
+    "trade": 58,
+    "bankroll": 9942
+  },
+  {
+    "trade": 59,
+    "bankroll": 10127
+  },
+  {
+    "trade": 60,
+    "bankroll": 10034
+  },
+  {
+    "trade": 61,
+    "bankroll": 9914
+  },
+  {
+    "trade": 62,
+    "bankroll": 10097
+  },
+  {
+    "trade": 63,
+    "bankroll": 9979
+  },
+  {
+    "trade": 64,
+    "bankroll": 9842
+  },
+  {
+    "trade": 65,
+    "bankroll": 9738
+  },
+  {
+    "trade": 66,
+    "bankroll": 9618
+  },
+  {
+    "trade": 67,
+    "bankroll": 9872
+  },
+  {
+    "trade": 68,
+    "bankroll": 10082
+  },
+  {
+    "trade": 69,
+    "bankroll": 9978
+  },
+  {
+    "trade": 70,
+    "bankroll": 10180
+  },
+  {
+    "trade": 71,
+    "bankroll": 10047
+  },
+  {
+    "trade": 72,
+    "bankroll": 10234
+  },
+  {
+    "trade": 73,
+    "bankroll": 10125
+  },
+  {
+    "trade": 74,
+    "bankroll": 9992
+  },
+  {
+    "trade": 75,
+    "bankroll": 9871
+  },
+  {
+    "trade": 76,
+    "bankroll": 9768
+  },
+  {
+    "trade": 77,
+    "bankroll": 10021
+  },
+  {
+    "trade": 78,
+    "bankroll": 10360
+  },
+  {
+    "trade": 79,
+    "bankroll": 10238
+  },
+  {
+    "trade": 80,
+    "bankroll": 10452
+  },
+  {
+    "trade": 81,
+    "bankroll": 10355
+  },
+  {
+    "trade": 82,
+    "bankroll": 10254
+  },
+  {
+    "trade": 83,
+    "bankroll": 10127
+  },
+  {
+    "trade": 84,
+    "bankroll": 10011
+  },
+  {
+    "trade": 85,
+    "bankroll": 9886
+  },
+  {
+    "trade": 86,
+    "bankroll": 10057
+  },
+  {
+    "trade": 87,
+    "bankroll": 9936
+  },
+  {
+    "trade": 88,
+    "bankroll": 9845
+  },
+  {
+    "trade": 89,
+    "bankroll": 9724
+  },
+  {
+    "trade": 90,
+    "bankroll": 9614
+  },
+  {
+    "trade": 91,
+    "bankroll": 9802
+  },
+  {
+    "trade": 92,
+    "bankroll": 9689
+  },
+  {
+    "trade": 93,
+    "bankroll": 9553
+  },
+  {
+    "trade": 94,
+    "bankroll": 9727
+  },
+  {
+    "trade": 95,
+    "bankroll": 9591
+  },
+  {
+    "trade": 96,
+    "bankroll": 9760
+  },
+  {
+    "trade": 97,
+    "bankroll": 10088
+  },
+  {
+    "trade": 98,
+    "bankroll": 10269
+  },
+  {
+    "trade": 99,
+    "bankroll": 10175
+  },
+  {
+    "trade": 100,
+    "bankroll": 10046
+  },
+  {
+    "trade": 101,
+    "bankroll": 10225
+  },
+  {
+    "trade": 102,
+    "bankroll": 10425
+  },
+  {
+    "trade": 103,
+    "bankroll": 10741
+  },
+  {
+    "trade": 104,
+    "bankroll": 10602
+  },
+  {
+    "trade": 105,
+    "bankroll": 10470
+  },
+  {
+    "trade": 106,
+    "bankroll": 10351
+  },
+  {
+    "trade": 107,
+    "bankroll": 10226
+  },
+  {
+    "trade": 108,
+    "bankroll": 10499
+  },
+  {
+    "trade": 109,
+    "bankroll": 10367
+  },
+  {
+    "trade": 110,
+    "bankroll": 10502
+  },
+  {
+    "trade": 111,
+    "bankroll": 10834
+  },
+  {
+    "trade": 112,
+    "bankroll": 11058
+  },
+  {
+    "trade": 113,
+    "bankroll": 10948
+  },
+  {
+    "trade": 114,
+    "bankroll": 10835
+  },
+  {
+    "trade": 115,
+    "bankroll": 11074
+  },
+  {
+    "trade": 116,
+    "bankroll": 11326
+  },
+  {
+    "trade": 117,
+    "bankroll": 11219
+  },
+  {
+    "trade": 118,
+    "bankroll": 11086
+  },
+  {
+    "trade": 119,
+    "bankroll": 11311
+  },
+  {
+    "trade": 120,
+    "bankroll": 11584
+  },
+  {
+    "trade": 121,
+    "bankroll": 11487
+  },
+  {
+    "trade": 122,
+    "bankroll": 11362
+  },
+  {
+    "trade": 123,
+    "bankroll": 11601
+  },
+  {
+    "trade": 124,
+    "bankroll": 11469
+  },
+  {
+    "trade": 125,
+    "bankroll": 11331
+  },
+  {
+    "trade": 126,
+    "bankroll": 11233
+  },
+  {
+    "trade": 127,
+    "bankroll": 11126
+  },
+  {
+    "trade": 128,
+    "bankroll": 11364
+  },
+  {
+    "trade": 129,
+    "bankroll": 11244
+  },
+  {
+    "trade": 130,
+    "bankroll": 11554
+  },
+  {
+    "trade": 131,
+    "bankroll": 11461
+  },
+  {
+    "trade": 132,
+    "bankroll": 11627
+  },
+  {
+    "trade": 133,
+    "bankroll": 11821
+  },
+  {
+    "trade": 134,
+    "bankroll": 11722
+  },
+  {
+    "trade": 135,
+    "bankroll": 11877
+  },
+  {
+    "trade": 136,
+    "bankroll": 11780
+  },
+  {
+    "trade": 137,
+    "bankroll": 12090
+  },
+  {
+    "trade": 138,
+    "bankroll": 11958
+  },
+  {
+    "trade": 139,
+    "bankroll": 11861
+  },
+  {
+    "trade": 140,
+    "bankroll": 12061
+  },
+  {
+    "trade": 141,
+    "bankroll": 12355
+  },
+  {
+    "trade": 142,
+    "bankroll": 12263
+  },
+  {
+    "trade": 143,
+    "bankroll": 12456
+  },
+  {
+    "trade": 144,
+    "bankroll": 12346
+  },
+  {
+    "trade": 145,
+    "bankroll": 12224
+  },
+  {
+    "trade": 146,
+    "bankroll": 12403
+  },
+  {
+    "trade": 147,
+    "bankroll": 12281
+  },
+  {
+    "trade": 148,
+    "bankroll": 12549
+  },
+  {
+    "trade": 149,
+    "bankroll": 12430
+  },
+  {
+    "trade": 150,
+    "bankroll": 12314
+  },
+  {
+    "trade": 151,
+    "bankroll": 12203
+  },
+  {
+    "trade": 152,
+    "bankroll": 12069
+  },
+  {
+    "trade": 153,
+    "bankroll": 11948
+  },
+  {
+    "trade": 154,
+    "bankroll": 11817
+  },
+  {
+    "trade": 155,
+    "bankroll": 12087
+  },
+  {
+    "trade": 156,
+    "bankroll": 12261
+  },
+  {
+    "trade": 157,
+    "bankroll": 12121
+  },
+  {
+    "trade": 158,
+    "bankroll": 12273
+  },
+  {
+    "trade": 159,
+    "bankroll": 12179
+  },
+  {
+    "trade": 160,
+    "bankroll": 12560
+  },
+  {
+    "trade": 161,
+    "bankroll": 12470
+  },
+  {
+    "trade": 162,
+    "bankroll": 12634
+  },
+  {
+    "trade": 163,
+    "bankroll": 12535
+  },
+  {
+    "trade": 164,
+    "bankroll": 12398
+  },
+  {
+    "trade": 165,
+    "bankroll": 12578
+  },
+  {
+    "trade": 166,
+    "bankroll": 12443
+  },
+  {
+    "trade": 167,
+    "bankroll": 12303
+  },
+  {
+    "trade": 168,
+    "bankroll": 12589
+  },
+  {
+    "trade": 169,
+    "bankroll": 12761
+  },
+  {
+    "trade": 170,
+    "bankroll": 12625
+  },
+  {
+    "trade": 171,
+    "bankroll": 12513
+  },
+  {
+    "trade": 172,
+    "bankroll": 12390
+  },
+  {
+    "trade": 173,
+    "bankroll": 12260
+  },
+  {
+    "trade": 174,
+    "bankroll": 12442
+  },
+  {
+    "trade": 175,
+    "bankroll": 12728
+  },
+  {
+    "trade": 176,
+    "bankroll": 12600
+  },
+  {
+    "trade": 177,
+    "bankroll": 12492
+  },
+  {
+    "trade": 178,
+    "bankroll": 12398
+  },
+  {
+    "trade": 179,
+    "bankroll": 12292
+  },
+  {
+    "trade": 180,
+    "bankroll": 12157
+  },
+  {
+    "trade": 181,
+    "bankroll": 12019
+  },
+  {
+    "trade": 182,
+    "bankroll": 12249
+  },
+  {
+    "trade": 183,
+    "bankroll": 12158
+  },
+  {
+    "trade": 184,
+    "bankroll": 12037
+  },
+  {
+    "trade": 185,
+    "bankroll": 12304
+  },
+  {
+    "trade": 186,
+    "bankroll": 12204
+  },
+  {
+    "trade": 187,
+    "bankroll": 12428
+  },
+  {
+    "trade": 188,
+    "bankroll": 12309
+  },
+  {
+    "trade": 189,
+    "bankroll": 12182
+  },
+  {
+    "trade": 190,
+    "bankroll": 12064
+  },
+  {
+    "trade": 191,
+    "bankroll": 11962
+  },
+  {
+    "trade": 192,
+    "bankroll": 11837
+  },
+  {
+    "trade": 193,
+    "bankroll": 11719
+  },
+  {
+    "trade": 194,
+    "bankroll": 11602
+  },
+  {
+    "trade": 195,
+    "bankroll": 11471
+  },
+  {
+    "trade": 196,
+    "bankroll": 11816
+  },
+  {
+    "trade": 197,
+    "bankroll": 12083
+  },
+  {
+    "trade": 198,
+    "bankroll": 12308
+  },
+  {
+    "trade": 199,
+    "bankroll": 12617
+  },
+  {
+    "trade": 200,
+    "bankroll": 12796
+  },
+  {
+    "trade": 201,
+    "bankroll": 12669
+  },
+  {
+    "trade": 202,
+    "bankroll": 12898
+  },
+  {
+    "trade": 203,
+    "bankroll": 12776
+  },
+  {
+    "trade": 204,
+    "bankroll": 12638
+  },
+  {
+    "trade": 205,
+    "bankroll": 12965
+  },
+  {
+    "trade": 206,
+    "bankroll": 12843
+  },
+  {
+    "trade": 207,
+    "bankroll": 13073
+  },
+  {
+    "trade": 208,
+    "bankroll": 12965
+  },
+  {
+    "trade": 209,
+    "bankroll": 12849
+  },
+  {
+    "trade": 210,
+    "bankroll": 13156
+  },
+  {
+    "trade": 211,
+    "bankroll": 13016
+  },
+  {
+    "trade": 212,
+    "bankroll": 12878
+  },
+  {
+    "trade": 213,
+    "bankroll": 12755
+  },
+  {
+    "trade": 214,
+    "bankroll": 12640
+  },
+  {
+    "trade": 215,
+    "bankroll": 12508
+  },
+  {
+    "trade": 216,
+    "bankroll": 12673
+  },
+  {
+    "trade": 217,
+    "bankroll": 12536
+  },
+  {
+    "trade": 218,
+    "bankroll": 12439
+  },
+  {
+    "trade": 219,
+    "bankroll": 12335
+  },
+  {
+    "trade": 220,
+    "bankroll": 12589
+  },
+  {
+    "trade": 221,
+    "bankroll": 12482
+  },
+  {
+    "trade": 222,
+    "bankroll": 12692
+  },
+  {
+    "trade": 223,
+    "bankroll": 12595
+  },
+  {
+    "trade": 224,
+    "bankroll": 12964
+  },
+  {
+    "trade": 225,
+    "bankroll": 12874
+  },
+  {
+    "trade": 226,
+    "bankroll": 13032
+  },
+  {
+    "trade": 227,
+    "bankroll": 13294
+  },
+  {
+    "trade": 228,
+    "bankroll": 13201
+  },
+  {
+    "trade": 229,
+    "bankroll": 13433
+  },
+  {
+    "trade": 230,
+    "bankroll": 13630
+  },
+  {
+    "trade": 231,
+    "bankroll": 13836
+  },
+  {
+    "trade": 232,
+    "bankroll": 14186
+  },
+  {
+    "trade": 233,
+    "bankroll": 14505
+  },
+  {
+    "trade": 234,
+    "bankroll": 14370
+  },
+  {
+    "trade": 235,
+    "bankroll": 14267
+  },
+  {
+    "trade": 236,
+    "bankroll": 14130
+  },
+  {
+    "trade": 237,
+    "bankroll": 14350
+  },
+  {
+    "trade": 238,
+    "bankroll": 14247
+  },
+  {
+    "trade": 239,
+    "bankroll": 14451
+  },
+  {
+    "trade": 240,
+    "bankroll": 14604
+  },
+  {
+    "trade": 241,
+    "bankroll": 14502
+  },
+  {
+    "trade": 242,
+    "bankroll": 14769
+  },
+  {
+    "trade": 243,
+    "bankroll": 14648
+  },
+  {
+    "trade": 244,
+    "bankroll": 14531
+  },
+  {
+    "trade": 245,
+    "bankroll": 14395
+  },
+  {
+    "trade": 246,
+    "bankroll": 14276
+  },
+  {
+    "trade": 247,
+    "bankroll": 14479
+  },
+  {
+    "trade": 248,
+    "bankroll": 14366
+  },
+  {
+    "trade": 249,
+    "bankroll": 14236
+  },
+  {
+    "trade": 250,
+    "bankroll": 14120
+  },
+  {
+    "trade": 251,
+    "bankroll": 14328
+  },
+  {
+    "trade": 252,
+    "bankroll": 14620
+  },
+  {
+    "trade": 253,
+    "bankroll": 14521
+  },
+  {
+    "trade": 254,
+    "bankroll": 14410
+  },
+  {
+    "trade": 255,
+    "bankroll": 14618
+  },
+  {
+    "trade": 256,
+    "bankroll": 14507
+  },
+  {
+    "trade": 257,
+    "bankroll": 14411
+  },
+  {
+    "trade": 258,
+    "bankroll": 14272
+  },
+  {
+    "trade": 259,
+    "bankroll": 14519
+  },
+  {
+    "trade": 260,
+    "bankroll": 14405
+  },
+  {
+    "trade": 261,
+    "bankroll": 14288
+  },
+  {
+    "trade": 262,
+    "bankroll": 14168
+  },
+  {
+    "trade": 263,
+    "bankroll": 14416
+  },
+  {
+    "trade": 264,
+    "bankroll": 14747
+  },
+  {
+    "trade": 265,
+    "bankroll": 14640
+  },
+  {
+    "trade": 266,
+    "bankroll": 14863
+  },
+  {
+    "trade": 267,
+    "bankroll": 15031
+  },
+  {
+    "trade": 268,
+    "bankroll": 14907
+  },
+  {
+    "trade": 269,
+    "bankroll": 14811
+  },
+  {
+    "trade": 270,
+    "bankroll": 14694
+  },
+  {
+    "trade": 271,
+    "bankroll": 14957
+  },
+  {
+    "trade": 272,
+    "bankroll": 15241
+  },
+  {
+    "trade": 273,
+    "bankroll": 15455
+  },
+  {
+    "trade": 274,
+    "bankroll": 15352
+  },
+  {
+    "trade": 275,
+    "bankroll": 15239
+  },
+  {
+    "trade": 276,
+    "bankroll": 15396
+  },
+  {
+    "trade": 277,
+    "bankroll": 15546
+  },
+  {
+    "trade": 278,
+    "bankroll": 15444
+  },
+  {
+    "trade": 279,
+    "bankroll": 15339
+  },
+  {
+    "trade": 280,
+    "bankroll": 15623
+  },
+  {
+    "trade": 281,
+    "bankroll": 15946
+  },
+  {
+    "trade": 282,
+    "bankroll": 16246
+  },
+  {
+    "trade": 283,
+    "bankroll": 16449
+  },
+  {
+    "trade": 284,
+    "bankroll": 16316
+  },
+  {
+    "trade": 285,
+    "bankroll": 16615
+  },
+  {
+    "trade": 286,
+    "bankroll": 16783
+  },
+  {
+    "trade": 287,
+    "bankroll": 17072
+  },
+  {
+    "trade": 288,
+    "bankroll": 17317
+  },
+  {
+    "trade": 289,
+    "bankroll": 17221
+  },
+  {
+    "trade": 290,
+    "bankroll": 17435
+  },
+  {
+    "trade": 291,
+    "bankroll": 17329
+  },
+  {
+    "trade": 292,
+    "bankroll": 17234
+  },
+  {
+    "trade": 293,
+    "bankroll": 17100
+  },
+  {
+    "trade": 294,
+    "bankroll": 16980
+  },
+  {
+    "trade": 295,
+    "bankroll": 16873
+  },
+  {
+    "trade": 296,
+    "bankroll": 16780
+  },
+  {
+    "trade": 297,
+    "bankroll": 16999
+  },
+  {
+    "trade": 298,
+    "bankroll": 17169
+  },
+  {
+    "trade": 299,
+    "bankroll": 17319
+  },
+  {
+    "trade": 300,
+    "bankroll": 17224
+  },
+  {
+    "trade": 301,
+    "bankroll": 17507
+  },
+  {
+    "trade": 302,
+    "bankroll": 17374
+  },
+  {
+    "trade": 303,
+    "bankroll": 17511
+  },
+  {
+    "trade": 304,
+    "bankroll": 17381
+  },
+  {
+    "trade": 305,
+    "bankroll": 17277
+  },
+  {
+    "trade": 306,
+    "bankroll": 17427
+  },
+  {
+    "trade": 307,
+    "bankroll": 17309
+  },
+  {
+    "trade": 308,
+    "bankroll": 17214
+  },
+  {
+    "trade": 309,
+    "bankroll": 17469
+  },
+  {
+    "trade": 310,
+    "bankroll": 17338
+  },
+  {
+    "trade": 311,
+    "bankroll": 17211
+  },
+  {
+    "trade": 312,
+    "bankroll": 17073
+  },
+  {
+    "trade": 313,
+    "bankroll": 16956
+  },
+  {
+    "trade": 314,
+    "bankroll": 16840
+  },
+  {
+    "trade": 315,
+    "bankroll": 16706
+  },
+  {
+    "trade": 316,
+    "bankroll": 16580
+  },
+  {
+    "trade": 317,
+    "bankroll": 16464
+  },
+  {
+    "trade": 318,
+    "bankroll": 16346
+  },
+  {
+    "trade": 319,
+    "bankroll": 16219
+  },
+  {
+    "trade": 320,
+    "bankroll": 16120
+  },
+  {
+    "trade": 321,
+    "bankroll": 16287
+  },
+  {
+    "trade": 322,
+    "bankroll": 16150
+  },
+  {
+    "trade": 323,
+    "bankroll": 16025
+  },
+  {
+    "trade": 324,
+    "bankroll": 15932
+  },
+  {
+    "trade": 325,
+    "bankroll": 15833
+  },
+  {
+    "trade": 326,
+    "bankroll": 15973
+  },
+  {
+    "trade": 327,
+    "bankroll": 15865
+  },
+  {
+    "trade": 328,
+    "bankroll": 15738
+  },
+  {
+    "trade": 329,
+    "bankroll": 15608
+  },
+  {
+    "trade": 330,
+    "bankroll": 15476
+  },
+  {
+    "trade": 331,
+    "bankroll": 15374
+  },
+  {
+    "trade": 332,
+    "bankroll": 15546
+  },
+  {
+    "trade": 333,
+    "bankroll": 15407
+  },
+  {
+    "trade": 334,
+    "bankroll": 15614
+  },
+  {
+    "trade": 335,
+    "bankroll": 15507
+  },
+  {
+    "trade": 336,
+    "bankroll": 15416
+  },
+  {
+    "trade": 337,
+    "bankroll": 15302
+  },
+  {
+    "trade": 338,
+    "bankroll": 15634
+  },
+  {
+    "trade": 339,
+    "bankroll": 15521
+  },
+  {
+    "trade": 340,
+    "bankroll": 15398
+  },
+  {
+    "trade": 341,
+    "bankroll": 15286
+  },
+  {
+    "trade": 342,
+    "bankroll": 15153
+  },
+  {
+    "trade": 343,
+    "bankroll": 15041
+  },
+  {
+    "trade": 344,
+    "bankroll": 15282
+  },
+  {
+    "trade": 345,
+    "bankroll": 15166
+  },
+  {
+    "trade": 346,
+    "bankroll": 15476
+  },
+  {
+    "trade": 347,
+    "bankroll": 15370
+  },
+  {
+    "trade": 348,
+    "bankroll": 15676
+  },
+  {
+    "trade": 349,
+    "bankroll": 15918
+  },
+  {
+    "trade": 350,
+    "bankroll": 16253
+  },
+  {
+    "trade": 351,
+    "bankroll": 16128
+  },
+  {
+    "trade": 352,
+    "bankroll": 16349
+  },
+  {
+    "trade": 353,
+    "bankroll": 16228
+  },
+  {
+    "trade": 354,
+    "bankroll": 16389
+  },
+  {
+    "trade": 355,
+    "bankroll": 16296
+  },
+  {
+    "trade": 356,
+    "bankroll": 16519
+  },
+  {
+    "trade": 357,
+    "bankroll": 16406
+  },
+  {
+    "trade": 358,
+    "bankroll": 16268
+  },
+  {
+    "trade": 359,
+    "bankroll": 16149
+  },
+  {
+    "trade": 360,
+    "bankroll": 16049
+  },
+  {
+    "trade": 361,
+    "bankroll": 16277
+  },
+  {
+    "trade": 362,
+    "bankroll": 16516
+  },
+  {
+    "trade": 363,
+    "bankroll": 16393
+  },
+  {
+    "trade": 364,
+    "bankroll": 16645
+  },
+  {
+    "trade": 365,
+    "bankroll": 16936
+  },
+  {
+    "trade": 366,
+    "bankroll": 16814
+  },
+  {
+    "trade": 367,
+    "bankroll": 17009
+  },
+  {
+    "trade": 368,
+    "bankroll": 17256
+  },
+  {
+    "trade": 369,
+    "bankroll": 17512
+  },
+  {
+    "trade": 370,
+    "bankroll": 17784
+  },
+  {
+    "trade": 371,
+    "bankroll": 17649
+  },
+  {
+    "trade": 372,
+    "bankroll": 17517
+  },
+  {
+    "trade": 373,
+    "bankroll": 17406
+  },
+  {
+    "trade": 374,
+    "bankroll": 17652
+  },
+  {
+    "trade": 375,
+    "bankroll": 17561
+  },
+  {
+    "trade": 376,
+    "bankroll": 17779
+  },
+  {
+    "trade": 377,
+    "bankroll": 17652
+  },
+  {
+    "trade": 378,
+    "bankroll": 17517
+  },
+  {
+    "trade": 379,
+    "bankroll": 17424
+  },
+  {
+    "trade": 380,
+    "bankroll": 17705
+  },
+  {
+    "trade": 381,
+    "bankroll": 17944
+  },
+  {
+    "trade": 382,
+    "bankroll": 17827
+  },
+  {
+    "trade": 383,
+    "bankroll": 17695
+  },
+  {
+    "trade": 384,
+    "bankroll": 17569
+  },
+  {
+    "trade": 385,
+    "bankroll": 17859
+  },
+  {
+    "trade": 386,
+    "bankroll": 17767
+  },
+  {
+    "trade": 387,
+    "bankroll": 17636
+  },
+  {
+    "trade": 388,
+    "bankroll": 17536
+  },
+  {
+    "trade": 389,
+    "bankroll": 17418
+  },
+  {
+    "trade": 390,
+    "bankroll": 17671
+  },
+  {
+    "trade": 391,
+    "bankroll": 17878
+  },
+  {
+    "trade": 392,
+    "bankroll": 18139
+  },
+  {
+    "trade": 393,
+    "bankroll": 18036
+  },
+  {
+    "trade": 394,
+    "bankroll": 17907
+  },
+  {
+    "trade": 395,
+    "bankroll": 18150
+  },
+  {
+    "trade": 396,
+    "bankroll": 18017
+  },
+  {
+    "trade": 397,
+    "bankroll": 18343
+  },
+  {
+    "trade": 398,
+    "bankroll": 18526
+  },
+  {
+    "trade": 399,
+    "bankroll": 18877
+  },
+  {
+    "trade": 400,
+    "bankroll": 18786
+  },
+  {
+    "trade": 401,
+    "bankroll": 19048
+  },
+  {
+    "trade": 402,
+    "bankroll": 18931
+  },
+  {
+    "trade": 403,
+    "bankroll": 18832
+  },
+  {
+    "trade": 404,
+    "bankroll": 18706
+  },
+  {
+    "trade": 405,
+    "bankroll": 18903
+  },
+  {
+    "trade": 406,
+    "bankroll": 18781
+  },
+  {
+    "trade": 407,
+    "bankroll": 18662
+  },
+  {
+    "trade": 408,
+    "bankroll": 18535
+  },
+  {
+    "trade": 409,
+    "bankroll": 18871
+  },
+  {
+    "trade": 410,
+    "bankroll": 18752
+  },
+  {
+    "trade": 411,
+    "bankroll": 18633
+  },
+  {
+    "trade": 412,
+    "bankroll": 18540
+  },
+  {
+    "trade": 413,
+    "bankroll": 18401
+  },
+  {
+    "trade": 414,
+    "bankroll": 18610
+  },
+  {
+    "trade": 415,
+    "bankroll": 18501
+  },
+  {
+    "trade": 416,
+    "bankroll": 18375
+  },
+  {
+    "trade": 417,
+    "bankroll": 18270
+  },
+  {
+    "trade": 418,
+    "bankroll": 18170
+  },
+  {
+    "trade": 419,
+    "bankroll": 18034
+  },
+  {
+    "trade": 420,
+    "bankroll": 17932
+  },
+  {
+    "trade": 421,
+    "bankroll": 17799
+  },
+  {
+    "trade": 422,
+    "bankroll": 17689
+  },
+  {
+    "trade": 423,
+    "bankroll": 17566
+  },
+  {
+    "trade": 424,
+    "bankroll": 17854
+  },
+  {
+    "trade": 425,
+    "bankroll": 18118
+  },
+  {
+    "trade": 426,
+    "bankroll": 18413
+  },
+  {
+    "trade": 427,
+    "bankroll": 18276
+  },
+  {
+    "trade": 428,
+    "bankroll": 18141
+  },
+  {
+    "trade": 429,
+    "bankroll": 18344
+  },
+  {
+    "trade": 430,
+    "bankroll": 18685
+  },
+  {
+    "trade": 431,
+    "bankroll": 18825
+  },
+  {
+    "trade": 432,
+    "bankroll": 18693
+  },
+  {
+    "trade": 433,
+    "bankroll": 18578
+  },
+  {
+    "trade": 434,
+    "bankroll": 18482
+  },
+  {
+    "trade": 435,
+    "bankroll": 18360
+  },
+  {
+    "trade": 436,
+    "bankroll": 18603
+  },
+  {
+    "trade": 437,
+    "bankroll": 18473
+  },
+  {
+    "trade": 438,
+    "bankroll": 18336
+  },
+  {
+    "trade": 439,
+    "bankroll": 18230
+  },
+  {
+    "trade": 440,
+    "bankroll": 18540
+  },
+  {
+    "trade": 441,
+    "bankroll": 18783
+  },
+  {
+    "trade": 442,
+    "bankroll": 18658
+  },
+  {
+    "trade": 443,
+    "bankroll": 18531
+  },
+  {
+    "trade": 444,
+    "bankroll": 18838
+  },
+  {
+    "trade": 445,
+    "bankroll": 18999
+  },
+  {
+    "trade": 446,
+    "bankroll": 19196
+  },
+  {
+    "trade": 447,
+    "bankroll": 19078
+  },
+  {
+    "trade": 448,
+    "bankroll": 19259
+  },
+  {
+    "trade": 449,
+    "bankroll": 19509
+  },
+  {
+    "trade": 450,
+    "bankroll": 19391
+  },
+  {
+    "trade": 451,
+    "bankroll": 19706
+  },
+  {
+    "trade": 452,
+    "bankroll": 20016
+  },
+  {
+    "trade": 453,
+    "bankroll": 19915
+  },
+  {
+    "trade": 454,
+    "bankroll": 20119
+  },
+  {
+    "trade": 455,
+    "bankroll": 19992
+  },
+  {
+    "trade": 456,
+    "bankroll": 19900
+  },
+  {
+    "trade": 457,
+    "bankroll": 20187
+  },
+  {
+    "trade": 458,
+    "bankroll": 20085
+  },
+  {
+    "trade": 459,
+    "bankroll": 19977
+  },
+  {
+    "trade": 460,
+    "bankroll": 19877
+  },
+  {
+    "trade": 461,
+    "bankroll": 19753
+  },
+  {
+    "trade": 462,
+    "bankroll": 19647
+  },
+  {
+    "trade": 463,
+    "bankroll": 19508
+  },
+  {
+    "trade": 464,
+    "bankroll": 19382
+  },
+  {
+    "trade": 465,
+    "bankroll": 19288
+  },
+  {
+    "trade": 466,
+    "bankroll": 19533
+  },
+  {
+    "trade": 467,
+    "bankroll": 19443
+  },
+  {
+    "trade": 468,
+    "bankroll": 19320
+  },
+  {
+    "trade": 469,
+    "bankroll": 19550
+  },
+  {
+    "trade": 470,
+    "bankroll": 19439
+  },
+  {
+    "trade": 471,
+    "bankroll": 19674
+  },
+  {
+    "trade": 472,
+    "bankroll": 19583
+  },
+  {
+    "trade": 473,
+    "bankroll": 19459
+  },
+  {
+    "trade": 474,
+    "bankroll": 19671
+  },
+  {
+    "trade": 475,
+    "bankroll": 19905
+  },
+  {
+    "trade": 476,
+    "bankroll": 20152
+  },
+  {
+    "trade": 477,
+    "bankroll": 20057
+  },
+  {
+    "trade": 478,
+    "bankroll": 20429
+  },
+  {
+    "trade": 479,
+    "bankroll": 20291
+  },
+  {
+    "trade": 480,
+    "bankroll": 20200
+  },
+  {
+    "trade": 481,
+    "bankroll": 20421
+  },
+  {
+    "trade": 482,
+    "bankroll": 20330
+  },
+  {
+    "trade": 483,
+    "bankroll": 20574
+  },
+  {
+    "trade": 484,
+    "bankroll": 20738
+  },
+  {
+    "trade": 485,
+    "bankroll": 20610
+  },
+  {
+    "trade": 486,
+    "bankroll": 20845
+  },
+  {
+    "trade": 487,
+    "bankroll": 21106
+  },
+  {
+    "trade": 488,
+    "bankroll": 20976
+  },
+  {
+    "trade": 489,
+    "bankroll": 21150
+  },
+  {
+    "trade": 490,
+    "bankroll": 21057
+  },
+  {
+    "trade": 491,
+    "bankroll": 20926
+  },
+  {
+    "trade": 492,
+    "bankroll": 21162
+  },
+  {
+    "trade": 493,
+    "bankroll": 21064
+  },
+  {
+    "trade": 494,
+    "bankroll": 20947
+  },
+  {
+    "trade": 495,
+    "bankroll": 20838
+  },
+  {
+    "trade": 496,
+    "bankroll": 20721
+  },
+  {
+    "trade": 497,
+    "bankroll": 20947
+  },
+  {
+    "trade": 498,
+    "bankroll": 20839
+  },
+  {
+    "trade": 499,
+    "bankroll": 20704
+  },
+  {
+    "trade": 500,
+    "bankroll": 20930
+  },
+  {
+    "trade": 501,
+    "bankroll": 20796
+  },
+  {
+    "trade": 502,
+    "bankroll": 21124
+  },
+  {
+    "trade": 503,
+    "bankroll": 20987
+  },
+  {
+    "trade": 504,
+    "bankroll": 20895
+  },
+  {
+    "trade": 505,
+    "bankroll": 21144
+  },
+  {
+    "trade": 506,
+    "bankroll": 21340
+  },
+  {
+    "trade": 507,
+    "bankroll": 21201
+  },
+  {
+    "trade": 508,
+    "bankroll": 21111
+  },
+  {
+    "trade": 509,
+    "bankroll": 20990
+  },
+  {
+    "trade": 510,
+    "bankroll": 20861
+  },
+  {
+    "trade": 511,
+    "bankroll": 21136
+  },
+  {
+    "trade": 512,
+    "bankroll": 21030
+  },
+  {
+    "trade": 513,
+    "bankroll": 20930
+  },
+  {
+    "trade": 514,
+    "bankroll": 20820
+  },
+  {
+    "trade": 515,
+    "bankroll": 20991
+  },
+  {
+    "trade": 516,
+    "bankroll": 20863
+  },
+  {
+    "trade": 517,
+    "bankroll": 20757
+  },
+  {
+    "trade": 518,
+    "bankroll": 20620
+  },
+  {
+    "trade": 519,
+    "bankroll": 20515
+  },
+  {
+    "trade": 520,
+    "bankroll": 20395
+  },
+  {
+    "trade": 521,
+    "bankroll": 20265
+  },
+  {
+    "trade": 522,
+    "bankroll": 20152
+  }
+]
