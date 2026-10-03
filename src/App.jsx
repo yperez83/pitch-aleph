@@ -153,7 +153,7 @@ const CORE_CALCULATOR_DATA = {
 
 // Generate 20 tailored bet simulator cases from the Data Vault sample with 3-letter codes
 const VAULT_CALCULATOR_DATA = Object.fromEntries(
-  VAULT_MATCHES.map(match => {
+  VAULT_MATCHES.map((match, idx) => {
     const isPass = match.status === 'PASS';
     const shortVs = toShortTitle(match.title);
     const cleanEv = match.ev ? match.ev.trim() : '+14.2% EV';
@@ -189,9 +189,19 @@ const VAULT_CALCULATOR_DATA = Object.fromEntries(
         marketOdds: marketOddsStr,
         pitchAlephProb: pitchAlephProbStr,
         ev: cleanEv.includes('EV') ? cleanEv : `${cleanEv} EV`,
-        publicResult: stake => isPass
-          ? `Wins $${Math.round(stake * oddsMultiplier).toLocaleString()} (Uncalibrated manual ticket; negative EV expectancy long-term)`
-          : `Loses full $${stake.toLocaleString()} (Public forced heavy favorite at ${marketOddsStr.split(' ')[0]} that collapsed to defensive variance)`,
+        publicResult: stake => {
+          if (!isPass) {
+            return `Loses full $${stake.toLocaleString()} (Public forced heavy favorite at ${marketOddsStr.split(' ')[0]} that collapsed to defensive variance)`;
+          }
+          const scenario = idx % 3;
+          if (scenario === 0) {
+            return `Loses full $${stake.toLocaleString()} (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)`;
+          }
+          if (scenario === 1) {
+            return `Wins $${Math.round(stake * oddsMultiplier).toLocaleString()} (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)`;
+          }
+          return `Wins $${Math.round(stake * oddsMultiplier * 0.6).toLocaleString()} (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)`;
+        },
         pitchAlephResult: stake => isPass
           ? `Wins $${Math.round(stake * oddsMultiplier).toLocaleString()} (PitchAleph algorithmic buy order at ${minuteLabel} captured ${cleanEv} edge)`
           : `Loses $0 / Hedged (Kelly risk filter blocked position at ${minuteLabel}, preventing catastrophic loss)`
