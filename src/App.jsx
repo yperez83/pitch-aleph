@@ -157,21 +157,43 @@ const VAULT_CALCULATOR_DATA = Object.fromEntries(
     const isPass = match.status === 'PASS';
     const shortVs = toShortTitle(match.title);
     const cleanEv = match.ev ? match.ev.trim() : '+14.2% EV';
+    const evVal = parseFloat(match.ev) || 14.2;
     const minuteLabel = match.minute || "75' Decision";
+
+    let marketOddsStr;
+    let pitchAlephProbStr;
+    let oddsMultiplier;
+
+    if (isPass) {
+      const americanOdds = Math.round(105 + evVal * 2.5);
+      oddsMultiplier = americanOdds / 100;
+      const impliedProb = Number(((100 / (americanOdds + 100)) * 100).toFixed(1));
+      const pitchProb = Number((impliedProb + evVal).toFixed(1));
+      marketOddsStr = `+${americanOdds} (${impliedProb.toFixed(1)}% implied)`;
+      pitchAlephProbStr = `${pitchProb.toFixed(1)}%`;
+    } else {
+      const americanOdds = Math.round(160 + evVal * 4);
+      oddsMultiplier = Number((100 / americanOdds).toFixed(2));
+      const impliedProb = Number(((americanOdds / (americanOdds + 100)) * 100).toFixed(1));
+      const pitchProb = Number((impliedProb - evVal).toFixed(1));
+      marketOddsStr = `-${americanOdds} (${impliedProb.toFixed(1)}% implied)`;
+      pitchAlephProbStr = `${pitchProb.toFixed(1)}%`;
+    }
+
     return [
       'vault_' + match.id,
       {
         title: `${shortVs} (${match.status})`,
         fullTitle: `${match.title} (${match.status}) — ${match.date} (${minuteLabel})`,
         category: isPass ? 'Vault Pass' : 'Vault Fail',
-        marketOdds: isPass ? '+135 (42.5% implied)' : '-210 (67.7% implied)',
-        pitchAlephProb: isPass ? '56.7%' : '49.2%',
+        marketOdds: marketOddsStr,
+        pitchAlephProb: pitchAlephProbStr,
         ev: cleanEv.includes('EV') ? cleanEv : `${cleanEv} EV`,
         publicResult: stake => isPass
-          ? `Wins $${Math.round(stake * 1.35).toLocaleString()} (Uncalibrated manual ticket; negative EV expectancy long-term)`
-          : `Loses full $${stake.toLocaleString()} (Public forced heavy favorite that collapsed to defensive variance)`,
+          ? `Wins $${Math.round(stake * oddsMultiplier).toLocaleString()} (Uncalibrated manual ticket; negative EV expectancy long-term)`
+          : `Loses full $${stake.toLocaleString()} (Public forced heavy favorite at ${marketOddsStr.split(' ')[0]} that collapsed to defensive variance)`,
         pitchAlephResult: stake => isPass
-          ? `Wins $${Math.round(stake * 1.35).toLocaleString()} (PitchAleph algorithmic buy order at ${minuteLabel} captured ${cleanEv} edge)`
+          ? `Wins $${Math.round(stake * oddsMultiplier).toLocaleString()} (PitchAleph algorithmic buy order at ${minuteLabel} captured ${cleanEv} edge)`
           : `Loses $0 / Hedged (Kelly risk filter blocked position at ${minuteLabel}, preventing catastrophic loss)`
       }
     ];
