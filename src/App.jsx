@@ -889,13 +889,39 @@ export default function App() {
             <div className="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8">
               {/* Controls */}
               <div className="md:col-span-1">
-                <label className="block text-emerald-400 font-mono text-xs sm:text-sm mb-3">
-                  BASE STAKE: ${calcStake.toLocaleString()}
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="base-stake-input" className="text-emerald-400 font-mono text-xs sm:text-sm font-bold">
+                    BASE STAKE:
+                  </label>
+                  <div className="relative flex items-center">
+                    <span className="absolute left-2.5 text-emerald-400 font-mono text-sm pointer-events-none font-bold">$</span>
+                    <input
+                      id="base-stake-input"
+                      type="number"
+                      min="1"
+                      max="1000000"
+                      step="50"
+                      value={calcStake}
+                      onChange={(e) => {
+                        const val = Number(e.target.value);
+                        if (!isNaN(val) && val >= 0) {
+                          setCalcStake(val);
+                        }
+                      }}
+                      className="w-32 bg-slate-950/80 border border-slate-700 focus:border-emerald-500 rounded-lg pl-7 pr-2.5 py-1 text-right text-white font-mono text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
+                      placeholder="1,000"
+                    />
+                  </div>
+                </div>
                 <input
-                  type="range" min="100" max="10000" step="100" value={calcStake}
+                  type="range"
+                  min="100"
+                  max="10000"
+                  step="100"
+                  value={Math.min(Math.max(calcStake, 100), 10000)}
                   onChange={(e) => setCalcStake(Number(e.target.value))}
                   className="w-full accent-emerald-500 mb-6 cursor-pointer"
+                  aria-label="Base stake range slider"
                 />
 
                 {/* Filter tabs for 24 scenarios */}
