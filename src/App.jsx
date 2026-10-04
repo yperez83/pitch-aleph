@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import VAULT_MATCHES from './vault_index.json';
 import CHART_DATA from './backtest_chart_data.json';
 
@@ -282,6 +282,78 @@ export default function App() {
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
   const [vaultFilter, setVaultFilter] = useState('ALL');
+
+  // Interactive zoom state for 1,000-Match Backtest Chart
+  const [chartZoomLeft, setChartZoomLeft] = useState('dataMin');
+  const [chartZoomRight, setChartZoomRight] = useState('dataMax');
+  const [chartRefLeft, setChartRefLeft] = useState('');
+  const [chartRefRight, setChartRefRight] = useState('');
+
+  const handleChartZoom = useCallback(() => {
+    if (chartRefLeft === chartRefRight || chartRefRight === '') {
+      setChartRefLeft('');
+      setChartRefRight('');
+      return;
+    }
+    let left = chartRefLeft;
+    let right = chartRefRight;
+    if (typeof left === 'number' && typeof right === 'number') {
+      if (left > right) [left, right] = [right, left];
+      // Require at least 5 points to zoom
+      if (right - left < 5) {
+        setChartRefLeft('');
+        setChartRefRight('');
+        return;
+      }
+    }
+    setChartRefLeft('');
+    setChartRefRight('');
+    setChartZoomLeft(left);
+    setChartZoomRight(right);
+  }, [chartRefLeft, chartRefRight]);
+
+  const handleChartZoomReset = useCallback(() => {
+    setChartZoomLeft('dataMin');
+    setChartZoomRight('dataMax');
+    setChartRefLeft('');
+    setChartRefRight('');
+  }, []);
+
+  const handleChartStepZoom = useCallback((direction) => {
+    const curLeft = chartZoomLeft === 'dataMin' ? 1 : chartZoomLeft;
+    const curRight = chartZoomRight === 'dataMax' ? 522 : chartZoomRight;
+    const span = curRight - curLeft;
+    const center = curLeft + span / 2;
+
+    if (direction === 'in') {
+      const nextSpan = Math.max(20, span * 0.6);
+      const nextLeft = Math.max(1, Math.round(center - nextSpan / 2));
+      const nextRight = Math.min(522, Math.round(center + nextSpan / 2));
+      setChartZoomLeft(nextLeft);
+      setChartZoomRight(nextRight);
+    } else {
+      const nextSpan = span * 1.5;
+      const nextLeft = Math.max(1, Math.round(center - nextSpan / 2));
+      const nextRight = Math.min(522, Math.round(center + nextSpan / 2));
+      if (nextLeft <= 1 && nextRight >= 522) {
+        handleChartZoomReset();
+      } else {
+        setChartZoomLeft(nextLeft);
+        setChartZoomRight(nextRight);
+      }
+    }
+  }, [chartZoomLeft, chartZoomRight, handleChartZoomReset]);
+
+  const handleChartPresetZoom = useCallback((start, end) => {
+    if (start === 'dataMin' && end === 'dataMax') {
+      handleChartZoomReset();
+    } else {
+      setChartZoomLeft(start);
+      setChartZoomRight(end);
+    }
+  }, [handleChartZoomReset]);
+
+  const isChartZoomed = chartZoomLeft !== 'dataMin' || chartZoomRight !== 'dataMax';
 
   // Subpage browser navigation helpers
   const navigate = useCallback((targetHash) => {
@@ -596,13 +668,83 @@ export default function App() {
               </ul>
             </div>
             
-            <div className="bg-slate-900 border border-slate-800 rounded-lg p-6 flex flex-col h-full min-h-[400px]">
-              <h4 className="text-xl font-bold text-white mb-2">Cumulative Bankroll (P&L)</h4>
-              <p className="text-slate-400 text-sm mb-6">Interactive execution ledger across 522 constrained market conditions.</p>
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 sm:p-6 flex flex-col h-full min-h-[460px]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
+                <div>
+                  <h4 className="text-xl font-bold text-white">Cumulative Bankroll (P&L)</h4>
+                  <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
+                    Interactive execution ledger across 522 constrained market conditions.
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 self-start sm:self-auto">
+                  <button
+                    onClick={() => handleChartStepZoom('in')}
+                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer"
+                    title="Zoom in (+)"
+                  >
+                    + Zoom In
+                  </button>
+                  <button
+                    onClick={() => handleChartStepZoom('out')}
+                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer"
+                    title="Zoom out (-)"
+                  >
+                    - Zoom Out
+                  </button>
+                  {isChartZoomed && (
+                    <button
+                      onClick={handleChartZoomReset}
+                      className="px-2.5 py-1 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 rounded border border-emerald-500/40 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
+                      title="Reset view to full range"
+                    >
+                      <span>↺</span>
+                      <span>Reset</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Zoom presets & hint bar */}
+              <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-3 text-xs font-mono">
+                <div className="flex items-center gap-1">
+                  <span className="text-slate-500 mr-1 text-[11px]">RANGE:</span>
+                  {[
+                    { label: 'ALL (522)', start: 'dataMin', end: 'dataMax' },
+                    { label: 'T1–150', start: 1, end: 150 },
+                    { label: 'T150–350', start: 150, end: 350 },
+                    { label: 'T350–522', start: 350, end: 522 }
+                  ].map(p => {
+                    const isActive = chartZoomLeft === p.start && chartZoomRight === p.end;
+                    return (
+                      <button
+                        key={p.label}
+                        onClick={() => handleChartPresetZoom(p.start, p.end)}
+                        className={`px-2 py-0.5 rounded text-[11px] transition-colors cursor-pointer ${
+                          isActive
+                            ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40 font-bold'
+                            : 'bg-slate-950/70 text-slate-400 hover:text-slate-200 border border-slate-800'
+                        }`}
+                      >
+                        {p.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <span className="text-emerald-400/80 font-semibold">Tip:</span>
+                  <span>Click and drag on chart to zoom custom region</span>
+                </div>
+              </div>
               
-              <div className="flex-grow w-full h-full min-h-[280px]">
+              <div className="flex-grow w-full h-full min-h-[300px] select-none">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={CHART_DATA} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                  <LineChart
+                    data={CHART_DATA}
+                    margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+                    onMouseDown={(e) => e && e.activeLabel && setChartRefLeft(e.activeLabel)}
+                    onMouseMove={(e) => chartRefLeft && e && e.activeLabel && setChartRefRight(e.activeLabel)}
+                    onMouseUp={handleChartZoom}
+                  >
                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                     <XAxis 
                       dataKey="trade" 
@@ -610,6 +752,9 @@ export default function App() {
                       tick={{fill: '#64748b', fontSize: 12}} 
                       tickLine={false}
                       axisLine={false}
+                      domain={[chartZoomLeft, chartZoomRight]}
+                      type="number"
+                      allowDataOverflow={true}
                     />
                     <YAxis 
                       stroke="#64748b" 
@@ -617,6 +762,8 @@ export default function App() {
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(value) => `$${value / 1000}k`}
+                      domain={['auto', 'auto']}
+                      allowDataOverflow={true}
                     />
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px', color: '#f8fafc' }}
@@ -632,7 +779,17 @@ export default function App() {
                       strokeWidth={3}
                       dot={false}
                       activeDot={{ r: 6, fill: '#10b981', stroke: '#0f172a', strokeWidth: 2 }}
+                      isAnimationActive={false}
                     />
+                    {chartRefLeft && chartRefRight && (
+                      <ReferenceArea
+                        x1={chartRefLeft}
+                        x2={chartRefRight}
+                        strokeOpacity={0.3}
+                        fill="#38bdf8"
+                        fillOpacity={0.2}
+                      />
+                    )}
                   </LineChart>
                 </ResponsiveContainer>
               </div>
