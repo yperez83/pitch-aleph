@@ -233,8 +233,42 @@ const Step = ({ id, activeStep, title, snippet, children }) => {
   );
 };
 
+const parseRoute = (hashString) => {
+  const clean = (hashString || '').replace(/^#\/?/, '').trim();
+  if (!clean) return { activeCase: null, showVaultModal: false, activeVaultMatch: null };
+  if (clean === 'vault') return { activeCase: null, showVaultModal: true, activeVaultMatch: null };
+  if (clean === '1k_sim' || clean === 'simulation/1k' || clean === '1k') {
+    return { activeCase: '1k_sim', showVaultModal: false, activeVaultMatch: null };
+  }
+  if (clean.startsWith('vault/')) {
+    const id = clean.replace('vault/', '');
+    const match = VAULT_MATCHES.find(m => m.id === id);
+    return { activeCase: 'vault_' + id, showVaultModal: false, activeVaultMatch: match || null };
+  }
+  if (clean.startsWith('case/vault_')) {
+    const id = clean.replace('case/vault_', '');
+    const match = VAULT_MATCHES.find(m => m.id === id);
+    return { activeCase: 'vault_' + id, showVaultModal: false, activeVaultMatch: match || null };
+  }
+  if (clean.startsWith('case/')) {
+    const c = clean.replace('case/', '');
+    return { activeCase: c, showVaultModal: false, activeVaultMatch: null };
+  }
+  if (clean.startsWith('match/')) {
+    const c = clean.replace('match/', '');
+    return { activeCase: c, showVaultModal: false, activeVaultMatch: null };
+  }
+  if (['2022', '2018', 'ksa', 'ned'].includes(clean)) {
+    return { activeCase: clean, showVaultModal: false, activeVaultMatch: null };
+  }
+  return { activeCase: null, showVaultModal: false, activeVaultMatch: null };
+};
+
 export default function App() {
-  const [activeCase, setActiveCase] = useState(null);
+  const initialRoute = parseRoute(typeof window !== 'undefined' ? window.location.hash : '');
+  const [activeCase, setActiveCase] = useState(initialRoute.activeCase);
+  const [showVaultModal, setShowVaultModal] = useState(initialRoute.showVaultModal);
+  const [activeVaultMatch, setActiveVaultMatch] = useState(initialRoute.activeVaultMatch);
   const [activeStep, setActiveStep] = useState(1);
   const [matchData, setMatchData] = useState([]);
   
@@ -247,9 +281,83 @@ export default function App() {
   const canvasRef = useRef(null);
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
-  const [showVaultModal, setShowVaultModal] = useState(false);
-  const [activeVaultMatch, setActiveVaultMatch] = useState(null);
   const [vaultFilter, setVaultFilter] = useState('ALL');
+
+  // Subpage browser navigation helpers
+  const navigate = useCallback((targetHash) => {
+    const currentHash = window.location.hash || '#/';
+    if (currentHash === targetHash) return;
+    const currentDepth = window.history.state?.depth ?? 0;
+    window.history.pushState({ app: 'pitch-aleph', depth: currentDepth + 1 }, '', targetHash);
+    const route = parseRoute(targetHash);
+    setActiveCase(route.activeCase);
+    setShowVaultModal(route.showVaultModal);
+    setActiveVaultMatch(route.activeVaultMatch);
+    setActiveStep(1);
+    setShowCanvas(false);
+    setManualMinute(null);
+    manualMinuteRef.current = null;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
+  const navigateBack = useCallback((fallbackHash = '#/') => {
+    const currentDepth = window.history.state?.depth ?? 0;
+    if (currentDepth > 0) {
+      window.history.back();
+    } else {
+      window.history.replaceState({ app: 'pitch-aleph', depth: 0 }, '', fallbackHash);
+      const route = parseRoute(fallbackHash);
+      setActiveCase(route.activeCase);
+      setShowVaultModal(route.showVaultModal);
+      setActiveVaultMatch(route.activeVaultMatch);
+      setActiveStep(1);
+      setShowCanvas(false);
+      setManualMinute(null);
+      manualMinuteRef.current = null;
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, []);
+
+  // Listen to popstate and hashchange to enable browser back / forward navigation
+  useEffect(() => {
+    if (!window.history.state?.app) {
+      window.history.replaceState(
+        { app: 'pitch-aleph', depth: 0 },
+        '',
+        window.location.hash || '#/'
+      );
+    }
+
+    const handleLocationChange = () => {
+      const route = parseRoute(window.location.hash);
+      setActiveCase(route.activeCase);
+      setShowVaultModal(route.showVaultModal);
+      setActiveVaultMatch(route.activeVaultMatch);
+      setActiveStep(1);
+      setShowCanvas(false);
+      setManualMinute(null);
+      manualMinuteRef.current = null;
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
+  }, []);
+
+  // Keyboard navigation: Escape key closes modal and navigates back
+  useEffect(() => {
+    if (!showVaultModal) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        navigateBack('#/');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showVaultModal, navigateBack]);
 
   useEffect(() => {
     if (!activeCase || activeCase === '1k_sim' || activeCase === 'vault') return;
@@ -422,7 +530,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-slate-950 font-sans text-white relative p-6 sm:p-8 md:p-16 overflow-y-auto">
         <button
-          onClick={() => setActiveCase(null)}
+          onClick={() => navigateBack('#/')}
           className="fixed top-6 left-6 z-50 text-slate-400 hover:text-white font-mono text-sm flex items-center gap-2 bg-slate-900/90 px-4 py-2 rounded-full border border-slate-700 transition-all cursor-pointer backdrop-blur-sm"
         >
           ← RETURN TO TERMINAL
@@ -567,19 +675,19 @@ export default function App() {
 
           {/* Scenario buttons — 1 col on xs, 2 col on sm+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-6">
-            <button onClick={() => { setActiveCase('2022'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all cursor-pointer">
+            <button onClick={() => navigate('#/case/2022')} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all cursor-pointer">
               <span className="text-xs text-slate-400 mb-1">TEST 01: ALPHA GENERATION</span>
               <span className="text-base sm:text-lg">ARG vs FRA (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('2018'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all cursor-pointer">
+            <button onClick={() => navigate('#/case/2018')} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all cursor-pointer">
               <span className="text-xs text-slate-400 mb-1">TEST 02: TAIL RISK / VARIANCE</span>
               <span className="text-base sm:text-lg">GER vs KOR (2018)</span>
             </button>
-            <button onClick={() => { setActiveCase('ksa'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all cursor-pointer">
+            <button onClick={() => navigate('#/case/ksa')} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all cursor-pointer">
               <span className="text-xs text-slate-400 mb-1">TEST 03: UNDERDOG INEFFICIENCY</span>
               <span className="text-base sm:text-lg">KSA vs ARG (2022)</span>
             </button>
-            <button onClick={() => { setActiveCase('ned'); setActiveVaultMatch(null); setActiveStep(1); setShowCanvas(false); setManualMinute(null); }} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all cursor-pointer">
+            <button onClick={() => navigate('#/case/ned')} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all cursor-pointer">
               <span className="text-xs text-slate-400 mb-1">TEST 04: DYNAMIC HEDGING</span>
               <span className="text-base sm:text-lg">NED vs ARG (2022)</span>
             </button>
@@ -592,7 +700,7 @@ export default function App() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button 
-                onClick={() => setShowVaultModal(true)} 
+                onClick={() => navigate('#/vault')} 
                 className="px-6 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
               >
                 <div className="flex items-center justify-between w-full mb-1">
@@ -608,7 +716,7 @@ export default function App() {
               </button>
 
               <button 
-                onClick={() => setActiveCase('1k_sim')} 
+                onClick={() => navigate('#/1k_sim')} 
                 className="px-6 py-4 bg-blue-950/20 border border-blue-500/40 hover:border-blue-400 text-blue-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(59,130,246,0.1)] hover:shadow-[0_0_35px_rgba(59,130,246,0.2)] cursor-pointer"
               >
                 <div className="flex items-center justify-between w-full mb-1">
@@ -627,7 +735,14 @@ export default function App() {
 
           {/* ─── DATA VAULT MODAL ─── */}
           {(showVaultModal || activeCase === 'vault') && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+            <div 
+              onClick={(e) => {
+                if (e.target === e.currentTarget) {
+                  navigateBack('#/');
+                }
+              }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto"
+            >
               <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-5 sm:p-8 text-left my-auto max-h-[90vh] flex flex-col">
                 {/* Modal Header */}
                 <div className="flex items-start justify-between pb-5 border-b border-slate-800">
@@ -647,7 +762,7 @@ export default function App() {
                     </p>
                   </div>
                   <button
-                    onClick={() => { setShowVaultModal(false); if (activeCase === 'vault') setActiveCase(null); }}
+                    onClick={() => navigateBack('#/')}
                     className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 font-mono text-lg transition-colors cursor-pointer"
                   >
                     ✕
@@ -731,14 +846,7 @@ export default function App() {
                             <div className="text-[10px] text-slate-500">{m.minute || "75' Decision"}</div>
                           </div>
                           <button
-                            onClick={() => {
-                              setShowVaultModal(false);
-                              setActiveVaultMatch(m);
-                              setActiveCase('vault_' + m.id);
-                              setActiveStep(1);
-                              setShowCanvas(false);
-                              setManualMinute(null);
-                            }}
+                            onClick={() => navigate('#/vault/' + m.id)}
                             className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>Simulate</span>
@@ -753,7 +861,7 @@ export default function App() {
                 <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-500">
                   <span>Discrete spatial event streams powered by StatsBomb Open Data</span>
                   <button
-                    onClick={() => { setShowVaultModal(false); if (activeCase === 'vault') setActiveCase(null); }}
+                    onClick={() => navigateBack('#/')}
                     className="text-slate-400 hover:text-white cursor-pointer"
                   >
                     Close
@@ -921,14 +1029,14 @@ export default function App() {
       <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-slate-800 bg-slate-900/95 backdrop-blur-sm z-50 sticky top-0">
         <div className="flex items-center gap-2">
           <button
-            onClick={() => { setActiveCase(null); setActiveVaultMatch(null); }}
+            onClick={() => navigateBack('#/')}
             className="text-slate-400 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 transition-all cursor-pointer"
           >
             ← TERMINAL
           </button>
           {activeCase?.startsWith('vault_') && (
             <button
-              onClick={() => { setActiveCase(null); setActiveVaultMatch(null); setShowVaultModal(true); }}
+              onClick={() => navigateBack('#/vault')}
               className="text-emerald-400 hover:text-emerald-300 font-mono text-xs sm:text-sm flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/30 transition-all cursor-pointer"
             >
               ← DATA VAULT
@@ -1120,7 +1228,7 @@ def compute_continuous_threat(event_stream):
 
                 <div className="pt-8 pb-16">
                   <button 
-                    onClick={() => { setActiveCase(null); setActiveVaultMatch(null); setShowVaultModal(true); }}
+                    onClick={() => navigateBack('#/vault')}
                     className="w-full py-3.5 px-5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono text-xs sm:text-sm font-bold rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     ← RETURN TO DATA VAULT ({VAULT_MATCHES.length} MATCHES)
