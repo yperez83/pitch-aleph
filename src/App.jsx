@@ -980,49 +980,49 @@ export default function App() {
               </div>
 
               {/* Results panel */}
-              <div className="md:col-span-2 bg-slate-950 border border-slate-800 rounded-xl p-5 md:p-6 font-mono flex flex-col justify-between">
+              <div className="md:col-span-2 w-full min-w-0 bg-slate-950 border border-slate-800 rounded-xl p-5 md:p-6 font-mono flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
-                    <span className="text-sm font-bold text-white">
+                  <div className="flex items-center justify-between gap-3 border-b border-slate-800 pb-3 mb-5 min-h-[44px]">
+                    <span className="text-sm font-bold text-white truncate" title={CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title}>
                       {CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
                     </span>
-                    <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                    <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 shrink-0 whitespace-nowrap">
                       EV: {CALCULATOR_DATA[calcCase]?.ev}
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60">
+                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60 min-w-0">
                       <div className="text-xs text-slate-500 mb-1">MARKET ODDS</div>
-                      <div className="text-sm md:text-lg text-slate-300 font-bold">
+                      <div className="text-sm md:text-lg text-slate-300 font-bold truncate">
                         {CALCULATOR_DATA[calcCase]?.marketOdds}
                       </div>
                     </div>
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60">
+                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60 min-w-0">
                       <div className="text-xs text-slate-500 mb-1">PITCHALEPH TRUE PROB</div>
-                      <div className="text-sm md:text-lg text-emerald-400 font-bold">
+                      <div className="text-sm md:text-lg text-emerald-400 font-bold truncate">
                         {CALCULATOR_DATA[calcCase]?.pitchAlephProb}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-red-950/20 border border-red-500/20 p-4 rounded-lg">
-                    <div className="text-xs text-red-400 font-bold mb-2 flex items-center gap-1.5">
+                <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                  <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-4 rounded-lg flex flex-col min-h-[140px] sm:min-h-[150px]">
+                    <div className="text-xs text-red-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <span>⚠️</span>
                       <span>PUBLIC BETTOR OUTCOME</span>
                     </div>
-                    <div className="text-xs md:text-sm text-red-300 leading-relaxed">
+                    <div className="text-xs md:text-sm text-red-300 leading-relaxed break-words overflow-y-auto">
                       {CALCULATOR_DATA[calcCase]?.publicResult(calcStake)}
                     </div>
                   </div>
-                  <div className="bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg">
-                    <div className="text-xs text-emerald-400 font-bold mb-2 flex items-center gap-1.5">
+                  <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg flex flex-col min-h-[140px] sm:min-h-[150px]">
+                    <div className="text-xs text-emerald-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <span>⚡</span>
                       <span>PITCHALEPH ENGINE OUTCOME</span>
                     </div>
-                    <div className="text-xs md:text-sm text-emerald-300 leading-relaxed">
+                    <div className="text-xs md:text-sm text-emerald-300 leading-relaxed break-words overflow-y-auto">
                       {CALCULATOR_DATA[calcCase]?.pitchAlephResult(calcStake)}
                     </div>
                   </div>
