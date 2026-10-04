@@ -355,13 +355,8 @@ export default function App() {
 
   const isChartZoomed = chartZoomLeft !== 'dataMin' || chartZoomRight !== 'dataMax';
 
-  // Subpage browser navigation helpers
-  const navigate = useCallback((targetHash) => {
-    const currentHash = window.location.hash || '#/';
-    if (currentHash === targetHash) return;
-    const currentDepth = window.history.state?.depth ?? 0;
-    window.history.pushState({ app: 'pitch-aleph', depth: currentDepth + 1 }, '', targetHash);
-    const route = parseRoute(targetHash);
+  // Apply route object to React state
+  const applyRoute = useCallback((route) => {
     setActiveCase(route.activeCase);
     setShowVaultModal(route.showVaultModal);
     setActiveVaultMatch(route.activeVaultMatch);
@@ -372,23 +367,24 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
+  // Subpage browser navigation helpers
+  const navigate = useCallback((targetHash) => {
+    const currentHash = window.location.hash || '#/';
+    if (currentHash === targetHash) return;
+    const currentDepth = window.history.state?.depth ?? 0;
+    window.history.pushState({ app: 'pitch-aleph', depth: currentDepth + 1 }, '', targetHash);
+    applyRoute(parseRoute(targetHash));
+  }, [applyRoute]);
+
   const navigateBack = useCallback((fallbackHash = '#/') => {
     const currentDepth = window.history.state?.depth ?? 0;
     if (currentDepth > 0) {
       window.history.back();
     } else {
       window.history.replaceState({ app: 'pitch-aleph', depth: 0 }, '', fallbackHash);
-      const route = parseRoute(fallbackHash);
-      setActiveCase(route.activeCase);
-      setShowVaultModal(route.showVaultModal);
-      setActiveVaultMatch(route.activeVaultMatch);
-      setActiveStep(1);
-      setShowCanvas(false);
-      setManualMinute(null);
-      manualMinuteRef.current = null;
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      applyRoute(parseRoute(fallbackHash));
     }
-  }, []);
+  }, [applyRoute]);
 
   // Listen to popstate and hashchange to enable browser back / forward navigation
   useEffect(() => {
@@ -401,14 +397,7 @@ export default function App() {
     }
 
     const handleLocationChange = () => {
-      const route = parseRoute(window.location.hash);
-      setActiveCase(route.activeCase);
-      setShowVaultModal(route.showVaultModal);
-      setActiveVaultMatch(route.activeVaultMatch);
-      setActiveStep(1);
-      setShowCanvas(false);
-      setManualMinute(null);
-      manualMinuteRef.current = null;
+      applyRoute(parseRoute(window.location.hash));
     };
 
     window.addEventListener('popstate', handleLocationChange);
@@ -417,7 +406,7 @@ export default function App() {
       window.removeEventListener('popstate', handleLocationChange);
       window.removeEventListener('hashchange', handleLocationChange);
     };
-  }, []);
+  }, [applyRoute]);
 
   // Keyboard navigation: Escape key closes modal and navigates back
   useEffect(() => {
@@ -442,10 +431,18 @@ export default function App() {
       'ned': '/match_data_ned.json'
     };
     const targetFile = files[activeCase] || `/${activeCase}.json`;
-    fetch(targetFile)
+    const controller = new AbortController();
+
+    fetch(targetFile, { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => setMatchData(data))
-      .catch((err) => console.error("Data missing.", err));
+      .catch((err) => {
+        if (err.name !== 'AbortError') {
+          console.error("Data missing.", err);
+        }
+      });
+
+    return () => controller.abort();
   }, [activeCase]);
   
   useEffect(() => {
@@ -489,7 +486,10 @@ export default function App() {
     let time = 0;
 
     const render = () => {
-      const isFrozen = activeStep === 4 && !activeCase?.startsWith('vault_');
+      const isLastStep = activeCase?.startsWith('vault_')
+        ? activeStep === (activeVaultMatch?.story?.length || 3)
+        : activeStep === 4;
+      const isFrozen = isLastStep;
       // Only auto-advance when not frozen and user hasn't grabbed the scrubber
       if (!isFrozen && manualMinuteRef.current === null) { time += 0.05; }
 
