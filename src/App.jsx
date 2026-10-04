@@ -827,7 +827,7 @@ export default function App() {
             The <span className="line-through decoration-red-500 decoration-3 sm:decoration-4 text-slate-400">House</span> <span className="text-emerald-400">Math</span> Always Wins.
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-3xl px-2 leading-relaxed font-normal">
-            Turn sports into a science. Our proprietary model was trained on millions of data points to reveal the hidden edge in every game. Steadily multiply your bankroll through consistent, data-backed decisions.
+            Turn sports into a science. Our proprietary model is trained and updated on millions of data points to reveal the hidden edge in every game. Steadily multiply your bankroll through consistent, data-backed decisions.
           </p>
           <div className="mb-6 md:mb-8 flex items-center gap-2">
             <span className="text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2">
