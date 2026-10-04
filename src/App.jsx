@@ -823,12 +823,18 @@ export default function App() {
               className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full shadow-[0_0_60px_rgba(16,185,129,0.25)] border border-emerald-500/30 relative z-10"
             />
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-3 md:mb-4 text-white">
-            Pitch<span className="text-emerald-400">Aleph</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 md:mb-6 text-white leading-tight">
+            The <span className="line-through decoration-red-500 decoration-3 sm:decoration-4 text-slate-400">House</span> <span className="text-emerald-400">Math</span> Always Wins.
           </h1>
-          <p className="text-sm sm:text-base md:text-xl text-slate-400 mb-8 md:mb-12 max-w-2xl px-2">
-            A quantitative sports simulation. Mapping ℵ₀ discrete spatial data to predict ℵ₁ continuous market states. Select a backtest scenario to launch the engine.
+          <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-3xl px-2 leading-relaxed font-normal">
+            Turn sports into a science. Our proprietary model was trained on millions of data points to reveal the hidden edge in every game. Steadily multiply your bankroll through consistent, data-backed decisions.
           </p>
+          <div className="mb-6 md:mb-8 flex items-center gap-2">
+            <span className="text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Launch Your Secret Weapon
+            </span>
+          </div>
 
           {/* Scenario buttons — 1 col on xs, 2 col on sm+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-6">
