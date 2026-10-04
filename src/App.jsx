@@ -1008,21 +1008,21 @@ export default function App() {
                 </div>
 
                 <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                  <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-4 rounded-lg flex flex-col min-h-[140px] sm:min-h-[150px]">
+                  <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-red-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <span>⚠️</span>
                       <span>PUBLIC BETTOR OUTCOME</span>
                     </div>
-                    <div className="text-xs md:text-sm text-red-300 leading-relaxed break-words overflow-y-auto">
+                    <div className="flex-1 overflow-y-auto pr-1 text-xs md:text-sm text-red-300 leading-relaxed break-words">
                       {CALCULATOR_DATA[calcCase]?.publicResult(calcStake)}
                     </div>
                   </div>
-                  <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg flex flex-col min-h-[140px] sm:min-h-[150px]">
+                  <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-emerald-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <span>⚡</span>
                       <span>PITCHALEPH ENGINE OUTCOME</span>
                     </div>
-                    <div className="text-xs md:text-sm text-emerald-300 leading-relaxed break-words overflow-y-auto">
+                    <div className="flex-1 overflow-y-auto pr-1 text-xs md:text-sm text-emerald-300 leading-relaxed break-words">
                       {CALCULATOR_DATA[calcCase]?.pitchAlephResult(calcStake)}
                     </div>
                   </div>
