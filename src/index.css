@@ -21,3 +21,19 @@
 .logo-glow-ring {
   animation: logo-glow-pulse 1.5s ease-out forwards;
 }
+
+/* Hide native browser spin buttons for clean custom arrows */
+input[type="number"].no-spinner::-webkit-inner-spin-button,
+input[type="number"].no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"].no-spinner {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Custom Tooltip styling */
+.tooltip-bubble {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}

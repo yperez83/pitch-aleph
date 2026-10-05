@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import VAULT_MATCHES from './vault_index.json';
 import CHART_DATA from './backtest_chart_data.json';
 
@@ -213,6 +213,115 @@ const VAULT_CALCULATOR_DATA = Object.fromEntries(
 const CALCULATOR_DATA = {
   ...CORE_CALCULATOR_DATA,
   ...VAULT_CALCULATOR_DATA
+};
+
+// ─── CUSTOM SVG ICONS ─────────────────────────────────────────
+const IconArrowLeft = ({ className = "w-4 h-4" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </svg>
+);
+
+const IconPlay = ({ className = "w-3.5 h-3.5" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+    <polygon points="6 3 20 12 6 21 6 3" />
+  </svg>
+);
+
+const IconClose = ({ className = "w-4 h-4" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+);
+
+const IconReset = ({ className = "w-3.5 h-3.5" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M21.5 2v6h-6M2.5 22v-6h6" />
+    <path d="M21.5 8a10 10 0 0 0-17 3.5M2.5 16a10 10 0 0 0 17-3.5" />
+  </svg>
+);
+
+const IconZoomIn = ({ className = "w-3.5 h-3.5" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    <line x1="11" y1="8" x2="11" y2="14" />
+    <line x1="8" y1="11" x2="14" y2="11" />
+  </svg>
+);
+
+const IconZoomOut = ({ className = "w-3.5 h-3.5" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    <line x1="8" y1="11" x2="14" y2="11" />
+  </svg>
+);
+
+const IconWarning = ({ className = "w-4 h-4" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+const IconBolt = ({ className = "w-4 h-4" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const IconChevronUp = ({ className = "w-3 h-3" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="18 15 12 9 6 15" />
+  </svg>
+);
+
+const IconChevronDown = ({ className = "w-3 h-3" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
+// ─── REUSABLE CUSTOM TOOLTIP COMPONENT ────────────────────────
+const Tooltip = ({ text, children, position = "top", className = "" }) => {
+  const [visible, setVisible] = useState(false);
+  const positionClasses = {
+    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
+    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
+    left: "right-full top-1/2 -translate-y-1/2 mr-2",
+    right: "left-full top-1/2 -translate-y-1/2 ml-2"
+  };
+  const arrowClasses = {
+    top: "top-full left-1/2 -translate-x-1/2 border-t-slate-800 border-x-transparent border-b-transparent border-t-4 border-x-4 border-b-0",
+    bottom: "bottom-full left-1/2 -translate-x-1/2 border-b-slate-800 border-x-transparent border-t-transparent border-b-4 border-x-4 border-t-0",
+    left: "left-full top-1/2 -translate-y-1/2 border-l-slate-800 border-y-transparent border-r-transparent border-l-4 border-y-4 border-r-0",
+    right: "right-full top-1/2 -translate-y-1/2 border-r-slate-800 border-y-transparent border-l-transparent border-r-4 border-y-4 border-l-0"
+  };
+
+  return (
+    <div
+      className={`relative inline-flex items-center ${className}`}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      onFocus={() => setVisible(true)}
+      onBlur={() => setVisible(false)}
+    >
+      {children}
+      {visible && text && (
+        <div
+          role="tooltip"
+          className={`absolute ${positionClasses[position] || positionClasses.top} z-50 pointer-events-none whitespace-nowrap bg-slate-900/95 backdrop-blur-md text-slate-200 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md border border-slate-700/80 shadow-2xl transition-all duration-150 tooltip-bubble`}
+        >
+          {text}
+          <span className={`absolute w-0 h-0 border-solid ${arrowClasses[position] || arrowClasses.top}`} />
+        </div>
+      )}
+    </div>
+  );
 };
 
 const Step = ({ id, activeStep, title, snippet, children }) => {
@@ -605,7 +714,8 @@ export default function App() {
           onClick={() => navigateBack('#/')}
           className="fixed top-6 left-6 z-50 text-slate-400 hover:text-white font-mono text-sm flex items-center gap-2 bg-slate-900/90 px-4 py-2 rounded-full border border-slate-700 transition-all cursor-pointer backdrop-blur-sm"
         >
-          ← RETURN TO TERMINAL
+          <IconArrowLeft className="w-4 h-4" />
+          <span>RETURN TO TERMINAL</span>
         </button>
 
         <div className="max-w-5xl mx-auto mt-12">
@@ -668,8 +778,8 @@ export default function App() {
               </ul>
             </div>
             
-            <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 sm:p-6 flex flex-col h-full min-h-[460px]">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 sm:p-6 flex flex-col h-[480px]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2 shrink-0">
                 <div>
                   <h4 className="text-xl font-bold text-white">Cumulative Bankroll (P&L)</h4>
                   <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
@@ -677,35 +787,43 @@ export default function App() {
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 self-start sm:self-auto">
-                  <button
-                    onClick={() => handleChartStepZoom('in')}
-                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer"
-                    title="Zoom in (+)"
-                  >
-                    + Zoom In
-                  </button>
-                  <button
-                    onClick={() => handleChartStepZoom('out')}
-                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer"
-                    title="Zoom out (-)"
-                  >
-                    - Zoom Out
-                  </button>
-                  {isChartZoomed && (
+                  <Tooltip text="Zoom in (+)">
                     <button
-                      onClick={handleChartZoomReset}
-                      className="px-2.5 py-1 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 rounded border border-emerald-500/40 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
-                      title="Reset view to full range"
+                      onClick={() => handleChartStepZoom('in')}
+                      className="p-1.5 sm:px-2.5 sm:py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+                      aria-label="Zoom in"
                     >
-                      <span>↺</span>
-                      <span>Reset</span>
+                      <IconZoomIn className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Zoom In</span>
                     </button>
+                  </Tooltip>
+                  <Tooltip text="Zoom out (-)">
+                    <button
+                      onClick={() => handleChartStepZoom('out')}
+                      className="p-1.5 sm:px-2.5 sm:py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded border border-slate-700 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+                      aria-label="Zoom out"
+                    >
+                      <IconZoomOut className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Zoom Out</span>
+                    </button>
+                  </Tooltip>
+                  {isChartZoomed && (
+                    <Tooltip text="Reset view to full range">
+                      <button
+                        onClick={handleChartZoomReset}
+                        className="p-1.5 sm:px-2.5 sm:py-1.5 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 rounded border border-emerald-500/40 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
+                        aria-label="Reset chart zoom"
+                      >
+                        <IconReset className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Reset</span>
+                      </button>
+                    </Tooltip>
                   )}
                 </div>
               </div>
 
               {/* Zoom presets & hint bar */}
-              <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-3 text-xs font-mono">
+              <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-3 text-xs font-mono shrink-0">
                 <div className="flex items-center gap-1">
                   <span className="text-slate-500 mr-1 text-[11px]">RANGE:</span>
                   {[
@@ -736,7 +854,7 @@ export default function App() {
                 </div>
               </div>
               
-              <div className="flex-grow w-full h-full min-h-[300px] select-none">
+              <div className="w-full h-[330px] select-none shrink-0">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                     data={CHART_DATA}
@@ -757,6 +875,7 @@ export default function App() {
                       allowDataOverflow={true}
                     />
                     <YAxis 
+                      width={54}
                       stroke="#64748b" 
                       tick={{fill: '#64748b', fontSize: 12}}
                       tickLine={false}
@@ -765,7 +884,7 @@ export default function App() {
                       domain={['auto', 'auto']}
                       allowDataOverflow={true}
                     />
-                    <Tooltip 
+                    <RechartsTooltip 
                       contentStyle={{ backgroundColor: '#0f172a', borderColor: '#1e293b', borderRadius: '8px', color: '#f8fafc' }}
                       itemStyle={{ color: '#34d399', fontWeight: 'bold' }}
                       formatter={(value) => [`$${value.toLocaleString()}`, 'Bankroll']}
@@ -924,12 +1043,15 @@ export default function App() {
                       Evaluate live spatial event playback and signal execution on each match.
                     </p>
                   </div>
-                  <button
-                    onClick={() => navigateBack('#/')}
-                    className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 font-mono text-lg transition-colors cursor-pointer"
-                  >
-                    ✕
-                  </button>
+                  <Tooltip text="Close (Esc)" position="left">
+                    <button
+                      onClick={() => navigateBack('#/')}
+                      className="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800 font-mono text-lg transition-colors cursor-pointer flex items-center justify-center"
+                      aria-label="Close modal"
+                    >
+                      <IconClose className="w-5 h-5" />
+                    </button>
+                  </Tooltip>
                 </div>
 
                 {/* Portfolio Stats Bar */}
@@ -1013,7 +1135,7 @@ export default function App() {
                             className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
                           >
                             <span>Simulate</span>
-                            <span>▶</span>
+                            <IconPlay className="w-3 h-3" />
                           </button>
                         </div>
                       </div>
@@ -1071,9 +1193,31 @@ export default function App() {
                           setCalcStake(val);
                         }
                       }}
-                      className="w-32 bg-slate-950/80 border border-slate-700 focus:border-emerald-500 rounded-lg pl-7 pr-2.5 py-1 text-right text-white font-mono text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors"
+                      className="w-36 bg-slate-950/80 border border-slate-700 focus:border-emerald-500 rounded-lg pl-7 pr-7 py-1 text-right text-white font-mono text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors no-spinner"
                       placeholder="1,000"
                     />
+                    <div className="absolute right-1 inset-y-1 flex flex-col justify-center gap-0.5">
+                      <Tooltip text="Increase stake (+$50)" position="left">
+                        <button
+                          type="button"
+                          onClick={() => setCalcStake(prev => Math.min(1000000, Math.max(1, (Number(prev) || 0) + 50)))}
+                          className="w-5 h-3.5 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-750 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
+                          aria-label="Increase stake by $50"
+                        >
+                          <IconChevronUp className="w-2.5 h-2.5" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip text="Decrease stake (-$50)" position="left">
+                        <button
+                          type="button"
+                          onClick={() => setCalcStake(prev => Math.min(1000000, Math.max(1, (Number(prev) || 0) - 50)))}
+                          className="w-5 h-3.5 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-750 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
+                          aria-label="Decrease stake by $50"
+                        >
+                          <IconChevronDown className="w-2.5 h-2.5" />
+                        </button>
+                      </Tooltip>
+                    </div>
                   </div>
                 </div>
                 <input
@@ -1146,9 +1290,11 @@ export default function App() {
               <div className="md:col-span-2 w-full min-w-0 bg-slate-950 border border-slate-800 rounded-xl p-5 md:p-6 font-mono flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between gap-3 border-b border-slate-800 pb-3 mb-5 min-h-[44px]">
-                    <span className="text-sm font-bold text-white truncate" title={CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title}>
-                      {CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
-                    </span>
+                    <Tooltip text={CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}>
+                      <span className="text-sm font-bold text-white truncate max-w-[280px] sm:max-w-md block">
+                        {CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
+                      </span>
+                    </Tooltip>
                     <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 shrink-0 whitespace-nowrap">
                       EV: {CALCULATOR_DATA[calcCase]?.ev}
                     </span>
@@ -1173,7 +1319,7 @@ export default function App() {
                 <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                   <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-red-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
-                      <span>⚠️</span>
+                      <IconWarning className="w-3.5 h-3.5 text-red-400 shrink-0" />
                       <span>PUBLIC BETTOR OUTCOME</span>
                     </div>
                     <div className="flex-1 overflow-y-auto pr-1 text-xs md:text-sm text-red-300 leading-relaxed break-words">
@@ -1182,7 +1328,7 @@ export default function App() {
                   </div>
                   <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-emerald-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
-                      <span>⚡</span>
+                      <IconBolt className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span>PITCHALEPH ENGINE OUTCOME</span>
                     </div>
                     <div className="flex-1 overflow-y-auto pr-1 text-xs md:text-sm text-emerald-300 leading-relaxed break-words">
@@ -1219,16 +1365,18 @@ export default function App() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => navigateBack('#/')}
-            className="text-slate-400 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 transition-all cursor-pointer"
+            className="text-slate-400 hover:text-white font-mono text-xs sm:text-sm flex items-center gap-1.5 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 transition-all cursor-pointer"
           >
-            ← TERMINAL
+            <IconArrowLeft className="w-3.5 h-3.5" />
+            <span>TERMINAL</span>
           </button>
           {activeCase?.startsWith('vault_') && (
             <button
               onClick={() => navigateBack('#/vault')}
               className="text-emerald-400 hover:text-emerald-300 font-mono text-xs sm:text-sm flex items-center gap-1.5 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/30 transition-all cursor-pointer"
             >
-              ← DATA VAULT
+              <IconArrowLeft className="w-3.5 h-3.5" />
+              <span>DATA VAULT</span>
             </button>
           )}
         </div>
@@ -1420,7 +1568,8 @@ def compute_continuous_threat(event_stream):
                     onClick={() => navigateBack('#/vault')}
                     className="w-full py-3.5 px-5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono text-xs sm:text-sm font-bold rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    ← RETURN TO DATA VAULT ({VAULT_MATCHES.length} MATCHES)
+                    <IconArrowLeft className="w-4 h-4" />
+                    <span>RETURN TO DATA VAULT ({VAULT_MATCHES.length} MATCHES)</span>
                   </button>
                 </div>
               </>
@@ -1458,9 +1607,10 @@ def compute_continuous_threat(event_stream):
                 {manualMinute !== null && (
                   <button
                     onClick={handleAutoResume}
-                    className="font-mono text-[10px] px-2 py-0.5 rounded border border-emerald-600 text-emerald-400 hover:bg-emerald-500/20 transition-all tracking-widest cursor-pointer"
+                    className="font-mono text-[10px] px-2 py-0.5 rounded border border-emerald-600 text-emerald-400 hover:bg-emerald-500/20 transition-all tracking-widest cursor-pointer flex items-center gap-1"
                   >
-                    ▶ AUTO
+                    <IconPlay className="w-2.5 h-2.5" />
+                    <span>AUTO</span>
                   </button>
                 )}
               </div>
