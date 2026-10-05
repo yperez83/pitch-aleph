@@ -778,15 +778,15 @@ export default function App() {
               </ul>
             </div>
             
-            <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 sm:p-6 flex flex-col h-[480px]">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2 shrink-0">
+            <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 sm:p-6 flex flex-col h-[520px] overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2 shrink-0 min-h-[50px]">
                 <div>
                   <h4 className="text-xl font-bold text-white">Cumulative Bankroll (P&L)</h4>
                   <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
                     Interactive execution ledger across 522 constrained market conditions.
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 self-start sm:self-auto">
+                <div className="flex items-center gap-1.5 self-start sm:self-auto shrink-0">
                   <Tooltip text="Zoom in (+)">
                     <button
                       onClick={() => handleChartStepZoom('in')}
@@ -807,23 +807,26 @@ export default function App() {
                       <span className="hidden sm:inline">Zoom Out</span>
                     </button>
                   </Tooltip>
-                  {isChartZoomed && (
-                    <Tooltip text="Reset view to full range">
-                      <button
-                        onClick={handleChartZoomReset}
-                        className="p-1.5 sm:px-2.5 sm:py-1.5 bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 rounded border border-emerald-500/40 font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5"
-                        aria-label="Reset chart zoom"
-                      >
-                        <IconReset className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">Reset</span>
-                      </button>
-                    </Tooltip>
-                  )}
+                  <Tooltip text="Reset view to full range">
+                    <button
+                      onClick={handleChartZoomReset}
+                      disabled={!isChartZoomed}
+                      className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded border font-mono text-xs font-bold transition-all flex items-center gap-1.5 ${
+                        isChartZoomed
+                          ? 'bg-emerald-500/15 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border-emerald-500/40 cursor-pointer'
+                          : 'bg-slate-800/40 text-slate-600 border-slate-800/80 cursor-not-allowed opacity-50'
+                      }`}
+                      aria-label="Reset chart zoom"
+                    >
+                      <IconReset className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Reset</span>
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
 
               {/* Zoom presets & hint bar */}
-              <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-3 text-xs font-mono shrink-0">
+              <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-2 text-xs font-mono shrink-0">
                 <div className="flex items-center gap-1">
                   <span className="text-slate-500 mr-1 text-[11px]">RANGE:</span>
                   {[
@@ -854,11 +857,11 @@ export default function App() {
                 </div>
               </div>
               
-              <div className="w-full h-[330px] select-none shrink-0">
+              <div className="w-full flex-1 min-h-[300px] select-none">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                     data={CHART_DATA}
-                    margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+                    margin={{ top: 10, right: 20, bottom: 15, left: 0 }}
                     onMouseDown={(e) => e && e.activeLabel && setChartRefLeft(e.activeLabel)}
                     onMouseMove={(e) => chartRefLeft && e && e.activeLabel && setChartRefRight(e.activeLabel)}
                     onMouseUp={handleChartZoom}
