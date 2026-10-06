@@ -1278,7 +1278,7 @@ export default function App() {
           )}
 
           {/* ─── RESTORED BET SIMULATOR: THE PITCHALEPH EDGE CALCULATOR (24 SCENARIOS) ─── */}
-          <div className="w-full bg-slate-900 border border-slate-800 rounded-xl p-5 sm:p-6 md:p-8 text-left shadow-2xl mb-8">
+          <div className="w-full bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6 md:p-8 text-left shadow-2xl mb-8">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                 The PitchAleph Edge Calculator (Bet Simulator)
@@ -1294,7 +1294,7 @@ export default function App() {
             {/* Stack to single col on mobile, 3-col on md+ */}
             <div className="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-8">
               {/* Controls */}
-              <div className="md:col-span-1">
+              <div className="md:col-span-1 min-w-0">
                 <div className="flex items-center justify-between mb-2">
                   <label htmlFor="base-stake-input" className="text-emerald-400 font-mono text-xs sm:text-sm font-bold">
                     BASE STAKE:
@@ -1408,37 +1408,37 @@ export default function App() {
               </div>
 
               {/* Results panel */}
-              <div className="md:col-span-2 w-full min-w-0 bg-slate-950 border border-slate-800 rounded-xl p-5 md:p-6 font-mono flex flex-col justify-between">
+              <div className="md:col-span-2 w-full min-w-0 bg-slate-950 border border-slate-800 rounded-xl p-4 sm:p-5 md:p-6 font-mono flex flex-col justify-between overflow-hidden">
                 <div>
-                  <div className="flex items-center justify-between gap-3 border-b border-slate-800 pb-3 mb-5 min-h-[44px]">
-                    <Tooltip text={CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}>
-                      <span className="text-sm font-bold text-white truncate max-w-[280px] sm:max-w-md block">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 border-b border-slate-800 pb-3 mb-5">
+                    <Tooltip text={CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'} className="min-w-0 flex-1">
+                      <span className="text-sm font-bold text-white line-clamp-2 sm:truncate block text-left">
                         {CALCULATOR_DATA[calcCase]?.fullTitle || CALCULATOR_DATA[calcCase]?.title || 'Scenario Analysis'}
                       </span>
                     </Tooltip>
-                    <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 shrink-0 whitespace-nowrap">
+                    <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30 self-start sm:self-auto shrink-0 whitespace-nowrap">
                       EV: {CALCULATOR_DATA[calcCase]?.ev}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-6">
                     <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60 min-w-0">
-                      <div className="text-xs text-slate-500 mb-1">MARKET ODDS</div>
-                      <div className="text-sm md:text-lg text-slate-300 font-bold truncate">
+                      <div className="text-[11px] sm:text-xs text-slate-500 mb-1">MARKET ODDS</div>
+                      <div className="text-xs sm:text-sm md:text-lg text-slate-300 font-bold truncate">
                         {CALCULATOR_DATA[calcCase]?.marketOdds}
                       </div>
                     </div>
                     <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/60 min-w-0">
-                      <div className="text-xs text-slate-500 mb-1">PITCHALEPH TRUE PROB</div>
-                      <div className="text-sm md:text-lg text-emerald-400 font-bold truncate">
+                      <div className="text-[11px] sm:text-xs text-slate-500 mb-1">PITCHALEPH TRUE PROB</div>
+                      <div className="text-xs sm:text-sm md:text-lg text-emerald-400 font-bold truncate">
                         {CALCULATOR_DATA[calcCase]?.pitchAlephProb}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                  <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
+                <div className="border-t border-slate-800 pt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
+                  <div className="w-full min-w-0 bg-red-950/20 border border-red-500/20 p-3 sm:p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-red-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <IconWarning className="w-3.5 h-3.5 text-red-400 shrink-0" />
                       <span>PUBLIC BETTOR OUTCOME</span>
@@ -1447,7 +1447,7 @@ export default function App() {
                       {CALCULATOR_DATA[calcCase]?.publicResult(calcStake)}
                     </div>
                   </div>
-                  <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
+                  <div className="w-full min-w-0 bg-emerald-950/20 border border-emerald-500/20 p-3 sm:p-4 rounded-lg flex flex-col h-[140px] sm:h-[150px]">
                     <div className="text-xs text-emerald-400 font-bold mb-2 flex items-center gap-1.5 shrink-0">
                       <IconBolt className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span>PITCHALEPH ENGINE OUTCOME</span>
