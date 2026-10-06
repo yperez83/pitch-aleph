@@ -4,7 +4,7 @@ export const OPENAPI_SPEC = {
     title: 'Pitch Aleph Quantitative Betting Engine API',
     version: '1.0.0',
     description:
-      'Public RESTful API for Pitch Aleph. Exposes programmatic access to the Data Vault matches, 1,000-Match Backtest ledger, and the mathematical Bet Simulator engine.',
+      'Public RESTful API for Pitch Aleph. Exposes programmatic access to the Data Vault matches, 1,000-Match Backtest ledger, and the mathematical Bet Simulator engine. Note: This environment operates as an interactive sandbox/demo; create, update, and delete mutations persist in-memory for the active runtime instance.',
     contact: {
       name: 'Pitch Aleph Engineering',
       url: 'https://pitch-aleph.vercel.app'
@@ -203,7 +203,7 @@ export const OPENAPI_SPEC = {
       },
       post: {
         summary: 'Register a new match scenario',
-        description: 'Creates a new match backtest scenario in the Data Vault.',
+        description: 'Creates a new match backtest scenario in the Data Vault. (Sandbox Demo: changes are stored in-memory for the active runtime instance).',
         requestBody: {
           required: true,
           content: {
@@ -287,7 +287,7 @@ export const OPENAPI_SPEC = {
       },
       put: {
         summary: 'Update match scenario',
-        description: 'Updates properties of an existing match scenario.',
+        description: 'Updates properties of an existing match scenario. (Sandbox Demo: updates persist in-memory for the active runtime instance).',
         parameters: [
           {
             name: 'id',
@@ -337,7 +337,7 @@ export const OPENAPI_SPEC = {
       },
       delete: {
         summary: 'Delete match scenario',
-        description: 'Removes a match scenario from the active Data Vault ledger.',
+        description: 'Removes a match scenario from the active Data Vault ledger. (Sandbox Demo: deletions apply in-memory for the active runtime instance).',
         parameters: [
           {
             name: 'id',

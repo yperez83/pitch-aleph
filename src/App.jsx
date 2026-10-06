@@ -12,7 +12,7 @@ const VAULT_FAIL_PERCENT = Math.round((VAULT_FAIL_COUNT / VAULT_MATCHES.length) 
 
 const CODE_SNIPPETS = {
   '2022': {
-    1: `-- Step 1: Ingesting ℵ₀
+    1: `-- Step 1: Ingesting Raw Spatial Data
 SELECT match_id, team_id, timestamp_minute, event_type, ISNULL(expected_threat, 0) AS xT
 FROM Fact_Event WHERE event_type IN ('Pass', 'Shot') AND is_successful = 1;`,
     2: `# Step 2: PitchAleph Gradient Boosting Pipeline
@@ -22,11 +22,11 @@ def train_aleph_model(features_df):
     model = xgb.XGBClassifier(n_estimators=500, learning_rate=0.05)
     model.fit(X_train, y_train)
     return model.predict_proba(X_test)`,
-    3: `-- Step 3: The ℵ₁ Engine
+    3: `-- Step 3: Predictive Probability Engine
 SELECT team_id, timestamp_minute,
 SUM(xT) OVER (PARTITION BY match_id ORDER BY match_event_sequence ROWS BETWEEN 14 PRECEDING AND CURRENT ROW) AS rolling_xT
 FROM EventStream;`,
-    4: `{ "trigger": "ALEPH_STATE_ACHIEVED", "action": "PLACE_BET", "target": "ARGENTINA", "expected_value": "+25.0%" }`
+    4: `{ "trigger": "HIGH_EDGE_STATE_ACHIEVED", "action": "PLACE_BET", "target": "ARGENTINA", "expected_value": "+25.0%" }`
   },
   '2018': {
     1: `-- Step 1: The Siege (Measuring Pressure)
@@ -46,10 +46,10 @@ def calculate_kelly(win_prob, odds, bankroll):
 -- Public market overwhelmingly backing Argentina
 SELECT market_implied_prob FROM LiveOdds WHERE team = 'Argentina' AND match_minute = 45;
 -- Result: 92.3%`,
-    2: `-- Step 2: Neutralizing ℵ₀ (The Offside Trap)
+    2: `-- Step 2: Neutralizing Spatial Threat (The Offside Trap)
 SELECT COUNT(*) as offside_traps_sprung, AVG(defensive_line_height) as line_height 
 FROM EventStream WHERE team_id = 'KSA' AND match_minute < 45;`,
-    3: `# Step 3: Recalculating True Probability (ℵ₁)
+    3: `# Step 3: Recalculating True Win Probability
 def evaluate_underdog_sustainability(trap_success_rate, xT_conceded):
     if trap_success_rate > 0.85 and xT_conceded < 0.5:
         return calculate_new_win_prob(target='KSA')`,
@@ -64,7 +64,7 @@ def detect_regime_change(pass_length_variance, aerial_duel_spike):
     if pass_length_variance > THRESHOLD and aerial_duel_spike > THRESHOLD:
         return "HIGH_VOLATILITY_STATE"
     return "STABLE"`,
-    3: `# Step 3: Measuring ℵ₁ Chaos
+    3: `# Step 3: Measuring Match Chaos & Volatility
 import numpy as np
 current_variance = np.var(live_match_data['aerial_duels'])
 if current_variance > historical_max:
@@ -384,7 +384,7 @@ const Footer = () => (
           <span className="font-bold text-sm tracking-tight text-white flex items-center gap-1.5">
             <span>Pitch Aleph</span>
             <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.2 rounded">
-              ℵ₁
+              ℵ₀
             </span>
           </span>
           <span className="text-[11px] font-mono text-slate-500">
@@ -451,7 +451,7 @@ const Footer = () => (
 
     {/* Bottom sub-bar with copyright & license */}
     <div className="max-w-6xl mx-auto mt-6 pt-4 border-t border-slate-900 text-center flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-slate-600 gap-2">
-      <span>© {new Date().getFullYear()} Pitch Aleph. Discrete ℵ₀ spatial mappings.</span>
+      <span>© {new Date().getFullYear()} Pitch Aleph. Discrete spatial event tracking.</span>
       <span>Open Source under MIT License</span>
     </div>
   </footer>
@@ -721,10 +721,11 @@ export default function App() {
       const timeLimit = activeCase === '2018' ? 82 : (activeCase === 'ksa' ? 55 : (activeCase === 'ned' ? 92 : (activeCase?.startsWith('vault_') ? (vaultCutoffMinute || 75) : 100)));
       const matchMinute = manualMinuteRef.current !== null ? manualMinuteRef.current : (time % timeLimit);
 
-      const W = canvas.parentElement.clientWidth;
-      const H = canvas.parentElement.clientHeight;
-      canvas.width = W;
-      canvas.height = H;
+      const parent = canvas.parentElement;
+      const W = parent ? parent.clientWidth : canvas.width;
+      const H = parent ? parent.clientHeight : canvas.height;
+      if (canvas.width !== W) canvas.width = W;
+      if (canvas.height !== H) canvas.height = H;
 
       // Responsive padding - tighter on mobile
       const pad = W < 500 ? 20 : 40;
@@ -790,7 +791,7 @@ export default function App() {
         ctx.textAlign = 'center';
 
         const lines = {
-          '2022': { color: '#34d399', bg: 'rgba(16, 185, 129, 0.2)', text: '🚨 ALEPH STATE\nACHIEVED 🚨' },
+          '2022': { color: '#34d399', bg: 'rgba(16, 185, 129, 0.2)', text: '🚨 OPTIMAL EDGE\nLOCKED 🚨' },
           '2018': { color: '#ef4444', bg: 'rgba(239, 68, 68, 0.2)', text: '🚨 TAIL EVENT\nMATERIALIZED 🚨' },
           'ksa':  { color: '#c084fc', bg: 'rgba(168, 85, 247, 0.2)', text: '🚨 UNDERDOG ALPHA\nLOCKED 🚨' },
           'ned':  { color: '#fb923c', bg: 'rgba(249, 115, 22, 0.2)', text: '🛡️ VOLATILITY HEDGE\nEXECUTED 🛡️' },
@@ -1067,7 +1068,7 @@ export default function App() {
             The <span className="line-through decoration-red-500 decoration-3 sm:decoration-4 text-slate-400">House</span> <span className="text-emerald-400">Math</span> Always Wins.
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-6 md:mb-8 max-w-3xl px-2 leading-relaxed font-normal">
-            Turn sports into a science. Our proprietary model is trained and updated on millions of data points to reveal the hidden edge in every game. Steadily multiply your bankroll through consistent, data-backed decisions.
+            Level the playing field. Our proprietary model is trained and updated on millions of data points to reveal the hidden edge in every game.<br className="hidden sm:inline" /> Turn unpredictable games into steady growth with a data-powered system built to limit loss and statistically increase profitability.
           </p>
           <div className="mb-6 md:mb-8 flex items-center gap-2">
             <span className="text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2">
@@ -1540,9 +1541,9 @@ export default function App() {
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3">The 25% Backtest</h1>
                   <p className="text-base md:text-xl text-slate-400">Blinding the model to find the +EV window in the 2022 Final.</p>
                 </div>
-                <Step id={1} activeStep={activeStep} title="1. Ingesting ℵ₀" snippet={CODE_SNIPPETS['2022'][1]}>Raw spatial event data is messy. We map the countable infinity of discrete pitch events—passes, shots, tackles—into pristine tick data. Every coordinate is normalized to feed the perception pipeline.</Step>
+                <Step id={1} activeStep={activeStep} title="1. Ingesting Live Match Events" snippet={CODE_SNIPPETS['2022'][1]}>Raw pitch data is messy. We stream every discrete on-field action—passes, shots, and tackles—into clean event data. Every coordinate is mapped to feed our real-time tracking pipeline.</Step>
                 <Step id={2} activeStep={activeStep} title="2. Feature Engineering" snippet={CODE_SNIPPETS['2022'][2]}>To outsmart the market, we upgrade to Gradient Boosting (XGBoost) and inject the human element. By factoring in Referee Foul-to-Tackle Ratios and Coach Aggression Indices, PitchAleph maps non-linear interactions public sportsbooks ignore.</Step>
-                <Step id={3} activeStep={activeStep} title="3. The ℵ₁ Engine" snippet={CODE_SNIPPETS['2022'][3]}>As ℵ₀ tick data streams in, PitchAleph calculates the ℵ₁ continuous probability state. We use dynamic SQL window functions to measure rolling Expected Threat (xT) spikes against the market's lagging live odds.</Step>
+                <Step id={3} activeStep={activeStep} title="3. The Predictive Engine" snippet={CODE_SNIPPETS['2022'][3]}>As live event data streams in, PitchAleph calculates real-time win probability. We use dynamic SQL window functions to measure rolling Expected Threat (xT) spikes against the market's lagging live odds.</Step>
                 <Step id={4} activeStep={activeStep} title="4. Execution Window" snippet={CODE_SNIPPETS['2022'][4]}>The 25% Test: We blindfolded the model. At exactly 22.5 minutes, PitchAleph detected an extreme territorial imbalance. While Vegas implied a 40% probability, PitchAleph calculated 65%, executing a +EV buy order right before Argentina scored.</Step>
               </>
             )}
@@ -1553,8 +1554,8 @@ export default function App() {
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3">Variance & Tail Risk</h1>
                   <p className="text-base md:text-xl text-slate-400">Managing statistical inevitability when the market edge fails.</p>
                 </div>
-                <Step id={1} activeStep={activeStep} title="1. The Siege" snippet={CODE_SNIPPETS['2018'][1]}>It is the 80th minute. Germany must win to survive the group stage. The discrete ℵ₀ tick data shows relentless, suffocating pressure in the final third. They are dominating possession and generating massive Expected Threat (xT).</Step>
-                <Step id={2} activeStep={activeStep} title="2. The Momentum Avalanche" snippet={CODE_SNIPPETS['2018'][2]}>PitchAleph's ℵ₁ engine tracks a historic spike in attacking momentum. The model proves Germany is breaking through the Korean lines entirely at will.</Step>
+                <Step id={1} activeStep={activeStep} title="1. The Siege" snippet={CODE_SNIPPETS['2018'][1]}>It is the 80th minute. Germany must win to survive the group stage. The live event data shows relentless, suffocating pressure in the final third. They are dominating possession and generating massive Expected Threat (xT).</Step>
+                <Step id={2} activeStep={activeStep} title="2. The Momentum Avalanche" snippet={CODE_SNIPPETS['2018'][2]}>PitchAleph's predictive engine tracks a historic spike in attacking momentum. The model proves Germany is breaking through the Korean lines entirely at will.</Step>
                 <Step id={3} activeStep={activeStep} title="3. The +EV Trap" snippet={CODE_SNIPPETS['2018'][3]}>The engine calculates a 92% true win probability for Germany based on the momentum. The market implies only 80%. This presents a massive +15% EV edge. PitchAleph takes the position.</Step>
                 <Step id={4} activeStep={activeStep} title="4. Risk Management" snippet={CODE_SNIPPETS['2018'][4]}>Quant trading is not about crystal-ball predictions; it is about edge over time. South Korea scores on two low-probability counter-attacks. Germany loses. However, because we use a Fractional Kelly Criterion for bankroll sizing (capping exposure at 2%), the fund easily absorbs the blow. We survived the variance.</Step>
               </>
@@ -1567,8 +1568,8 @@ export default function App() {
                   <p className="text-base md:text-xl text-slate-400">Exploiting market anchoring in the biggest upset of 2022.</p>
                 </div>
                 <Step id={1} activeStep={activeStep} title="1. The Market Anchor" snippet={CODE_SNIPPETS['ksa'][1]}>The public market heavily backed Argentina, assigning them a 92.3% implied win probability. Casual bettors saw Argentina dominating possession and assumed an inevitable blowout.</Step>
-                <Step id={2} activeStep={activeStep} title="2. Neutralizing ℵ₀" snippet={CODE_SNIPPETS['ksa'][2]}>PitchAleph's engine flagged an anomaly: Saudi Arabia was running a perfectly synchronized high defensive line, catching Argentina offside repeatedly. This wasn't luck; it was a highly disciplined tactical system entirely neutralizing Argentina's spatial threat.</Step>
-                <Step id={3} activeStep={activeStep} title="3. True Probability (ℵ₁)" snippet={CODE_SNIPPETS['ksa'][3]}>By adjusting for the success rate of the offside traps, PitchAleph recalculated the ℵ₁ state. The engine determined Saudi Arabia's defensive block was highly sustainable and that the market was fundamentally mispricing the game.</Step>
+                <Step id={2} activeStep={activeStep} title="2. Neutralizing Spatial Threat" snippet={CODE_SNIPPETS['ksa'][2]}>PitchAleph's engine flagged an anomaly: Saudi Arabia was running a perfectly synchronized high defensive line, catching Argentina offside repeatedly. This wasn't luck; it was a highly disciplined tactical system entirely neutralizing Argentina's spatial threat.</Step>
+                <Step id={3} activeStep={activeStep} title="3. True Win Probability" snippet={CODE_SNIPPETS['ksa'][3]}>By adjusting for the success rate of the offside traps, PitchAleph recalculated the true match odds. The engine determined Saudi Arabia's defensive block was highly sustainable and that the market was fundamentally mispricing the game.</Step>
                 <Step id={4} activeStep={activeStep} title="4. The Underdog Alpha" snippet={CODE_SNIPPETS['ksa'][4]}>At halftime, the market still priced Argentina as heavy -600 favorites. PitchAleph executed a massive +EV buy order on Saudi Arabia at +1200 odds. Just minutes into the second half, KSA scored two rapid-fire goals to win 2-1, cashing a massive underdog ticket.</Step>
               </>
             )}
@@ -1581,7 +1582,7 @@ export default function App() {
                 </div>
                 <Step id={1} activeStep={activeStep} title="1. The Baseline State" snippet={CODE_SNIPPETS['ned'][1]}>For 75 minutes, the Netherlands played a structured, possession-based game. PitchAleph's standard spatial models were accurately predicting match flow and keeping our Argentina position secure.</Step>
                 <Step id={2} activeStep={activeStep} title="2. Tactical Rupture" snippet={CODE_SNIPPETS['ned'][2]}>Trailing 2-0, the Netherlands completely abandoned 'Total Football'. They brought on 6-foot-6 striker Wout Weghorst and began launching direct long balls from deep in their own half. The structured game state evaporated.</Step>
-                <Step id={3} activeStep={activeStep} title="3. Measuring ℵ₁ Chaos" snippet={CODE_SNIPPETS['ned'][3]}>PitchAleph flagged a "Regime Change." Pass completion rates plummeted, aerial duels skyrocketed, and variance went off the charts. The game devolved into raw physical chaos, meaning all historical predictive probabilities were completely voided.</Step>
+                <Step id={3} activeStep={activeStep} title="3. Measuring Match Chaos" snippet={CODE_SNIPPETS['ned'][3]}>PitchAleph flagged a "Regime Change." Pass completion rates plummeted, aerial duels skyrocketed, and variance went off the charts. The game devolved into raw physical chaos, meaning all historical predictive probabilities were completely voided.</Step>
                 <Step id={4} activeStep={activeStep} title="4. Dynamic Hedging" snippet={CODE_SNIPPETS['ned'][4]}>A core quant principle: Do not trade in chaotic states you cannot model. Sensing extreme volatility, PitchAleph executed an automated hedge. Instead of risking the original Argentina position in a coin-flip scenario, the engine cashed out to lock in a guaranteed profit. Minutes later, the Netherlands scored a miraculous equalizer. The public lost; PitchAleph profited.</Step>
               </>
             )}
@@ -1646,7 +1647,7 @@ export default function App() {
                     <Step 
                       id={1} 
                       activeStep={activeStep} 
-                      title="1. Discrete Event Ingestion (ℵ₀)" 
+                      title="1. Discrete Event Ingestion" 
                       snippet={`-- Step 1: Querying spatial feed for ${activeVaultMatch.title}
 SELECT event_id, minute, second, type_name, location_x, location_y
 FROM StatsBomb_Events 
@@ -1658,8 +1659,8 @@ WHERE match_id = '${activeVaultMatch.id}' AND minute <= 75.0;`}
                     <Step 
                       id={2} 
                       activeStep={activeStep} 
-                      title="2. Continuous Threat Transformation (ℵ₁)" 
-                      snippet={`# Step 2: PitchAleph ℵ₁ Tensor Mapping
+                      title="2. Continuous Threat Transformation" 
+                      snippet={`# Step 2: PitchAleph Threat Tensor Mapping
 def compute_continuous_threat(event_stream):
     xt_vector = model.evaluate_spatial_pressure(event_stream)
     rolling_momentum = np.convolve(xt_vector, weights, mode='valid')

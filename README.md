@@ -1,7 +1,7 @@
 # ⚽ PitchAleph (ℵ)
 
 > **Quantitative sports simulation & live predictive market engine.**  
-> Mapping **ℵ₀** discrete spatial pitch data to predict **ℵ₁** continuous market states.
+> Transforming discrete on-pitch event data into real-time predictive probability models.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-pitch--aleph.vercel.app-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://pitch-aleph.vercel.app)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -25,7 +25,7 @@ Experience the full interactive simulation directly in your browser:
 
 **PitchAleph** models high-frequency spatial soccer match events into continuous predictive probability states, highlighting market inefficiencies and identifying positive expected value (+EV) betting windows before sportsbooks adjust.
 
-Traditional models look at box scores and lagged match stats. PitchAleph consumes granular, discrete event streams (ℵ₀)—passes, shots, defensive blocks, spatial threat (xT)—and projects continuous probability surfaces (ℵ₁) to exploit odds distortions in real time.
+Traditional models look at box scores and lagged match stats. PitchAleph consumes granular, real-time event streams—passes, shots, defensive blocks, spatial threat (xT)—and projects continuous win probabilities to exploit odds distortions in real time.
 
 ---
 
@@ -38,7 +38,7 @@ Explore four backtested World Cup match scenarios directly inside the engine:
 2. **TEST 02: Tail Risk & Variance — GER vs KOR (2018 Group Stage)**
    - *Managing Inevitable Outliers*: Extreme sustained siege pressure creates a statistical edge that fails on black-swan counter-attacks. Surviving downside risk via Fractional Kelly Criterion sizing (capped at 2%).
 3. **TEST 03: Underdog Inefficiency — KSA vs ARG (2022 Group Stage)**
-   - *Neutralizing ℵ₀*: Identifying tactical anomalies where Saudi Arabia's synchronized high defensive line dismantled spatial threat, buying massive +1200 underdog undervaluation.
+   - *Neutralizing Spatial Threat*: Identifying tactical anomalies where Saudi Arabia's synchronized high defensive line dismantled spatial threat, buying massive +1200 underdog undervaluation.
 4. **TEST 04: Dynamic Hedging — NED vs ARG (2022 Quarter-Final)**
    - *Regime Change Detection*: When long-ball aerial chaos nullified predictive models at minute 75, PitchAleph triggered an automated cash-out hedge, locking in +8.5 Units of profit before the 90+11' equalizer.
 
