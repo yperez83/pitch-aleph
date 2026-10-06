@@ -7,6 +7,7 @@
     "**/.next/**",
     "**/.turbo/**",
     "**/generated/**",
-    "**/*.generated.*"
+    "**/*.generated.*",
+    "**/openapi-spec.ts"
   ]
 }

@@ -51,13 +51,48 @@ Explore four backtested World Cup match scenarios directly inside the engine:
 - **📱 Fully Responsive UI**: Seamlessly adapts to handheld devices and wide monitors, featuring dedicated mobile analysis/pitch views and reactive touch feedback.
 - **💡 PitchAleph Edge Calculator**: Interactive stake-sizing tool comparing conventional bettor outcomes vs. PitchAleph mathematical bankroll outcomes.
 - **🛡️ Guardrails with RepNix**: Enforced repository health verification including zero-dead-code checks (Knip), code duplication detection (jscpd), and strict linting.
+- **🔌 Public RESTful API & OpenAPI/Swagger**: Programmatic access to Data Vault match scenarios, backtest performance ledger, and the mathematical bet simulation engine secured with API key authentication.
+
+---
+
+## 🔌 Public RESTful API & Swagger Documentation
+
+Pitch Aleph exposes a public RESTful API powered by Next.js Serverless Route Handlers.
+
+### Endpoints Overview
+
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| `GET` | `/api/docs` | Interactive Swagger UI API documentation | No |
+| `GET` | `/api/openapi.json` | OpenAPI 3.0.3 specification document | No |
+| `GET` | `/api/v1/matches` | List Data Vault matches with optional status/search filters | Yes |
+| `POST` | `/api/v1/matches` | Register a new match scenario | Yes |
+| `GET` | `/api/v1/matches/:id` | Retrieve detailed tactical match analysis | Yes |
+| `PUT` | `/api/v1/matches/:id` | Update an existing match scenario | Yes |
+| `DELETE` | `/api/v1/matches/:id` | Remove a match scenario | Yes |
+| `GET` | `/api/v1/backtest` | Retrieve trade-by-trade P&L performance ledger | Yes |
+| `POST` | `/api/v1/simulate` | Run mathematical bet simulator against Pitch Aleph models | Yes |
+
+### Authentication
+Authenticate requests using the `x-api-key` header or standard HTTP `Authorization: Bearer <token>`:
+```bash
+# Using x-api-key header
+curl -H "x-api-key: aleph_demo_key_2026" https://pitch-aleph.vercel.app/api/v1/matches
+
+# Using Authorization Bearer header
+curl -H "Authorization: Bearer aleph_demo_key_2026" https://pitch-aleph.vercel.app/api/v1/matches
+```
+
+Demo Key: `aleph_demo_key_2026` (or set custom key via `PITCH_ALEPH_API_KEY` environment variable).
 
 ---
 
 ## 🛠️ Tech Stack & Architecture
 
-- **Frontend**: React 19, Vite, Tailwind CSS
-- **Visualization**: HTML5 2D Canvas Engine
+- **Framework**: Next.js 16 (App Router & Serverless Route Handlers)
+- **Frontend**: React 19, Tailwind CSS
+- **Visualization**: HTML5 2D Canvas Engine & Recharts
+- **API & Docs**: OpenAPI 3.0.3 Specification & Swagger UI
 - **Quality & Guardrails**: [RepNix](https://github.com/zakaihamilton/repnix), ESLint, Knip, jscpd
 - **Hosting & CI/CD**: [Vercel](https://pitch-aleph.vercel.app)
 

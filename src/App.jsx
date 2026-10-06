@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import VAULT_MATCHES from './vault_index.json';
