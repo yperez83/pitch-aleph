@@ -7,7 +7,7 @@ export const OPENAPI_SPEC = {
       'Public RESTful API for Pitch Aleph. Exposes programmatic access to the Data Vault matches, 1,000-Match Backtest ledger, and the mathematical Bet Simulator engine. Note: This environment operates as an interactive sandbox/demo; create, update, and delete mutations persist in-memory for the active runtime instance.',
     contact: {
       name: 'Pitch Aleph Engineering',
-      url: 'https://pitch-aleph.vercel.app'
+      url: 'https://pitchaleph.com'
     }
   },
   servers: [

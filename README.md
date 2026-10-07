@@ -3,7 +3,7 @@
 > **Quantitative sports simulation & live predictive market engine.**  
 > Transforming discrete on-pitch event data into real-time predictive probability models.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-pitch--aleph.vercel.app-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://pitch-aleph.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-pitchaleph.com-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://pitchaleph.com)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -15,7 +15,7 @@
 
 Experience the full interactive simulation directly in your browser:
 
-### 🔗 **[https://pitch-aleph.vercel.app](https://pitch-aleph.vercel.app)**
+### 🔗 **[https://pitchaleph.com](https://pitchaleph.com)**
 
 *Tested and optimized for desktop, tablet, and mobile handheld devices.*
 
@@ -77,10 +77,10 @@ Pitch Aleph exposes a public RESTful API powered by Next.js Serverless Route Han
 Authenticate requests using the `x-api-key` header or standard HTTP `Authorization: Bearer <token>`:
 ```bash
 # Using x-api-key header
-curl -H "x-api-key: aleph_demo_key_2026" https://pitch-aleph.vercel.app/api/v1/matches
+curl -H "x-api-key: aleph_demo_key_2026" https://pitchaleph.com/api/v1/matches
 
 # Using Authorization Bearer header
-curl -H "Authorization: Bearer aleph_demo_key_2026" https://pitch-aleph.vercel.app/api/v1/matches
+curl -H "Authorization: Bearer aleph_demo_key_2026" https://pitchaleph.com/api/v1/matches
 ```
 
 Demo Key: `aleph_demo_key_2026` (or set custom key via `PITCH_ALEPH_API_KEY` environment variable).
@@ -94,7 +94,7 @@ Demo Key: `aleph_demo_key_2026` (or set custom key via `PITCH_ALEPH_API_KEY` env
 - **Visualization**: HTML5 2D Canvas Engine & Recharts
 - **API & Docs**: OpenAPI 3.0.3 Specification & Swagger UI
 - **Quality & Guardrails**: [RepNix](https://github.com/zakaihamilton/repnix), ESLint, Knip, jscpd
-- **Hosting & CI/CD**: [Vercel](https://pitch-aleph.vercel.app)
+- **Hosting & CI/CD**: [Vercel](https://pitchaleph.com)
 
 ---
 
