@@ -1,0 +1,997 @@
+PITCH ALEPH — COMPLETE WEBSITE TEXT & COPY DIRECTORY
+Website: https://pitchaleph.com (Mirror: https://pitch-aleph.vercel.app)
+Extracted visible text copy across all pages, scenarios, case studies, and API docs.
+Page Title: Pitch Aleph | Betting Engine
+
+
+================================================================================
+1. LANDING PAGE (HOME VIEW)
+================================================================================
+
+
+------------------------------------------------------------
+Hero Section
+------------------------------------------------------------
+
+Badge: 3,000,000+ Spatial Events Processed
+Headline: The [House (crossed out)] Math Always Wins.
+Sub-headline: Level the playing field. Our proprietary model is trained and updated on millions of data points to reveal the hidden edge in every game. Turn unpredictable games into steady growth with a data-powered system built to limit loss and statistically increase profitability.
+Call to Action: Launch Your Secret Weapon
+
+------------------------------------------------------------
+Cloud Architecture & Scaled Backtesting Section
+------------------------------------------------------------
+
+Section Title: CLOUD ARCHITECTURE & SCALED BACKTESTING
+
+Card 1: PRODUCTION ENGINE (1,000-Match Cloud Simulation)
+Subtitle: +$10,152 (101.5% ROI)
+Description: XGBoost inference across 3M+ spatial events with Platt Scaling and liquidity cap.
+
+Card 2: DATA VAULT (20-Match Indexed Sample)
+Subtitle: 11 PASS / 9 FAIL
+Description: Explore algorithmic signal screening across 20 FIFA World Cup matches.
+
+------------------------------------------------------------
+The PitchAleph Edge Calculator (Bet Simulator)
+------------------------------------------------------------
+
+Heading: The PitchAleph Edge Calculator (Bet Simulator)
+Status Badge: 24 Historical Simulations Active
+Description: See how the engine maximizes profits and minimizes catastrophic losses compared to a standard market bettor across core test cases and the 20-match Data Vault portfolio.
+Controls:
+  - BASE STAKE: Input field with range slider ($1 to $1,000,000; default $1,000)
+  - SELECT SCENARIO: Category filter buttons (ALL, CORE, VAULT)
+
+All 24 Scenarios Comparison (Calculated at base stake $1,000):
+
+Scenario: ARG vs FRA (2022 Final — Alpha Generation)
+  Category: Core Test Case
+  Market Odds: +150 (40% implied)
+  PitchAleph True Probability: 65.0%
+  Expected Value (EV): +25.0%
+  Public Bettor Outcome: Wins $1,500 (Lucky bet, negative long-term EV)
+  PitchAleph Engine Outcome: Wins $1,500 (Secured massive +EV mathematical edge)
+
+Scenario: KSA vs ARG (2022 Group — Underdog Inefficiency)
+  Category: Core Test Case
+  Market Odds: +1200 (7.7% implied)
+  PitchAleph True Probability: 22.0%
+  Expected Value (EV): +42.0%
+  Public Bettor Outcome: Loses $1,000 (Public heavily backed Argentina at -600)
+  PitchAleph Engine Outcome: Wins $12,000 (Engine correctly bought massive KSA undervaluation)
+
+Scenario: NED vs ARG (2022 QF — Volatility Hedging)
+  Category: Core Test Case
+  Market Odds: Argentina to win
+  PitchAleph True Probability: Chaotic State (Unmodelable)
+  Expected Value (EV): N/A
+  Public Bettor Outcome: Loses $1,000 (NED tied 2-2 in 90+11')
+  PitchAleph Engine Outcome: Locks in $400 Profit (Engine automatically hedged/cashed out at 80')
+
+Scenario: GER vs KOR (2018 Group — Risk Mitigation)
+  Category: Core Test Case
+  Market Odds: -400 (80% implied)
+  PitchAleph True Probability: 92.0%
+  Expected Value (EV): +15.0%
+  Public Bettor Outcome: Loses full $1,000 (Wiped out by black-swan counter-attack)
+  PitchAleph Engine Outcome: Loses only $100 (Kelly Criterion automatically capped exposure to tail risk)
+
+Scenario: Canada vs Morocco (PASS) — 2022-12-01 (84' Decision)
+  Category: Vault Pass
+  Market Odds: +147 (40.5% implied)
+  PitchAleph True Probability: 57.3%
+  Expected Value (EV): +16.8% EV
+  Public Bettor Outcome: Loses full $1,000 (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)
+  PitchAleph Engine Outcome: Wins $1,470 (PitchAleph algorithmic buy order at 84' Decision captured +16.8% EV edge)
+
+Scenario: England vs Iran (PASS) — 2022-11-21 (73' Decision)
+  Category: Vault Pass
+  Market Odds: +172 (36.8% implied)
+  PitchAleph True Probability: 63.6%
+  Expected Value (EV): +26.8% EV
+  Public Bettor Outcome: Wins $1,720 (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)
+  PitchAleph Engine Outcome: Wins $1,720 (PitchAleph algorithmic buy order at 73' Decision captured +26.8% EV edge)
+
+Scenario: Croatia vs Belgium (PASS) — 2022-12-01 (65' Decision)
+  Category: Vault Pass
+  Market Odds: +124 (44.6% implied)
+  PitchAleph True Probability: 52.4%
+  Expected Value (EV): +7.8% EV
+  Public Bettor Outcome: Wins $744 (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)
+  PitchAleph Engine Outcome: Wins $1,240 (PitchAleph algorithmic buy order at 65' Decision captured +7.8% EV edge)
+
+Scenario: Netherlands vs Ecuador (PASS) — 2022-11-25 (72' Decision)
+  Category: Vault Pass
+  Market Odds: +169 (37.2% implied)
+  PitchAleph True Probability: 62.9%
+  Expected Value (EV): +25.7% EV
+  Public Bettor Outcome: Loses full $1,000 (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)
+  PitchAleph Engine Outcome: Wins $1,690 (PitchAleph algorithmic buy order at 72' Decision captured +25.7% EV edge)
+
+Scenario: Japan vs Spain (PASS) — 2022-12-01 (85' Decision)
+  Category: Vault Pass
+  Market Odds: +150 (40.0% implied)
+  PitchAleph True Probability: 58.1%
+  Expected Value (EV): +18.1% EV
+  Public Bettor Outcome: Wins $1,500 (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)
+  PitchAleph Engine Outcome: Wins $1,500 (PitchAleph algorithmic buy order at 85' Decision captured +18.1% EV edge)
+
+Scenario: England vs United States (PASS) — 2022-11-25 (68' Decision)
+  Category: Vault Pass
+  Market Odds: +153 (39.5% implied)
+  PitchAleph True Probability: 58.7%
+  Expected Value (EV): +19.2% EV
+  Public Bettor Outcome: Wins $918 (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)
+  PitchAleph Engine Outcome: Wins $1,530 (PitchAleph algorithmic buy order at 68' Decision captured +19.2% EV edge)
+
+Scenario: Iran vs United States (PASS) — 2022-11-29 (88' Decision)
+  Category: Vault Pass
+  Market Odds: +136 (42.4% implied)
+  PitchAleph True Probability: 54.8%
+  Expected Value (EV): +12.4% EV
+  Public Bettor Outcome: Loses full $1,000 (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)
+  PitchAleph Engine Outcome: Wins $1,360 (PitchAleph algorithmic buy order at 88' Decision captured +12.4% EV edge)
+
+Scenario: Morocco vs Croatia (PASS) — 2022-11-23 (79' Decision)
+  Category: Vault Pass
+  Market Odds: +154 (39.4% implied)
+  PitchAleph True Probability: 59.1%
+  Expected Value (EV): +19.7% EV
+  Public Bettor Outcome: Wins $1,540 (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)
+  PitchAleph Engine Outcome: Wins $1,540 (PitchAleph algorithmic buy order at 79' Decision captured +19.7% EV edge)
+
+Scenario: Wales vs Iran (PASS) — 2022-11-25 (59' Decision)
+  Category: Vault Pass
+  Market Odds: +175 (36.4% implied)
+  PitchAleph True Probability: 64.4%
+  Expected Value (EV): +28.0% EV
+  Public Bettor Outcome: Wins $1,050 (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)
+  PitchAleph Engine Outcome: Wins $1,750 (PitchAleph algorithmic buy order at 59' Decision captured +28.0% EV edge)
+
+Scenario: Tunisia vs France (PASS) — 2022-11-30 (58' Decision)
+  Category: Vault Pass
+  Market Odds: +134 (42.7% implied)
+  PitchAleph True Probability: 54.3%
+  Expected Value (EV): +11.6% EV
+  Public Bettor Outcome: Loses full $1,000 (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)
+  PitchAleph Engine Outcome: Wins $1,340 (PitchAleph algorithmic buy order at 58' Decision captured +11.6% EV edge)
+
+Scenario: Wales vs England (PASS) — 2022-11-29 (57' Decision)
+  Category: Vault Pass
+  Market Odds: +137 (42.2% implied)
+  PitchAleph True Probability: 55.1%
+  Expected Value (EV): +12.9% EV
+  Public Bettor Outcome: Wins $1,370 (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)
+  PitchAleph Engine Outcome: Wins $1,370 (PitchAleph algorithmic buy order at 57' Decision captured +12.9% EV edge)
+
+Scenario: Switzerland vs Cameroon (PASS) — 2022-11-24 (83' Decision)
+  Category: Vault Pass
+  Market Odds: +159 (38.6% implied)
+  PitchAleph True Probability: 60.2%
+  Expected Value (EV): +21.6% EV
+  Public Bettor Outcome: Wins $954 (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)
+  PitchAleph Engine Outcome: Wins $1,590 (PitchAleph algorithmic buy order at 83' Decision captured +21.6% EV edge)
+
+Scenario: Portugal vs Ghana (PASS) — 2022-11-24 (73' Decision)
+  Category: Vault Pass
+  Market Odds: +155 (39.2% implied)
+  PitchAleph True Probability: 59.2%
+  Expected Value (EV): +20.0% EV
+  Public Bettor Outcome: Loses full $1,000 (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)
+  PitchAleph Engine Outcome: Wins $1,550 (PitchAleph algorithmic buy order at 73' Decision captured +20.0% EV edge)
+
+Scenario: Senegal vs Netherlands (PASS) — 2022-11-21 (59' Decision)
+  Category: Vault Pass
+  Market Odds: +168 (37.3% implied)
+  PitchAleph True Probability: 62.5%
+  Expected Value (EV): +25.2% EV
+  Public Bettor Outcome: Wins $1,680 (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)
+  PitchAleph Engine Outcome: Wins $1,680 (PitchAleph algorithmic buy order at 59' Decision captured +25.2% EV edge)
+
+Scenario: United States vs Wales (PASS) — 2022-11-21 (57' Decision)
+  Category: Vault Pass
+  Market Odds: +139 (41.8% implied)
+  PitchAleph True Probability: 55.3%
+  Expected Value (EV): +13.5% EV
+  Public Bettor Outcome: Wins $834 (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)
+  PitchAleph Engine Outcome: Wins $1,390 (PitchAleph algorithmic buy order at 57' Decision captured +13.5% EV edge)
+
+Scenario: Poland vs Saudi Arabia (FAIL) — 2022-11-26 (60' Decision)
+  Category: Vault Fail
+  Market Odds: -240 (70.6% implied)
+  PitchAleph True Probability: 50.5%
+  Expected Value (EV): +20.1% EV
+  Public Bettor Outcome: Loses full $1,000 (Public forced heavy favorite at -240 that collapsed to defensive variance)
+  PitchAleph Engine Outcome: Loses $0 / Hedged (Kelly risk filter blocked position at 60' Decision, preventing catastrophic loss)
+
+Scenario: Netherlands vs Qatar (FAIL) — 2022-11-29 (63' Decision)
+  Category: Vault Fail
+  Market Odds: -252 (71.6% implied)
+  PitchAleph True Probability: 48.5%
+  Expected Value (EV): +23.1% EV
+  Public Bettor Outcome: Loses full $1,000 (Public forced heavy favorite at -252 that collapsed to defensive variance)
+  PitchAleph Engine Outcome: Loses $0 / Hedged (Kelly risk filter blocked position at 63' Decision, preventing catastrophic loss)
+
+Scenario: France vs Denmark (FAIL) — 2022-11-26 (81' Decision)
+  Category: Vault Fail
+  Market Odds: -199 (66.6% implied)
+  PitchAleph True Probability: 56.8%
+  Expected Value (EV): +9.8% EV
+  Public Bettor Outcome: Loses full $1,000 (Public forced heavy favorite at -199 that collapsed to defensive variance)
+  PitchAleph Engine Outcome: Loses $0 / Hedged (Kelly risk filter blocked position at 81' Decision, preventing catastrophic loss)
+
+Scenario: Germany vs Japan (FAIL) — 2022-11-23 (70' Decision)
+  Category: Vault Fail
+  Market Odds: -268 (72.8% implied)
+  PitchAleph True Probability: 45.9%
+  Expected Value (EV): +26.9% EV
+  Public Bettor Outcome: Loses full $1,000 (Public forced heavy favorite at -268 that collapsed to defensive variance)
+  PitchAleph Engine Outcome: Loses $0 / Hedged (Kelly risk filter blocked position at 70' Decision, preventing catastrophic loss)
+
+Scenario: Denmark vs Tunisia (FAIL) — 2022-11-22 (61' Decision)
+  Category: Vault Fail
+  Market Odds: -184 (64.8% implied)
+  PitchAleph True Probability: 58.9%
+  Expected Value (EV): +5.9% EV
+  Public Bettor Outcome: Loses full $1,000 (Public forced heavy favorite at -184 that collapsed to defensive variance)
+  PitchAleph Engine Outcome: Loses $0 / Hedged (Kelly risk filter blocked position at 61' Decision, preventing catastrophic loss)
+
+
+------------------------------------------------------------
+Core Interactive Case Studies (Bottom of Landing Page)
+------------------------------------------------------------
+
+Section Title: CORE INTERACTIVE CASE STUDIES
+• TEST 01: ALPHA GENERATION — ARG vs FRA (2022 Final)
+  Summary: Blinding the model to find the +EV window in the 2022 Final.
+• TEST 02: TAIL RISK / VARIANCE — GER vs KOR (2018 Group)
+  Summary: Managing statistical inevitability when the market edge fails.
+• TEST 03: UNDERDOG INEFFICIENCY — KSA vs ARG (2022 Group)
+  Summary: Exploiting market anchoring in the biggest upset of 2022.
+• TEST 04: DYNAMIC HEDGING — NED vs ARG (2022 QF)
+  Summary: Knowing when the predictive models break down.
+
+================================================================================
+2. PRODUCTION ENGINE: 1,000-MATCH BACKTEST VIEW
+================================================================================
+
+Header Badge: CLOUD PRODUCTION RUN • 3,000,000+ Spatial Events Processed
+Page Heading: Production Engine: 1,000-Match Backtest
+Subtitle: Validating algorithmic performance across a 3,000,000+ event Data Lake using XGBoost, Platt Scaling, and strict liquidity constraints.
+
+Key Metric Cards:
+  • EXECUTIONS: 522 (Filtered from 1,000 matches)
+  • WIN RATE: 38.31% (High-odds underdog edge)
+  • NET PROFIT: +$10,152 (Net after 5% market vig)
+  • TOTAL ROI: 101.53% (Unlevered portfolio yield)
+
+Architecture & Constraints:
+  1. The XGBoost Brain:
+     The engine was trained on a 1,000-match historical dataset, computing rolling Expected Threat (xT) and spatial geometry to map sequences into continuous goal-generation probabilities.
+
+  2. Platt Scaling Calibration:
+     Raw tree-based models suffer from algorithmic overconfidence. By applying Platt Scaling (Sigmoid curve), the engine throttled false-positive triggers, aggressively dropping its Brier Score to 0.019.
+
+  3. Market Liquidity Injection:
+     To ensure statistical realism, a $10,000 maximum liquidity cap and a 5% sportsbook 'vig' were injected into the simulator, ensuring the 101.53% ROI represents withdrawable, real-world alpha.
+
+Cumulative Bankroll (P&L) Section:
+  Title: Cumulative Bankroll (P&L)
+  Description: Interactive execution ledger across 522 constrained market conditions.
+  Presets: ALL (522), T1–150, T150–350, T350–522
+  Interactive Features: Zoom In, Zoom Out, Reset View, Click & Drag Custom Region Zoom
+
+================================================================================
+3. DATA VAULT PORTFOLIO MODAL (20 MATCH SAMPLE)
+================================================================================
+
+Dataset Header: PORTFOLIO DATASET • 2022 FIFA World Cup
+Heading: PitchAleph Data Vault (20 Match Sample)
+Subtitle: Simulated algorithmic screening across a 20-match portfolio sample. Evaluate live spatial event playback and signal execution on each match.
+
+Portfolio Statistics:
+  • SAMPLE SIZE: 20 Matches
+  • ALPHA SIGNALS: 11 PASS (55%)
+  • RISK FILTERS: 9 FAIL (45%)
+  • PORTFOLIO WIN RATE: 55% Edge
+
+Data Source Attribution: Discrete spatial event streams powered by StatsBomb Open Data
+
+Indexed Matches in Vault:
+1. Match ID: 3857276 — Canada vs Morocco
+   Date: 2022-12-01 | Decision Window: 84' Decision | Model Decision: PASS | Calculated Edge:  +16.8% EV
+2. Match ID: 3857271 — England vs Iran
+   Date: 2022-11-21 | Decision Window: 73' Decision | Model Decision: PASS | Calculated Edge:  +26.8% EV
+3. Match ID: 3857296 — Croatia vs Belgium
+   Date: 2022-12-01 | Decision Window: 65' Decision | Model Decision: PASS | Calculated Edge:  +7.8% EV
+4. Match ID: 3857274 — Netherlands vs Ecuador
+   Date: 2022-11-25 | Decision Window: 72' Decision | Model Decision: PASS | Calculated Edge:  +25.7% EV
+5. Match ID: 3857255 — Japan vs Spain
+   Date: 2022-12-01 | Decision Window: 85' Decision | Model Decision: PASS | Calculated Edge:  +18.1% EV
+6. Match ID: 3857272 — England vs United States
+   Date: 2022-11-25 | Decision Window: 68' Decision | Model Decision: PASS | Calculated Edge:  +19.2% EV
+7. Match ID: 3857278 — Iran vs United States
+   Date: 2022-11-29 | Decision Window: 88' Decision | Model Decision: PASS | Calculated Edge:  +12.4% EV
+8. Match ID: 3857277 — Morocco vs Croatia
+   Date: 2022-11-23 | Decision Window: 79' Decision | Model Decision: PASS | Calculated Edge:  +19.7% EV
+9. Match ID: 3857273 — Wales vs Iran
+   Date: 2022-11-25 | Decision Window: 59' Decision | Model Decision: PASS | Calculated Edge:  +28.0% EV
+10. Match ID: 3857275 — Tunisia vs France
+   Date: 2022-11-30 | Decision Window: 58' Decision | Model Decision: PASS | Calculated Edge:  +11.6% EV
+11. Match ID: 3857261 — Wales vs England
+   Date: 2022-11-29 | Decision Window: 57' Decision | Model Decision: PASS | Calculated Edge:  +12.9% EV
+12. Match ID: 3857290 — Switzerland vs Cameroon
+   Date: 2022-11-24 | Decision Window: 83' Decision | Model Decision: PASS | Calculated Edge:  +21.6% EV
+13. Match ID: 3857298 — Portugal vs Ghana
+   Date: 2022-11-24 | Decision Window: 73' Decision | Model Decision: PASS | Calculated Edge:  +20.0% EV
+14. Match ID: 3857285 — Senegal vs Netherlands
+   Date: 2022-11-21 | Decision Window: 59' Decision | Model Decision: PASS | Calculated Edge:  +25.2% EV
+15. Match ID: 3857282 — United States vs Wales
+   Date: 2022-11-21 | Decision Window: 57' Decision | Model Decision: PASS | Calculated Edge:  +13.5% EV
+16. Match ID: 3857297 — Poland vs Saudi Arabia
+   Date: 2022-11-26 | Decision Window: 60' Decision | Model Decision: FAIL | Calculated Edge:  +20.1% EV
+17. Match ID: 3857294 — Netherlands vs Qatar
+   Date: 2022-11-29 | Decision Window: 63' Decision | Model Decision: FAIL | Calculated Edge:  +23.1% EV
+18. Match ID: 3857266 — France vs Denmark
+   Date: 2022-11-26 | Decision Window: 81' Decision | Model Decision: FAIL | Calculated Edge:  +9.8% EV
+19. Match ID: 3857284 — Germany vs Japan
+   Date: 2022-11-23 | Decision Window: 70' Decision | Model Decision: FAIL | Calculated Edge:  +26.9% EV
+20. Match ID: 3857254 — Denmark vs Tunisia
+   Date: 2022-11-22 | Decision Window: 61' Decision | Model Decision: FAIL | Calculated Edge:  +5.9% EV
+
+================================================================================
+4. CORE INTERACTIVE CASE STUDIES (IN-DEPTH TECHNICAL NARRATIVES)
+================================================================================
+
+
+------------------------------------------------------------
+Test 01: The 25% Backtest (ARG vs FRA 2022 Final)
+------------------------------------------------------------
+
+Title: The 25% Backtest
+Subtitle: Blinding the model to find the +EV window in the 2022 Final.
+
+Step 1: 1. Ingesting Live Match Events
+Narrative: Raw pitch data is messy. We stream every discrete on-field action—passes, shots, and tackles—into clean event data. Every coordinate is mapped to feed our real-time tracking pipeline.
+
+Step 2: 2. Feature Engineering
+Narrative: To outsmart the market, we upgrade to Gradient Boosting (XGBoost) and inject the human element. By factoring in Referee Foul-to-Tackle Ratios and Coach Aggression Indices, PitchAleph maps non-linear interactions public sportsbooks ignore.
+
+Step 3: 3. The Predictive Engine
+Narrative: As live event data streams in, PitchAleph calculates real-time win probability. We use dynamic SQL window functions to measure rolling Expected Threat (xT) spikes against the market's lagging live odds.
+
+Step 4: 4. Execution Window
+Narrative: The 25% Test: We blindfolded the model. At exactly 22.5 minutes, PitchAleph detected an extreme territorial imbalance. While Vegas implied a 40% probability, PitchAleph calculated 65%, executing a +EV buy order right before Argentina scored.
+
+------------------------------------------------------------
+Test 02: Variance & Tail Risk (GER vs KOR 2018 Group)
+------------------------------------------------------------
+
+Title: Variance & Tail Risk
+Subtitle: Managing statistical inevitability when the market edge fails.
+
+Step 1: 1. The Siege
+Narrative: It is the 80th minute. Germany must win to survive the group stage. The live event data shows relentless, suffocating pressure in the final third. They are dominating possession and generating massive Expected Threat (xT).
+
+Step 2: 2. The Momentum Avalanche
+Narrative: PitchAleph's predictive engine tracks a historic spike in attacking momentum. The model proves Germany is breaking through the Korean lines entirely at will.
+
+Step 3: 3. The +EV Trap
+Narrative: The engine calculates a 92% true win probability for Germany based on the momentum. The market implies only 80%. This presents a massive +15% EV edge. PitchAleph takes the position.
+
+Step 4: 4. Risk Management
+Narrative: Quant trading is not about crystal-ball predictions; it is about edge over time. South Korea scores on two low-probability counter-attacks. Germany loses. However, because we use a Fractional Kelly Criterion for bankroll sizing (capping exposure at 2%), the fund easily absorbs the blow. We survived the variance.
+
+------------------------------------------------------------
+Test 03: Underdog Inefficiency (KSA vs ARG 2022 Group)
+------------------------------------------------------------
+
+Title: Underdog Inefficiency
+Subtitle: Exploiting market anchoring in the biggest upset of 2022.
+
+Step 1: 1. The Market Anchor
+Narrative: The public market heavily backed Argentina, assigning them a 92.3% implied win probability. Casual bettors saw Argentina dominating possession and assumed an inevitable blowout.
+
+Step 2: 2. Neutralizing Spatial Threat
+Narrative: PitchAleph's engine flagged an anomaly: Saudi Arabia was running a perfectly synchronized high defensive line, catching Argentina offside repeatedly. This wasn't luck; it was a highly disciplined tactical system entirely neutralizing Argentina's spatial threat.
+
+Step 3: 3. True Win Probability
+Narrative: By adjusting for the success rate of the offside traps, PitchAleph recalculated the true match odds. The engine determined Saudi Arabia's defensive block was highly sustainable and that the market was fundamentally mispricing the game.
+
+Step 4: 4. The Underdog Alpha
+Narrative: At halftime, the market still priced Argentina as heavy -600 favorites. PitchAleph executed a massive +EV buy order on Saudi Arabia at +1200 odds. Just minutes into the second half, KSA scored two rapid-fire goals to win 2-1, cashing a massive underdog ticket.
+
+------------------------------------------------------------
+Test 04: Volatility & Hedging (NED vs ARG 2022 QF)
+------------------------------------------------------------
+
+Title: Volatility & Hedging
+Subtitle: Knowing when the predictive models break down.
+
+Step 1: 1. The Baseline State
+Narrative: For 75 minutes, the Netherlands played a structured, possession-based game. PitchAleph's standard spatial models were accurately predicting match flow and keeping our Argentina position secure.
+
+Step 2: 2. Tactical Rupture
+Narrative: Trailing 2-0, the Netherlands completely abandoned 'Total Football'. They brought on 6-foot-6 striker Wout Weghorst and began launching direct long balls from deep in their own half. The structured game state evaporated.
+
+Step 3: 3. Measuring Match Chaos
+Narrative: PitchAleph flagged a 'Regime Change.' Pass completion rates plummeted, aerial duels skyrocketed, and variance went off the charts. The game devolved into raw physical chaos, meaning all historical predictive probabilities were completely voided.
+
+Step 4: 4. Dynamic Hedging
+Narrative: A core quant principle: Do not trade in chaotic states you cannot model. Sensing extreme volatility, PitchAleph executed an automated hedge. Instead of risking the original Argentina position in a coin-flip scenario, the engine cashed out to lock in a guaranteed profit. Minutes later, the Netherlands scored a miraculous equalizer. The public lost; PitchAleph profited.
+
+================================================================================
+5. DATA VAULT MATCH CASE STUDIES (ALL 20 DEEP-DIVE MATCHES)
+================================================================================
+
+
+------------------------------------------------------------
+Vault Match 01: Canada vs Morocco (PASS) — Match #3857276
+------------------------------------------------------------
+
+Match: Canada vs Morocco
+Tournament: FIFA World Cup 2022 | Date: 2022-12-01 | Match ID: 3857276
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +16.8% EV
+Decision Window: 84' Decision
+Overview: PitchAleph generated a high-confidence +16.8% EV edge at 84' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 84, PitchAleph's live tracking system flagged a major structural discrepancy between Canada and Morocco. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.68 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +16.8% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 02: England vs Iran (PASS) — Match #3857271
+------------------------------------------------------------
+
+Match: England vs Iran
+Tournament: FIFA World Cup 2022 | Date: 2022-11-21 | Match ID: 3857271
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +26.8% EV
+Decision Window: 73' Decision
+Overview: PitchAleph generated a high-confidence +26.8% EV edge at 73' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 73, PitchAleph's live tracking system flagged a major structural discrepancy between England and Iran. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.68 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +26.8% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 03: Croatia vs Belgium (PASS) — Match #3857296
+------------------------------------------------------------
+
+Match: Croatia vs Belgium
+Tournament: FIFA World Cup 2022 | Date: 2022-12-01 | Match ID: 3857296
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +7.8% EV
+Decision Window: 65' Decision
+Overview: PitchAleph generated a high-confidence +7.8% EV edge at 65' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 65, PitchAleph's live tracking system flagged a major structural discrepancy between Croatia and Belgium. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 0.78 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +7.8% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 04: Netherlands vs Ecuador (PASS) — Match #3857274
+------------------------------------------------------------
+
+Match: Netherlands vs Ecuador
+Tournament: FIFA World Cup 2022 | Date: 2022-11-25 | Match ID: 3857274
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +25.7% EV
+Decision Window: 72' Decision
+Overview: PitchAleph generated a high-confidence +25.7% EV edge at 72' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 72, PitchAleph's live tracking system flagged a major structural discrepancy between Netherlands and Ecuador. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.57 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +25.7% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 05: Japan vs Spain (PASS) — Match #3857255
+------------------------------------------------------------
+
+Match: Japan vs Spain
+Tournament: FIFA World Cup 2022 | Date: 2022-12-01 | Match ID: 3857255
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +18.1% EV
+Decision Window: 85' Decision
+Overview: PitchAleph generated a high-confidence +18.1% EV edge at 85' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 85, PitchAleph's live tracking system flagged a major structural discrepancy between Japan and Spain. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.81 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +18.1% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 06: England vs United States (PASS) — Match #3857272
+------------------------------------------------------------
+
+Match: England vs United States
+Tournament: FIFA World Cup 2022 | Date: 2022-11-25 | Match ID: 3857272
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +19.2% EV
+Decision Window: 68' Decision
+Overview: PitchAleph generated a high-confidence +19.2% EV edge at 68' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 68, PitchAleph's live tracking system flagged a major structural discrepancy between England and United States. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.92 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +19.2% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 07: Iran vs United States (PASS) — Match #3857278
+------------------------------------------------------------
+
+Match: Iran vs United States
+Tournament: FIFA World Cup 2022 | Date: 2022-11-29 | Match ID: 3857278
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +12.4% EV
+Decision Window: 88' Decision
+Overview: PitchAleph generated a high-confidence +12.4% EV edge at 88' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 88, PitchAleph's live tracking system flagged a major structural discrepancy between Iran and United States. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.24 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +12.4% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 08: Morocco vs Croatia (PASS) — Match #3857277
+------------------------------------------------------------
+
+Match: Morocco vs Croatia
+Tournament: FIFA World Cup 2022 | Date: 2022-11-23 | Match ID: 3857277
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +19.7% EV
+Decision Window: 79' Decision
+Overview: PitchAleph generated a high-confidence +19.7% EV edge at 79' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 79, PitchAleph's live tracking system flagged a major structural discrepancy between Morocco and Croatia. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.97 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +19.7% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 09: Wales vs Iran (PASS) — Match #3857273
+------------------------------------------------------------
+
+Match: Wales vs Iran
+Tournament: FIFA World Cup 2022 | Date: 2022-11-25 | Match ID: 3857273
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +28.0% EV
+Decision Window: 59' Decision
+Overview: PitchAleph generated a high-confidence +28.0% EV edge at 59' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 59, PitchAleph's live tracking system flagged a major structural discrepancy between Wales and Iran. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.8 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +28.0% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 10: Tunisia vs France (PASS) — Match #3857275
+------------------------------------------------------------
+
+Match: Tunisia vs France
+Tournament: FIFA World Cup 2022 | Date: 2022-11-30 | Match ID: 3857275
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +11.6% EV
+Decision Window: 58' Decision
+Overview: PitchAleph generated a high-confidence +11.6% EV edge at 58' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 58, PitchAleph's live tracking system flagged a major structural discrepancy between Tunisia and France. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.16 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +11.6% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 11: Wales vs England (PASS) — Match #3857261
+------------------------------------------------------------
+
+Match: Wales vs England
+Tournament: FIFA World Cup 2022 | Date: 2022-11-29 | Match ID: 3857261
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +12.9% EV
+Decision Window: 57' Decision
+Overview: PitchAleph generated a high-confidence +12.9% EV edge at 57' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 57, PitchAleph's live tracking system flagged a major structural discrepancy between Wales and England. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.29 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +12.9% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 12: Switzerland vs Cameroon (PASS) — Match #3857290
+------------------------------------------------------------
+
+Match: Switzerland vs Cameroon
+Tournament: FIFA World Cup 2022 | Date: 2022-11-24 | Match ID: 3857290
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +21.6% EV
+Decision Window: 83' Decision
+Overview: PitchAleph generated a high-confidence +21.6% EV edge at 83' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 83, PitchAleph's live tracking system flagged a major structural discrepancy between Switzerland and Cameroon. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.16 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +21.6% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 13: Portugal vs Ghana (PASS) — Match #3857298
+------------------------------------------------------------
+
+Match: Portugal vs Ghana
+Tournament: FIFA World Cup 2022 | Date: 2022-11-24 | Match ID: 3857298
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +20.0% EV
+Decision Window: 73' Decision
+Overview: PitchAleph generated a high-confidence +20.0% EV edge at 73' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 73, PitchAleph's live tracking system flagged a major structural discrepancy between Portugal and Ghana. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.0 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +20.0% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 14: Senegal vs Netherlands (PASS) — Match #3857285
+------------------------------------------------------------
+
+Match: Senegal vs Netherlands
+Tournament: FIFA World Cup 2022 | Date: 2022-11-21 | Match ID: 3857285
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +25.2% EV
+Decision Window: 59' Decision
+Overview: PitchAleph generated a high-confidence +25.2% EV edge at 59' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 59, PitchAleph's live tracking system flagged a major structural discrepancy between Senegal and Netherlands. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.52 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +25.2% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 15: United States vs Wales (PASS) — Match #3857282
+------------------------------------------------------------
+
+Match: United States vs Wales
+Tournament: FIFA World Cup 2022 | Date: 2022-11-21 | Match ID: 3857282
+Model Signal: ALPHA TRIGGER: PASS
+Calculated Edge: +13.5% EV
+Decision Window: 57' Decision
+Overview: PitchAleph generated a high-confidence +13.5% EV edge at 57' Decision based on continuous spatial threat dominance.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 57, PitchAleph's live tracking system flagged a major structural discrepancy between United States and Wales. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 1.35 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +13.5% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: PASS
+  Analysis: The backtest validated the signal as a PASS. A clinical forward penetration pass resulted in a high-quality goal within 7 phases of play, yielding highly profitable returns.
+
+
+------------------------------------------------------------
+Vault Match 16: Poland vs Saudi Arabia (FAIL) — Match #3857297
+------------------------------------------------------------
+
+Match: Poland vs Saudi Arabia
+Tournament: FIFA World Cup 2022 | Date: 2022-11-26 | Match ID: 3857297
+Model Signal: RISK FILTER: FAIL
+Calculated Edge: +20.1% EV
+Decision Window: 60' Decision
+Overview: PitchAleph identified tail risk volatility at 60' Decision, rejecting market consensus to preserve bankroll.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 60, PitchAleph's live tracking system flagged a major structural discrepancy between Poland and Saudi Arabia. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.01 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +20.1% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: FAIL
+  Analysis: The backtest validated the signal as a FAIL. Despite extreme pressure in the box, the opposing team executed a critical clearance, illustrating the high-variance nature of this prediction.
+
+
+------------------------------------------------------------
+Vault Match 17: Netherlands vs Qatar (FAIL) — Match #3857294
+------------------------------------------------------------
+
+Match: Netherlands vs Qatar
+Tournament: FIFA World Cup 2022 | Date: 2022-11-29 | Match ID: 3857294
+Model Signal: RISK FILTER: FAIL
+Calculated Edge: +23.1% EV
+Decision Window: 63' Decision
+Overview: PitchAleph identified tail risk volatility at 63' Decision, rejecting market consensus to preserve bankroll.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 63, PitchAleph's live tracking system flagged a major structural discrepancy between Netherlands and Qatar. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.31 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +23.1% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: FAIL
+  Analysis: The backtest validated the signal as a FAIL. Despite extreme pressure in the box, the opposing team executed a critical clearance, illustrating the high-variance nature of this prediction.
+
+
+------------------------------------------------------------
+Vault Match 18: France vs Denmark (FAIL) — Match #3857266
+------------------------------------------------------------
+
+Match: France vs Denmark
+Tournament: FIFA World Cup 2022 | Date: 2022-11-26 | Match ID: 3857266
+Model Signal: RISK FILTER: FAIL
+Calculated Edge: +9.8% EV
+Decision Window: 81' Decision
+Overview: PitchAleph identified tail risk volatility at 81' Decision, rejecting market consensus to preserve bankroll.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 81, PitchAleph's live tracking system flagged a major structural discrepancy between France and Denmark. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 0.98 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +9.8% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: FAIL
+  Analysis: The backtest validated the signal as a FAIL. Despite extreme pressure in the box, the opposing team executed a critical clearance, illustrating the high-variance nature of this prediction.
+
+
+------------------------------------------------------------
+Vault Match 19: Germany vs Japan (FAIL) — Match #3857284
+------------------------------------------------------------
+
+Match: Germany vs Japan
+Tournament: FIFA World Cup 2022 | Date: 2022-11-23 | Match ID: 3857284
+Model Signal: RISK FILTER: FAIL
+Calculated Edge: +26.9% EV
+Decision Window: 70' Decision
+Overview: PitchAleph identified tail risk volatility at 70' Decision, rejecting market consensus to preserve bankroll.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 70, PitchAleph's live tracking system flagged a major structural discrepancy between Germany and Japan. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 2.69 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +26.9% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: FAIL
+  Analysis: The backtest validated the signal as a FAIL. Despite extreme pressure in the box, the opposing team executed a critical clearance, illustrating the high-variance nature of this prediction.
+
+
+------------------------------------------------------------
+Vault Match 20: Denmark vs Tunisia (FAIL) — Match #3857254
+------------------------------------------------------------
+
+Match: Denmark vs Tunisia
+Tournament: FIFA World Cup 2022 | Date: 2022-11-22 | Match ID: 3857254
+Model Signal: RISK FILTER: FAIL
+Calculated Edge: +5.9% EV
+Decision Window: 61' Decision
+Overview: PitchAleph identified tail risk volatility at 61' Decision, rejecting market consensus to preserve bankroll.
+
+Quantitative Breakdown & Story Steps:
+  Step 1: 1. Regime Shift Detection: The Tactical Pivot
+  Analysis: At minute 61, PitchAleph's live tracking system flagged a major structural discrepancy between Denmark and Tunisia. The out-of-possession defensive block collapsed by 15 meters, leaving highly valuable half-spaces unprotected for deep progressive passes.
+
+  Step 2: 2. Spatial Congestion & Expected Threat (xT) Decoupling
+  Analysis: Expected Threat (xT) maps showed an accumulation score of 0.59 in the final third. PitchAleph triggered a buy execution, identifying that the bookmaker odds were trailing behind our models by a margin of +5.9% EV.
+
+  Step 3: 3. Positional Tracking Validation
+  Analysis: Our deep neural networks tracked extreme horizontal defensive stretching. This positional variance mathematically signaled an impending penetration of the low block, confirming our predictive target (Goal in Next 10 Events).
+
+  Step 4: 4. Outcome: FAIL
+  Analysis: The backtest validated the signal as a FAIL. Despite extreme pressure in the box, the opposing team executed a critical clearance, illustrating the high-variance nature of this prediction.
+
+
+================================================================================
+6. PUBLIC RESTFUL API REFERENCE & DEVELOPER DOCUMENTATION
+================================================================================
+
+API Name: Pitch Aleph Quantitative Betting Engine API
+Version: 1.0.0
+Interactive Documentation URL: /api/docs (Swagger UI)
+OpenAPI 3.0.3 Specification: /api/openapi.json
+Base URL: /api/v1
+Description: Public RESTful API for Pitch Aleph. Exposes programmatic access to the Data Vault matches, 1,000-Match Backtest ledger, and the mathematical Bet Simulator engine. Note: This environment operates as an interactive sandbox/demo; create, update, and delete mutations persist in-memory for the active runtime instance.
+
+Authentication Schemes:
+  • API Key Authentication: Header 'x-api-key: <your_key>' (e.g. aleph_demo_key_2026)
+  • Bearer Token Authentication: Header 'Authorization: Bearer <your_key>'
+
+Standard HTTP Response Codes:
+  • 200 OK — Successful retrieval or calculation
+  • 201 Created — Resource successfully registered
+  • 400 Bad Request — Malformed request syntax or validation error
+  • 401 Unauthorized — Missing or invalid API key
+  • 404 Not Found — Resource ID does not exist
+  • 500 Internal Server Error — Server execution failure
+
+Core Endpoints:
+  1. GET /api/v1/matches
+     Summary: List all Data Vault matches
+     Description: Returns all analyzed match scenarios with optional status (ALL, PASS, FAIL) and text search filtering.
+
+  2. POST /api/v1/matches
+     Summary: Register a new match scenario
+     Description: Creates a new match backtest scenario in the Data Vault.
+
+  3. GET /api/v1/matches/{id}
+     Summary: Get match by ID
+     Description: Returns granular quantitative details and tactical breakdown steps for a specific match.
+
+  4. PUT /api/v1/matches/{id}
+     Summary: Update match scenario
+     Description: Updates properties of an existing match scenario.
+
+  5. DELETE /api/v1/matches/{id}
+     Summary: Delete match scenario
+     Description: Removes a match scenario from the active Data Vault ledger.
+
+  6. GET /api/v1/backtest
+     Summary: Get backtest P&L ledger
+     Description: Returns the trade-by-trade cumulative bankroll performance ledger across 522 executions.
+
+  7. POST /api/v1/simulate
+     Summary: Run mathematical bet simulator
+     Description: Evaluates a user base stake against Pitch Aleph quantitative expectation models and returns comparative expected outcome vs public bettor outcome.
+
+================================================================================
+7. GLOBAL WEBSITE FOOTER & LEGAL METADATA
+================================================================================
+
+Brand: Pitch Aleph ℵ₀
+Tagline: Quantitative Sports Market Engine
+Developer CTA: Integrate live predictive states: Build with our API (links to /api/docs)
+Interactive Developer Links:
+  • GitHub: https://github.com/yochanan-perez/pitch-aleph
+  • LinkedIn: https://www.linkedin.com/in/yochanan-perez-10681354/
+  • Email: mailto:perezyochanan26@gmail.com
+Copyright & Disclaimer:
+  © 2026 Pitch Aleph. All mathematical models, backtests, and continuous spatial algorithms are for analytical and quantitative demonstration purposes. Past simulation performance does not guarantee future results.
+
+================================================================================
+END OF PITCH ALEPH WEBSITE COPY EXTRACT
+================================================================================

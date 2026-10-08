@@ -212,10 +212,84 @@ const VAULT_CALCULATOR_DATA = Object.fromEntries(
   })
 );
 
-const CALCULATOR_DATA = {
+// ─── SCENARIO DISPARITY CALCULATION & ORDERING ─────────────────
+// Categorization tiers based on PitchAleph outcome vs Public Bettor:
+// 1. Greatest win over Public (Underdogs/Contrarians/Late Money where Engine captures massive profit)
+// 2. Mitigated losses (Engine locks profit, Kelly caps risk, or risk filter blocks loss vs Public total wipeout)
+// 3. Breaking even or slight edge (Equal outcome / Dumb money lucky hit)
+const RAW_ALL_CALCULATOR_DATA = {
   ...CORE_CALCULATOR_DATA,
   ...VAULT_CALCULATOR_DATA
 };
+
+const getScenarioDisparityScore = (key, item) => {
+  // Use benchmark stake of $1,000 to determine disparity
+  const stake = 1000;
+  let pitchPnL = 0;
+  let publicPnL = 0;
+
+  if (key === 'ksa') {
+    pitchPnL = 12000;
+    publicPnL = -1000;
+    return { tier: 1, disparity: pitchPnL - publicPnL }; // +$13,000
+  }
+  if (key === 'ned') {
+    pitchPnL = 400;
+    publicPnL = -1000;
+    return { tier: 2, disparity: pitchPnL - publicPnL }; // +$1,400
+  }
+  if (key === '2018') {
+    pitchPnL = -100;
+    publicPnL = -1000;
+    return { tier: 2, disparity: pitchPnL - publicPnL }; // +$900
+  }
+  if (key === '2022') {
+    pitchPnL = 1500;
+    publicPnL = 1500;
+    return { tier: 3, disparity: pitchPnL - publicPnL }; // $0
+  }
+
+  // Vault cases
+  const isPass = item.category === 'Vault Pass';
+  const pubText = item.publicResult(stake);
+  const pitchText = item.pitchAlephResult(stake);
+
+  if (!isPass) {
+    // Mitigated loss: Public loses $1,000, Pitch loses $0
+    return { tier: 2, disparity: 1000 };
+  }
+
+  // Pass cases:
+  if (pubText.includes('Contrarian')) {
+    // Public loses $1,000, Pitch wins full profit
+    const match = pitchText.match(/\$([0-9,]+)/);
+    const winAmt = match ? parseInt(match[1].replace(/,/g, ''), 10) : 1500;
+    return { tier: 1, disparity: winAmt + 1000 };
+  }
+  if (pubText.includes('Late Money')) {
+    // Engine wins 40% more profit than public
+    const pitchMatch = pitchText.match(/\$([0-9,]+)/);
+    const pubMatch = pubText.match(/\$([0-9,]+)/);
+    const pitchWin = pitchMatch ? parseInt(pitchMatch[1].replace(/,/g, ''), 10) : 1500;
+    const pubWin = pubMatch ? parseInt(pubMatch[1].replace(/,/g, ''), 10) : 900;
+    return { tier: 1, disparity: pitchWin - pubWin };
+  }
+  // Dumb Money: same win amount
+  return { tier: 3, disparity: 0 };
+};
+
+const SORTED_CALCULATOR_KEYS = Object.keys(RAW_ALL_CALCULATOR_DATA).sort((a, b) => {
+  const scoreA = getScenarioDisparityScore(a, RAW_ALL_CALCULATOR_DATA[a]);
+  const scoreB = getScenarioDisparityScore(b, RAW_ALL_CALCULATOR_DATA[b]);
+  if (scoreA.tier !== scoreB.tier) {
+    return scoreA.tier - scoreB.tier;
+  }
+  return scoreB.disparity - scoreA.disparity;
+});
+
+const CALCULATOR_DATA = Object.fromEntries(
+  SORTED_CALCULATOR_KEYS.map(key => [key, RAW_ALL_CALCULATOR_DATA[key]])
+);
 
 // ─── CUSTOM SVG ICONS ─────────────────────────────────────────
 const IconArrowLeft = ({ className = "w-4 h-4" }) => (
@@ -497,7 +571,7 @@ export default function App() {
   const [matchData, setMatchData] = useState([]);
   
   const [calcStake, setCalcStake] = useState(1000);
-  const [calcCase, setCalcCase] = useState('2022');
+  const [calcCase, setCalcCase] = useState('ksa');
   const [calcFilter, setCalcFilter] = useState('ALL');
   const [showCanvas, setShowCanvas] = useState(false);
   const [manualMinute, setManualMinute] = useState(null);
@@ -1073,28 +1147,9 @@ export default function App() {
           <div className="mb-6 md:mb-8 flex items-center gap-2">
             <span className="text-xs sm:text-sm font-mono font-bold tracking-wider uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Launch Your Secret Weapon
+              <span>Launch Your Secret Weapon</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             </span>
-          </div>
-
-          {/* Scenario buttons — 1 col on xs, 2 col on sm+ */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full mb-6">
-            <button onClick={() => navigate('#/case/2022')} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all cursor-pointer">
-              <span className="text-xs text-slate-400 mb-1">TEST 01: ALPHA GENERATION</span>
-              <span className="text-base sm:text-lg">ARG vs FRA (2022)</span>
-            </button>
-            <button onClick={() => navigate('#/case/2018')} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all cursor-pointer">
-              <span className="text-xs text-slate-400 mb-1">TEST 02: TAIL RISK / VARIANCE</span>
-              <span className="text-base sm:text-lg">GER vs KOR (2018)</span>
-            </button>
-            <button onClick={() => navigate('#/case/ksa')} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all cursor-pointer">
-              <span className="text-xs text-slate-400 mb-1">TEST 03: UNDERDOG INEFFICIENCY</span>
-              <span className="text-base sm:text-lg">KSA vs ARG (2022)</span>
-            </button>
-            <button onClick={() => navigate('#/case/ned')} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all cursor-pointer">
-              <span className="text-xs text-slate-400 mb-1">TEST 04: DYNAMIC HEDGING</span>
-              <span className="text-base sm:text-lg">NED vs ARG (2022)</span>
-            </button>
           </div>
 
           {/* ─── CLOUD ARCHITECTURE & DATA VAULT SECTION ─── */}
@@ -1103,22 +1158,6 @@ export default function App() {
               Cloud Architecture & Scaled Backtesting
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button 
-                onClick={() => navigate('#/vault')} 
-                className="px-6 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
-              >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-emerald-400">DATA VAULT</span>
-                  <span className="text-xs text-slate-500 font-normal">{VAULT_PASS_COUNT} PASS / {VAULT_FAIL_COUNT} FAIL</span>
-                </div>
-                <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-                  {VAULT_MATCHES.length}-Match Indexed Sample →
-                </span>
-                <span className="text-xs font-normal text-slate-400 mt-1">
-                  Explore algorithmic signal screening across {VAULT_MATCHES.length} FIFA World Cup matches
-                </span>
-              </button>
-
               <button 
                 onClick={() => navigate('#/1k_sim')} 
                 className="px-6 py-4 bg-blue-950/20 border border-blue-500/40 hover:border-blue-400 text-blue-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(59,130,246,0.1)] hover:shadow-[0_0_35px_rgba(59,130,246,0.2)] cursor-pointer"
@@ -1132,6 +1171,22 @@ export default function App() {
                 </span>
                 <span className="text-xs font-normal text-slate-400 mt-1">
                   XGBoost inference across 3M+ spatial events with Platt Scaling and liquidity cap
+                </span>
+              </button>
+
+              <button 
+                onClick={() => navigate('#/vault')} 
+                className="px-6 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
+              >
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className="text-xs text-emerald-400">DATA VAULT</span>
+                  <span className="text-xs text-slate-500 font-normal">{VAULT_PASS_COUNT} PASS / {VAULT_FAIL_COUNT} FAIL</span>
+                </div>
+                <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
+                  {VAULT_MATCHES.length}-Match Indexed Sample →
+                </span>
+                <span className="text-xs font-normal text-slate-400 mt-1">
+                  Explore algorithmic signal screening across {VAULT_MATCHES.length} FIFA World Cup matches
                 </span>
               </button>
             </div>
@@ -1459,6 +1514,31 @@ export default function App() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* ─── 4 CORE TEST CASES (AT BOTTOM) ─── */}
+          <div className="w-full border-t border-slate-800/80 pt-8 mb-8">
+            <h2 className="text-xs font-mono text-slate-500 tracking-widest mb-4 uppercase text-left">
+              Core Interactive Case Studies
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full">
+              <button onClick={() => navigate('#/case/2022')} className="px-5 py-4 bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-mono font-bold rounded hover:bg-emerald-500/20 text-left flex flex-col transition-all cursor-pointer">
+                <span className="text-xs text-slate-400 mb-1">TEST 01: ALPHA GENERATION</span>
+                <span className="text-base sm:text-lg">ARG vs FRA (2022)</span>
+              </button>
+              <button onClick={() => navigate('#/case/2018')} className="px-5 py-4 bg-red-500/10 border border-red-500 text-red-400 font-mono font-bold rounded hover:bg-red-500/20 text-left flex flex-col transition-all cursor-pointer">
+                <span className="text-xs text-slate-400 mb-1">TEST 02: TAIL RISK / VARIANCE</span>
+                <span className="text-base sm:text-lg">GER vs KOR (2018)</span>
+              </button>
+              <button onClick={() => navigate('#/case/ksa')} className="px-5 py-4 bg-purple-500/10 border border-purple-500 text-purple-400 font-mono font-bold rounded hover:bg-purple-500/20 text-left flex flex-col transition-all cursor-pointer">
+                <span className="text-xs text-slate-400 mb-1">TEST 03: UNDERDOG INEFFICIENCY</span>
+                <span className="text-base sm:text-lg">KSA vs ARG (2022)</span>
+              </button>
+              <button onClick={() => navigate('#/case/ned')} className="px-5 py-4 bg-orange-500/10 border border-orange-500 text-orange-400 font-mono font-bold rounded hover:bg-orange-500/20 text-left flex flex-col transition-all cursor-pointer">
+                <span className="text-xs text-slate-400 mb-1">TEST 04: DYNAMIC HEDGING</span>
+                <span className="text-base sm:text-lg">NED vs ARG (2022)</span>
+              </button>
             </div>
           </div>
 
