@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import VAULT_MATCHES from './vault_index.json';
 import CHART_DATA from './backtest_chart_data.json';
+import LiveSportsTicker from './components/LiveSportsTicker';
 
 const VAULT_PASS_COUNT = VAULT_MATCHES.filter(m => m.status === 'PASS').length;
 const VAULT_FAIL_COUNT = VAULT_MATCHES.filter(m => m.status === 'FAIL').length;
@@ -225,28 +226,18 @@ const RAW_ALL_CALCULATOR_DATA = {
 const getScenarioDisparityScore = (key, item) => {
   // Use benchmark stake of $1,000 to determine disparity
   const stake = 1000;
-  let pitchPnL = 0;
-  let publicPnL = 0;
 
   if (key === 'ksa') {
-    pitchPnL = 12000;
-    publicPnL = -1000;
-    return { tier: 1, disparity: pitchPnL - publicPnL }; // +$13,000
+    return { tier: 1, disparity: 12000 - (-1000) }; // +$13,000
   }
   if (key === 'ned') {
-    pitchPnL = 400;
-    publicPnL = -1000;
-    return { tier: 2, disparity: pitchPnL - publicPnL }; // +$1,400
+    return { tier: 2, disparity: 400 - (-1000) }; // +$1,400
   }
   if (key === '2018') {
-    pitchPnL = -100;
-    publicPnL = -1000;
-    return { tier: 2, disparity: pitchPnL - publicPnL }; // +$900
+    return { tier: 2, disparity: -100 - (-1000) }; // +$900
   }
   if (key === '2022') {
-    pitchPnL = 1500;
-    publicPnL = 1500;
-    return { tier: 3, disparity: pitchPnL - publicPnL }; // $0
+    return { tier: 3, disparity: 0 }; // $0
   }
 
   // Vault cases
@@ -1121,7 +1112,10 @@ export default function App() {
       <div className="min-h-screen bg-slate-950 flex flex-col font-sans text-white relative overflow-y-auto pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/20 via-slate-950 to-slate-950 fixed pointer-events-none"></div>
 
-        <div className="z-10 flex flex-col items-center w-full max-w-5xl mx-auto text-center px-4 sm:px-6 mt-10 sm:mt-16 md:mt-20">
+        {/* Live Sports Ticker Marquee */}
+        <LiveSportsTicker />
+
+        <div className="z-10 flex flex-col items-center w-full max-w-5xl mx-auto text-center px-4 sm:px-6 mt-6 sm:mt-10 md:mt-12">
           {/* Logo + Hero */}
           <div className="relative mb-4 md:mb-6 inline-flex items-center justify-center">
             {/* Reactive glow ring — remounts on each trigger to restart animation */}
