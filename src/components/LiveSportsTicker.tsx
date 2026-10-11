@@ -51,13 +51,20 @@ const TickerTooltip = ({
   );
 };
 
-// Default upcoming fixtures with N/A EV state awaiting model execution
+// Helper to generate dynamic upcoming fixture timestamps relative to now
+const getFutureUtcIso = (hoursFromNow: number) => {
+  const date = new Date(Date.now() + hoursFromNow * 3600 * 1000);
+  date.setUTCMinutes(0, 0, 0);
+  return date.toISOString();
+};
+
+// Default upcoming fixtures with dynamic relative timestamps and N/A EV state awaiting live inference
 const DEFAULT_TICKER_FIXTURES: Fixture[] = [
   {
     id: 'fix-1',
     home_team: 'Arsenal',
     away_team: 'Manchester City',
-    utc_timestamp: '2026-10-10T16:30:00Z',
+    utc_timestamp: getFutureUtcIso(4),
     league: 'PREMIER LEAGUE',
     ev: null
   },
@@ -65,7 +72,7 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
     id: 'fix-2',
     home_team: 'Real Madrid',
     away_team: 'Barcelona',
-    utc_timestamp: '2026-10-10T19:00:00Z',
+    utc_timestamp: getFutureUtcIso(7),
     league: 'LA LIGA',
     ev: null
   },
@@ -73,7 +80,7 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
     id: 'fix-3',
     home_team: 'Bayern Munich',
     away_team: 'Borussia Dortmund',
-    utc_timestamp: '2026-10-11T14:30:00Z',
+    utc_timestamp: getFutureUtcIso(22),
     league: 'BUNDESLIGA',
     ev: null
   },
@@ -81,7 +88,7 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
     id: 'fix-4',
     home_team: 'Inter Milan',
     away_team: 'Juventus',
-    utc_timestamp: '2026-10-11T18:45:00Z',
+    utc_timestamp: getFutureUtcIso(28),
     league: 'SERIE A',
     ev: null
   },
@@ -89,7 +96,7 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
     id: 'fix-5',
     home_team: 'Paris Saint-Germain',
     away_team: 'Marseille',
-    utc_timestamp: '2026-10-11T20:00:00Z',
+    utc_timestamp: getFutureUtcIso(32),
     league: 'LIGUE 1',
     ev: null
   },
@@ -97,7 +104,7 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
     id: 'fix-6',
     home_team: 'Liverpool',
     away_team: 'Chelsea',
-    utc_timestamp: '2026-10-12T15:00:00Z',
+    utc_timestamp: getFutureUtcIso(48),
     league: 'PREMIER LEAGUE',
     ev: null
   }

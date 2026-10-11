@@ -560,6 +560,8 @@ export default function App() {
   const [activeVaultMatch, setActiveVaultMatch] = useState(initialRoute.activeVaultMatch);
   const [activeStep, setActiveStep] = useState(1);
   const [matchData, setMatchData] = useState([]);
+  const [matchDataLoading, setMatchDataLoading] = useState(false);
+  const [matchDataError, setMatchDataError] = useState(null);
   
   const [calcStake, setCalcStake] = useState(1000);
   const [calcCase, setCalcCase] = useState('ksa');
@@ -653,6 +655,13 @@ export default function App() {
     setShowCanvas(false);
     setManualMinute(null);
     manualMinuteRef.current = null;
+    setMatchDataError(null);
+    if (route.activeCase && route.activeCase !== '1k_sim' && route.activeCase !== 'vault') {
+      setMatchDataLoading(true);
+      setMatchData([]);
+    } else {
+      setMatchDataLoading(false);
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
@@ -723,11 +732,21 @@ export default function App() {
     const controller = new AbortController();
 
     fetch(targetFile, { signal: controller.signal })
-      .then((res) => res.json())
-      .then((data) => setMatchData(data))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error ${res.status}: unable to load ${targetFile}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setMatchData(data);
+        setMatchDataLoading(false);
+      })
       .catch((err) => {
         if (err.name !== 'AbortError') {
           console.error("Data missing.", err);
+          setMatchDataError(err.message || 'Spatial event stream currently unavailable.');
+          setMatchDataLoading(false);
         }
       });
 
@@ -787,10 +806,17 @@ export default function App() {
       const matchMinute = manualMinuteRef.current !== null ? manualMinuteRef.current : (time % timeLimit);
 
       const parent = canvas.parentElement;
-      const W = parent ? parent.clientWidth : canvas.width;
-      const H = parent ? parent.clientHeight : canvas.height;
-      if (canvas.width !== W) canvas.width = W;
-      if (canvas.height !== H) canvas.height = H;
+      const W = parent ? parent.clientWidth : 300;
+      const H = parent ? parent.clientHeight : 200;
+      const dpr = typeof window !== 'undefined' ? (window.devicePixelRatio || 1) : 1;
+
+      if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) {
+        canvas.width = Math.round(W * dpr);
+        canvas.height = Math.round(H * dpr);
+      }
+
+      ctx.save();
+      ctx.scale(dpr, dpr);
 
       // Responsive padding - tighter on mobile
       const pad = W < 500 ? 20 : 40;
@@ -880,6 +906,7 @@ export default function App() {
           ctx.fillText(text.replace('\n', ' '), W / 2, H / 2);
         }
       }
+      ctx.restore();
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -1411,7 +1438,17 @@ export default function App() {
                     {['ALL', 'CORE', 'VAULT'].map(cat => (
                       <button
                         key={cat}
-                        onClick={() => setCalcFilter(cat)}
+                        onClick={() => {
+                          setCalcFilter(cat);
+                          const matchingKeys = Object.keys(CALCULATOR_DATA).filter(key => {
+                            if (cat === 'CORE') return ['2022', '2018', 'ksa', 'ned'].includes(key);
+                            if (cat === 'VAULT') return key.startsWith('vault_');
+                            return true;
+                          });
+                          if (!matchingKeys.includes(calcCase) && matchingKeys.length > 0) {
+                            setCalcCase(matchingKeys[0]);
+                          }
+                        }}
                         className={`text-[10px] font-mono px-2 py-0.5 rounded cursor-pointer transition-all ${
                           calcFilter === cat ? 'bg-slate-700 text-white font-bold' : 'text-slate-500 hover:text-slate-300'
                         }`}
@@ -1780,6 +1817,32 @@ def compute_continuous_threat(event_stream):
         {/* Canvas panel */}
         <div className={`${showCanvas ? 'flex' : 'hidden'} md:flex h-[70vw] md:h-full w-full bg-slate-950 relative border-t md:border-t-0 md:border-l border-slate-800`}>
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+
+          {/* Loading / Error fallback overlays */}
+          {matchDataLoading && (
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950/80 backdrop-blur-sm font-mono text-xs text-slate-400 gap-2">
+              <span className="w-3 h-3 rounded-full border-2 border-emerald-400 border-t-transparent animate-spin"></span>
+              <span>STREAMING SPATIAL EVENTS...</span>
+            </div>
+          )}
+
+          {matchDataError && (
+            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950/90 backdrop-blur-sm p-6 text-center font-mono">
+              <div className="text-red-400 text-sm font-bold mb-2 flex items-center gap-2">
+                <IconWarning className="w-4 h-4 text-red-400" />
+                <span>SPATIAL STREAM OFFLINE</span>
+              </div>
+              <p className="text-xs text-slate-400 max-w-sm mb-4">
+                {matchDataError}
+              </p>
+              <button
+                onClick={() => navigateBack('#/')}
+                className="px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs border border-slate-700 transition-colors cursor-pointer"
+              >
+                RETURN TO DASHBOARD
+              </button>
+            </div>
+          )}
 
           {/* Engine status — top right */}
           <div className="absolute top-3 right-3 text-emerald-400 font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase z-10">

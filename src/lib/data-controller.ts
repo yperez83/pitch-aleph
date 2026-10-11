@@ -109,13 +109,17 @@ export function runSimulationEngine(params: SimulationParams): SimulationResult 
     pitchPnl = stake * 0.4;
     publicDesc = `Loses $${stake.toLocaleString()} (NED tied 2-2 in 90+11')`;
     pitchDesc = `Locks in $${(stake * 0.4).toLocaleString()} Profit (Engine automatically hedged/cashed out at 80')`;
-  } else if (matchId) {
-    const found = getMatchById(matchId);
+  } else if (matchId || caseKey.startsWith('vault_')) {
+    const targetId = matchId || caseKey.replace('vault_', '');
+    const foundIndex = matchesData.findIndex(m => m.id === targetId);
+    const found = foundIndex !== -1 ? matchesData[foundIndex] : undefined;
     if (found) {
-      matchTitle = `${found.title} (${found.status})`;
-      status = found.status;
+      const idx = foundIndex;
       const isPass = found.status === 'PASS';
       const evVal = parseFloat(found.ev) || 14.2;
+      const minuteLabel = found.minute || "75' Decision";
+      matchTitle = `${found.title} (${found.status}) — ${found.date} (${minuteLabel})`;
+      status = found.status;
       modelEv = found.ev.trim();
 
       if (isPass) {
@@ -124,10 +128,20 @@ export function runSimulationEngine(params: SimulationParams): SimulationResult 
         const implied = Number(((100 / (americanOdds + 100)) * 100).toFixed(1));
         marketOdds = `+${americanOdds} (${implied}% implied)`;
         modelProb = `${(implied + evVal).toFixed(1)}%`;
-        publicPnl = Math.round(stake * mult);
         pitchPnl = Math.round(stake * mult);
-        publicDesc = `Wins $${publicPnl.toLocaleString()} (Lucky bet, negative long-term EV)`;
-        pitchDesc = `Wins $${pitchPnl.toLocaleString()} (Captured ${modelEv} quantitative edge)`;
+        pitchDesc = `Wins $${pitchPnl.toLocaleString()} (PitchAleph algorithmic buy order at ${minuteLabel} captured ${modelEv} edge)`;
+
+        const scenario = idx % 3;
+        if (scenario === 0) {
+          publicPnl = -stake;
+          publicDesc = `Loses full $${stake.toLocaleString()} (The Contrarian Scenario: Public backed the heavy favorite instead, losing their full stake while PitchAleph won the underdog payout)`;
+        } else if (scenario === 1) {
+          publicPnl = Math.round(stake * mult);
+          publicDesc = `Wins $${publicPnl.toLocaleString()} (The Dumb Money Scenario: Lucky, Negative-EV bet long-term; public backed the same team but holds negative mathematical expectancy)`;
+        } else {
+          publicPnl = Math.round(stake * mult * 0.6);
+          publicDesc = `Wins $${publicPnl.toLocaleString()} (The Late Money Scenario: Public bet the same team but reacted late, getting crushed closing odds and winning 40% less profit than PitchAleph)`;
+        }
       } else {
         const americanOdds = Math.round(160 + evVal * 4);
         const implied = Number(((americanOdds / (americanOdds + 100)) * 100).toFixed(1));
@@ -135,8 +149,8 @@ export function runSimulationEngine(params: SimulationParams): SimulationResult 
         modelProb = `${(implied - evVal).toFixed(1)}%`;
         publicPnl = -stake;
         pitchPnl = 0;
-        publicDesc = `Loses full $${stake.toLocaleString()} (Public favorite collapsed)`;
-        pitchDesc = `Loses $0 / Hedged (Kelly risk filter blocked position)`;
+        publicDesc = `Loses full $${stake.toLocaleString()} (Public forced heavy favorite at -${americanOdds} that collapsed to defensive variance)`;
+        pitchDesc = `Loses $0 / Hedged (Kelly risk filter blocked position at ${minuteLabel}, preventing catastrophic loss)`;
       }
     }
   }
