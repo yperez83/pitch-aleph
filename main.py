@@ -96,8 +96,8 @@ async def lifespan(app: FastAPI):
     """
     logger.info("Initializing PitchAleph 1.1 Inference Engine lifespan...")
 
-    endpoint_url = os.getenv("DO_SPACES_ENDPOINT", "https://nyc3.digitaloceanspaces.com")
-    region_name = os.getenv("DO_SPACES_REGION", "nyc3")
+    endpoint_url = os.getenv("DO_SPACES_ENDPOINT", "https://sfo3.digitaloceanspaces.com")
+    region_name = os.getenv("DO_SPACES_REGION", "sfo3")
     bucket_name = os.getenv("DO_SPACES_BUCKET", "pitch-aleph")
     access_key = os.getenv("DO_SPACES_KEY") or os.getenv("AWS_ACCESS_KEY_ID")
     secret_key = os.getenv("DO_SPACES_SECRET") or os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -368,14 +368,43 @@ async def calculate_edge(
         )
 
     # 1. Transform features into Pandas DataFrame
-    feature_dict = {
+    # Base 5 core match state features
+    feature_dict: dict[str, list[Any]] = {
         "match_time_ratio": [match_state.match_time_ratio],
-        "goal_differential": [match_state.goal_differential],
-        "team_A_possession_share": [match_state.team_A_possession_share],
         "shot_differential": [match_state.shot_differential],
+        "team_A_possession_share": [match_state.team_A_possession_share],
+        "goal_differential": [match_state.goal_differential],
         "prematch_elo_diff": [match_state.prematch_elo_diff],
     }
+
+    # If the loaded frozen model expects the expanded 16-feature schema, enrich DataFrame
+    model_features = []
+    base_est = getattr(model, "estimator", model)
+    if hasattr(base_est, "feature_names_in_"):
+        model_features = [str(f) for f in base_est.feature_names_in_]
+    elif hasattr(model, "get_booster") and model.get_booster().feature_names:
+        model_features = [str(f) for f in model.get_booster().feature_names]
+
+    if model_features and len(model_features) > 5:
+        # Impute team baseline elos around 1800 with prematch_elo_diff split
+        base_elo = 1800.0
+        feature_dict["team_A_prematch_elo"] = [base_elo + (match_state.prematch_elo_diff / 2.0)]
+        feature_dict["team_B_prematch_elo"] = [base_elo - (match_state.prematch_elo_diff / 2.0)]
+        feature_dict["event_seconds"] = [match_state.match_time_ratio * 5400.0]
+        # One-hot event indicators default to generic in-play touch
+        for event_name in [
+            "event_duel", "event_foul", "event_pass", "event_save",
+            "event_set_piece", "event_shot", "event_stoppage"
+        ]:
+            feature_dict[event_name] = [0]
+        feature_dict["event_touch"] = [1]
+
     features_df = pd.DataFrame(feature_dict)
+    # Ensure exact column ordering if the model defines it
+    if model_features:
+        available_cols = [c for c in model_features if c in features_df.columns]
+        if len(available_cols) == len(model_features):
+            features_df = features_df[model_features]
 
     # 2. Inference via XGBoost model (predict probability of positive class)
     try:
