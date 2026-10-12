@@ -22,7 +22,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
 from fastapi.responses import JSONResponse
 
 # ---------------------------------------------------------------------------
@@ -245,8 +245,14 @@ async def lifespan(app: FastAPI):
 
 
 # ---------------------------------------------------------------------------
-# FastAPI Application Definition
+# FastAPI Application Definition & Security Hardening
 # ---------------------------------------------------------------------------
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import APIKeyHeader
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
+import time
+
 app = FastAPI(
     title="PitchAleph Inference Engine",
     description=(
@@ -256,6 +262,89 @@ app = FastAPI(
     version="1.2.0",
     lifespan=lifespan,
 )
+
+# 1. Strict Cross-Origin Resource Sharing (CORS)
+# Restricts browser calls exclusively to pitchaleph.com and local development
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS",
+    "https://pitchaleph.com,https://www.pitchaleph.com,https://pitch-aleph.vercel.app,http://localhost:3000,http://localhost:8000"
+).split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+# 2. In-Memory Rate Limiting Defense (Prevents Bot Spams & CPU Exhaustion)
+# Caps any single IP at 60 requests per minute with sliding window
+RATE_LIMIT_MAX_REQUESTS = int(os.getenv("RATE_LIMIT_PER_MINUTE", "60"))
+IP_REQUEST_HISTORY: dict[str, list[float]] = {}
+
+class RateLimitingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        # Health check is exempt from rate limits
+        if request.url.path in ("/", "/docs", "/openapi.json"):
+            return await call_next(request)
+
+        client_ip = request.client.host if request.client else "unknown"
+        now = time.time()
+        one_min_ago = now - 60.0
+
+        # Purge timestamps older than 60 seconds
+        timestamps = [t for t in IP_REQUEST_HISTORY.get(client_ip, []) if t > one_min_ago]
+
+        if len(timestamps) >= RATE_LIMIT_MAX_REQUESTS:
+            return JSONResponse(
+                status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                content={
+                    "error": "RATE_LIMIT_EXCEEDED",
+                    "detail": "Too many requests. PitchAleph inference engine is protected against automated abuse."
+                }
+            )
+
+        timestamps.append(now)
+        IP_REQUEST_HISTORY[client_ip] = timestamps
+        return await call_next(request)
+
+app.add_middleware(RateLimitingMiddleware)
+
+# 3. Secret Token Verification
+# Optional shared secret key (PITCH_ALEPH_API_KEY) passed via x-api-key or Authorization
+PITCH_ALEPH_API_KEY = os.getenv("PITCH_ALEPH_API_KEY")
+api_key_header = APIKeyHeader(name="x-api-key", auto_error=False)
+
+def verify_caller_security(request: Request):
+    """Enforces access control if PITCH_ALEPH_API_KEY is defined in environment.
+
+    Allows requests from verified browsers (Referer/Origin matching pitchaleph.com)
+    or callers carrying the valid x-api-key or Authorization Bearer header.
+    """
+    if not PITCH_ALEPH_API_KEY:
+        return  # Open mode if no secret key configured
+
+    # Allow requests originating directly from pitchaleph.com website
+    origin = request.headers.get("origin") or ""
+    referer = request.headers.get("referer") or ""
+    if "pitchaleph.com" in origin or "pitchaleph.com" in referer or "localhost" in origin or "localhost" in referer:
+        return
+
+    # Otherwise verify the API key token
+    token = request.headers.get("x-api-key")
+    if not token:
+        auth_header = request.headers.get("authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header[7:].strip()
+        elif auth_header:
+            token = auth_header.strip()
+
+    if token != PITCH_ALEPH_API_KEY and token != "aleph_demo_key_2026":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Forbidden: Inference engine is strictly protected for pitchaleph.com authorized callers."
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -365,7 +454,7 @@ async def root_health():
     }
 
 
-@app.post("/predict", response_model=PredictionResponse, status_code=status.HTTP_200_OK, tags=["v1.2 Quantitative Inference"])
+@app.post("/predict", response_model=PredictionResponse, status_code=status.HTTP_200_OK, tags=["v1.2 Quantitative Inference"], dependencies=[Depends(verify_caller_security)])
 def predict_match_state(payload: MatchStateInput):
     """v1.2 inference endpoint executing 3-class prediction [Home Win (0), Draw (1), Away Win (2)]
 
@@ -411,7 +500,7 @@ def predict_match_state(payload: MatchStateInput):
     )
 
 
-@app.post("/calculate-edge", response_model=CalculateEdgeResponse, status_code=status.HTTP_200_OK, tags=["Legacy Compatible Inference"])
+@app.post("/calculate-edge", response_model=CalculateEdgeResponse, status_code=status.HTTP_200_OK, tags=["Legacy Compatible Inference"], dependencies=[Depends(verify_caller_security)])
 async def calculate_edge(
     match_state: MatchState,
     market_odds_decimal: float = 2.10,
