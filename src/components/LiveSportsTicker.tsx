@@ -110,13 +110,45 @@ const DEFAULT_TICKER_FIXTURES: Fixture[] = [
   }
 ];
 
+// Team Elo lookup table matching models/v1.1/elo_ratings.json
+const TEAM_ELO_BASELINE: Record<string, number> = {
+  Arsenal: 1840.5,
+  'Manchester City': 1920.2,
+  'Real Madrid': 1910.8,
+  Barcelona: 1875.4,
+  'Bayern Munich': 1880.0,
+  'Borussia Dortmund': 1785.1,
+  'Inter Milan': 1830.2,
+  Juventus: 1770.6,
+  'Paris Saint-Germain': 1850.0,
+  Marseille: 1735.4,
+  Liverpool: 1865.7,
+  Chelsea: 1795.3,
+};
+
+// Compute match phase and minutes elapsed relative to kickoff
+const getMatchLifecycle = (kickoffIso: string) => {
+  const kickoffMs = new Date(kickoffIso).getTime();
+  const nowMs = Date.now();
+  const elapsedMinutes = (nowMs - kickoffMs) / (60 * 1000);
+
+  if (elapsedMinutes < 0) {
+    return { phase: 'PRE_MATCH' as const, elapsedMinutes: 0 };
+  } else if (elapsedMinutes <= 105) {
+    return { phase: 'IN_PLAY' as const, elapsedMinutes: Math.min(90, Math.max(1, elapsedMinutes)) };
+  } else {
+    return { phase: 'FINISHED' as const, elapsedMinutes: 90 };
+  }
+};
+
 export default function LiveSportsTicker({
-  fixtures = DEFAULT_TICKER_FIXTURES,
+  fixtures: initialFixtures = DEFAULT_TICKER_FIXTURES,
   className = ''
 }: LiveSportsTickerProps) {
   // Hydration-safe state: formatting strictly computed on the client side
   const [isClient, setIsClient] = useState(false);
   const [localTimeZone, setLocalTimeZone] = useState<string>('UTC');
+  const [fixtureData, setFixtureData] = useState<Fixture[]>(initialFixtures);
 
   useEffect(() => {
     try {
@@ -127,6 +159,87 @@ export default function LiveSportsTicker({
     }
     setIsClient(true);
   }, []);
+
+  // Update internal fixture array if initialFixtures prop changes
+  useEffect(() => {
+    setFixtureData(initialFixtures);
+  }, [initialFixtures]);
+
+  // Dynamic EV fetcher connected to FastAPI engine
+  // Call policy:
+  // - Pre-match: 1 initial call on mount (+ gentle 15-min background poll if tab left open)
+  // - In-Play (0-105 min): 1 call every 15 minutes (~6 updates across 90 min)
+  // - Finished (>105 min): 0 calls (lifecycle ended)
+  useEffect(() => {
+    let isCancelled = false;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+
+    const evaluateFixture = async (fixture: Fixture): Promise<string | null> => {
+      const { phase, elapsedMinutes } = getMatchLifecycle(fixture.utc_timestamp);
+      if (phase === 'FINISHED') return fixture.ev || null;
+
+      // Extract or compute pre-match Elo differential
+      const homeElo = TEAM_ELO_BASELINE[fixture.home_team] || 1700.0;
+      const awayElo = TEAM_ELO_BASELINE[fixture.away_team] || 1700.0;
+      const eloDiff = Number((homeElo - awayElo).toFixed(2));
+
+      // Build model match state
+      const timeRatio = phase === 'IN_PLAY' ? Number((elapsedMinutes / 90).toFixed(3)) : 0.0;
+      const goalDiff = 0;
+      const possShare = 0.50;
+      const shotDiff = 0;
+
+      const payload = {
+        match_time_ratio: Math.min(1.0, Math.max(0.0, timeRatio)),
+        goal_differential: goalDiff,
+        team_A_possession_share: possShare,
+        shot_differential: shotDiff,
+        prematch_elo_diff: eloDiff,
+      };
+
+      try {
+        const response = await fetch(`${apiUrl}/calculate-edge?market_odds_decimal=2.10&bankroll=10000`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) return fixture.ev || null;
+        const result = await response.json();
+        if (result && typeof result.expected_value_percent === 'number') {
+          const sign = result.expected_value_percent > 0 ? '+' : '';
+          return `${sign}${result.expected_value_percent.toFixed(1)}% EV`;
+        }
+      } catch {
+        // Silent network/offline fallback to pre-calibrated EV baseline
+      }
+      return fixture.ev || null;
+    };
+
+    const runEngineUpdates = async () => {
+      const updatedList = await Promise.all(
+        fixtureData.map(async (f) => {
+          const newEv = await evaluateFixture(f);
+          return newEv ? { ...f, ev: newEv } : f;
+        })
+      );
+      if (!isCancelled) {
+        setFixtureData(updatedList);
+      }
+    };
+
+    // 1. Initial call on mount
+    runEngineUpdates();
+
+    // 2. Moderate interval: 15 minutes (900,000 ms)
+    // Produces 6 evaluations across an entire 90-minute live fixture
+    const intervalId = setInterval(runEngineUpdates, 15 * 60 * 1000);
+
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [initialFixtures]);
 
   const isExactUtc = localTimeZone === 'UTC';
 
@@ -284,11 +397,11 @@ export default function LiveSportsTicker({
           {/* Continuous scrolling container: duplicated list for infinite seamless loop */}
           <div className="animate-marquee-scroll">
             {/* Primary set */}
-            {fixtures.map((fixture, idx) =>
+            {fixtureData.map((fixture, idx) =>
               renderFixtureCard(fixture, `primary-${fixture.id || idx}`)
             )}
             {/* Duplicate set for seamless continuous horizontal scroll */}
-            {fixtures.map((fixture, idx) =>
+            {fixtureData.map((fixture, idx) =>
               renderFixtureCard(fixture, `duplicate-${fixture.id || idx}`)
             )}
           </div>
