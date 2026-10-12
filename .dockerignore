@@ -1,0 +1,13 @@
+.git
+.github
+node_modules
+.next
+dist
+public
+*.md
+.DS_Store
+__pycache__
+*.pyc
+*.pyo
+.env*
+match_8658.json
