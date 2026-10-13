@@ -21,6 +21,13 @@ const VAULT_FAIL_COUNT_V12 = VAULT_CASES_26.filter(m => m.status === 'FAIL').len
 const VAULT_PASS_PERCENT_V12 = ((VAULT_PASS_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
 const VAULT_FAIL_PERCENT_V12 = ((VAULT_FAIL_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
 
+// Helper to extract numeric EV percentage for sorting (e.g., "+50.9% EV" -> 50.9, "-5.4% EV" -> -5.4)
+const parseEvValue = (evStr) => {
+  if (!evStr) return -999;
+  const match = String(evStr).match(/([+-]?\d+(?:\.\d+)?)/);
+  return match ? parseFloat(match[1]) : -999;
+};
+
 // Format 26 cases to match uniform match schema
 const FORMATTED_CASES_26 = VAULT_CASES_26.map(c => ({
   id: String(c.match_id),
@@ -626,6 +633,8 @@ export default function App() {
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
   const [vaultFilter, setVaultFilter] = useState('ALL');
+  // Data Vault sort order: 'desc' (Highest to Lowest EV), 'asc' (Lowest to Highest EV), or 'default' (Index/Chronological)
+  const [vaultSort, setVaultSort] = useState('desc');
   // Data Vault version toggle: 'v1.2' (26-Case Portfolio Taxonomy) vs 'v1.0' (Legacy 20-Match Sample)
   const [vaultVersion, setVaultVersion] = useState('v1.2');
   // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
@@ -1499,9 +1508,9 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex gap-2">
+                {/* Filter & Sort Controls */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {['ALL', 'PASS', 'FAIL'].map((filter) => {
                       const count = vaultVersion === 'v1.2'
                         ? (filter === 'ALL' ? VAULT_CASES_26.length : filter === 'PASS' ? VAULT_PASS_COUNT_V12 : VAULT_FAIL_COUNT_V12)
@@ -1521,9 +1530,48 @@ export default function App() {
                       );
                     })}
                   </div>
-                  <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
-                    {vaultVersion === 'v1.2' ? 'Cases A–Z across 4 quantitative archetypes' : 'Click any match to launch 2D pitch simulation'}
-                  </span>
+
+                  {/* EV Sorting Controls */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono text-slate-500">Sort EV:</span>
+                    <div className="inline-flex rounded-lg bg-slate-950/80 p-0.5 border border-slate-800 font-mono text-xs">
+                      <button
+                        onClick={() => setVaultSort('desc')}
+                        title="Sort highest EV to lowest"
+                        className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                          vaultSort === 'desc'
+                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <span>Highest First</span>
+                        <span>↓</span>
+                      </button>
+                      <button
+                        onClick={() => setVaultSort('asc')}
+                        title="Sort lowest EV to highest"
+                        className={`px-2.5 py-1 rounded text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                          vaultSort === 'asc'
+                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <span>Lowest First</span>
+                        <span>↑</span>
+                      </button>
+                      <button
+                        onClick={() => setVaultSort('default')}
+                        title={vaultVersion === 'v1.2' ? 'Sort Cases A to Z' : 'Sort Default Order'}
+                        className={`px-2 py-1 rounded text-[11px] font-bold transition-all cursor-pointer ${
+                          vaultSort === 'default'
+                            ? 'bg-slate-800 text-slate-200 border border-slate-700'
+                            : 'text-slate-500 hover:text-slate-300'
+                        }`}
+                      >
+                        {vaultVersion === 'v1.2' ? 'A–Z' : 'Default'}
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Scrollable Matches List */}
@@ -1531,10 +1579,16 @@ export default function App() {
                   {vaultVersion === 'v1.2' ? (
                     VAULT_CASES_26
                       .filter(c => vaultFilter === 'ALL' || c.status === vaultFilter)
+                      .slice()
+                      .sort((a, b) => {
+                        if (vaultSort === 'desc') return parseEvValue(b.ev_display) - parseEvValue(a.ev_display);
+                        if (vaultSort === 'asc') return parseEvValue(a.ev_display) - parseEvValue(b.ev_display);
+                        return a.case_letter.localeCompare(b.case_letter);
+                      })
                       .map((c) => (
                         <div
                           key={`case_${c.case_letter}`}
-                          className="bg-slate-950/70 border border-slate-800/80 hover:border-emerald-500/40 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/40"
+                          className="bg-slate-950/70 border border-slate-800/80 hover:border-slate-700 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/30"
                         >
                           <div className="flex items-center gap-3">
                             <span
@@ -1572,19 +1626,25 @@ export default function App() {
                               </div>
                               <div className="text-[10px] text-slate-500">{c.decision_minute}</div>
                             </div>
-                            <button
-                              onClick={() => navigate('#/vault/' + c.match_id)}
-                              className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                            <span
+                              title="Validated under v1.2 Out-of-Sample Protocol"
+                              className="px-3 py-1.5 rounded-lg bg-slate-900/90 text-slate-400 font-mono text-xs font-medium border border-slate-800 select-none flex items-center gap-1.5 cursor-default"
                             >
-                              <span>Simulate</span>
-                              <IconPlay className="w-3 h-3" />
-                            </button>
+                              <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                              <span>Validated</span>
+                            </span>
                           </div>
                         </div>
                       ))
                   ) : (
                     VAULT_MATCHES_V10
                       .filter(m => vaultFilter === 'ALL' || m.status === vaultFilter)
+                      .slice()
+                      .sort((a, b) => {
+                        if (vaultSort === 'desc') return parseEvValue(m.ev) - parseEvValue(a.ev);
+                        if (vaultSort === 'asc') return parseEvValue(a.ev) - parseEvValue(b.ev);
+                        return 0;
+                      })
                       .map((m) => (
                         <div
                           key={m.id}
