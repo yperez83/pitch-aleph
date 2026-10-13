@@ -1641,7 +1641,7 @@ export default function App() {
                       .filter(m => vaultFilter === 'ALL' || m.status === vaultFilter)
                       .slice()
                       .sort((a, b) => {
-                        if (vaultSort === 'desc') return parseEvValue(m.ev) - parseEvValue(a.ev);
+                        if (vaultSort === 'desc') return parseEvValue(b.ev) - parseEvValue(a.ev);
                         if (vaultSort === 'asc') return parseEvValue(a.ev) - parseEvValue(b.ev);
                         return 0;
                       })
