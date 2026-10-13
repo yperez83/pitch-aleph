@@ -21,10 +21,24 @@ const VAULT_FAIL_COUNT_V12 = VAULT_CASES_26.filter(m => m.status === 'FAIL').len
 const VAULT_PASS_PERCENT_V12 = ((VAULT_PASS_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
 const VAULT_FAIL_PERCENT_V12 = ((VAULT_FAIL_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
 
-const VAULT_PASS_COUNT = VAULT_PASS_COUNT_V10;
-const VAULT_FAIL_COUNT = VAULT_FAIL_COUNT_V10;
-const VAULT_PASS_PERCENT = VAULT_PASS_PERCENT_V10;
-const VAULT_FAIL_PERCENT = VAULT_FAIL_PERCENT_V10;
+// Format 26 cases to match uniform match schema
+const FORMATTED_CASES_26 = VAULT_CASES_26.map(c => ({
+  id: String(c.match_id),
+  case_letter: c.case_letter,
+  title: c.fixture || `Match #${c.match_id}`,
+  fixture: c.fixture,
+  status: c.status,
+  ev: c.ev_display,
+  minute: c.decision_minute,
+  date: c.date,
+  archetype: c.archetype,
+  zero_stake_ratio: c.zero_stake_ratio
+}));
+
+const ALL_VAULT_LOOKUP = [
+  ...FORMATTED_CASES_26,
+  ...VAULT_MATCHES_V10.filter(m => !FORMATTED_CASES_26.some(c => c.id === String(m.id)))
+];
 
 const CODE_SNIPPETS = {
   '2022': {
@@ -570,12 +584,12 @@ const parseRoute = (hashString) => {
   }
   if (clean.startsWith('vault/')) {
     const id = clean.replace('vault/', '');
-    const match = VAULT_MATCHES.find(m => m.id === id);
+    const match = ALL_VAULT_LOOKUP.find(m => m.id === id);
     return { activeCase: 'vault_' + id, showVaultModal: false, activeVaultMatch: match || null };
   }
   if (clean.startsWith('case/vault_')) {
     const id = clean.replace('case/vault_', '');
-    const match = VAULT_MATCHES.find(m => m.id === id);
+    const match = ALL_VAULT_LOOKUP.find(m => m.id === id);
     return { activeCase: 'vault_' + id, showVaultModal: false, activeVaultMatch: match || null };
   }
   if (clean.startsWith('case/')) {
@@ -1534,15 +1548,19 @@ export default function App() {
                             </span>
                             <div>
                               <div className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                                <span className="text-emerald-400 font-mono text-xs px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+                                <span className="text-emerald-400 font-mono text-xs px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 shrink-0">
                                   Case {c.case_letter}
                                 </span>
-                                <span>Match #{c.match_id}</span>
+                                <span>{c.fixture || `Match #${c.match_id}`}</span>
                               </div>
-                              <div className="text-xs font-mono text-slate-400 flex items-center gap-2 mt-0.5">
-                                <span className="text-slate-300 font-semibold">{c.archetype}</span>
+                              <div className="text-xs font-mono text-slate-500 flex items-center gap-1.5 mt-0.5 flex-wrap">
+                                <span>{c.date}</span>
                                 <span>•</span>
-                                <span className="text-slate-500">Zero-Stake Ratio: {(c.zero_stake_ratio * 100).toFixed(1)}%</span>
+                                <span>Match #{c.match_id}</span>
+                                <span>•</span>
+                                <span className="text-slate-300 font-medium">{c.archetype}</span>
+                                <span>•</span>
+                                <span>Zero-Stake Ratio: {(c.zero_stake_ratio * 100).toFixed(1)}%</span>
                               </div>
                             </div>
                           </div>
@@ -1554,9 +1572,13 @@ export default function App() {
                               </div>
                               <div className="text-[10px] text-slate-500">{c.decision_minute}</div>
                             </div>
-                            <span className="px-2.5 py-1 rounded bg-slate-900 text-slate-400 font-mono text-[11px] border border-slate-800">
-                              Archetype Validated
-                            </span>
+                            <button
+                              onClick={() => navigate('#/vault/' + c.match_id)}
+                              className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <span>Simulate</span>
+                              <IconPlay className="w-3 h-3" />
+                            </button>
                           </div>
                         </div>
                       ))
@@ -2071,7 +2093,7 @@ def compute_continuous_threat(event_stream):
                     className="w-full py-3.5 px-5 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono text-xs sm:text-sm font-bold rounded-lg border border-slate-700 hover:border-emerald-500/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <IconArrowLeft className="w-4 h-4" />
-                    <span>RETURN TO DATA VAULT ({VAULT_MATCHES.length} MATCHES)</span>
+                    <span>RETURN TO DATA VAULT</span>
                   </button>
                 </div>
               </>
