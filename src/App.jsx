@@ -597,6 +597,7 @@ export default function App() {
   const canvasRef = useRef(null);
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
+  const [vaultFilter, setVaultFilter] = useState('ALL');
   // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
   const [backtestVersion, setBacktestVersion] = useState('v1.2');
 
