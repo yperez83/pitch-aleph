@@ -1318,17 +1318,20 @@ export default function App() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button 
                 onClick={() => navigate('#/1k_sim')} 
-                className="px-6 py-4 bg-blue-950/20 border border-blue-500/40 hover:border-blue-400 text-blue-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(59,130,246,0.1)] hover:shadow-[0_0_35px_rgba(59,130,246,0.2)] cursor-pointer"
+                className="px-6 py-4 bg-emerald-950/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(16,185,129,0.1)] hover:shadow-[0_0_35px_rgba(16,185,129,0.2)] cursor-pointer"
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-blue-400">PRODUCTION ENGINE</span>
-                  <span className="text-xs text-emerald-400 font-normal">+$10,152 (101.5% ROI)</span>
+                  <span className="text-xs text-emerald-400 flex items-center gap-1.5">
+                    <span>PRODUCTION ENGINE v1.2</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </span>
+                  <span className="text-xs text-emerald-400 font-normal">+$5,588 (55.88% ROI)</span>
                 </div>
-                <span className="text-base sm:text-lg text-white group-hover:text-blue-300 transition-colors">
-                  1,000-Match Cloud Simulation →
+                <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
+                  Production Engine: Backtest Analytics →
                 </span>
                 <span className="text-xs font-normal text-slate-400 mt-1">
-                  XGBoost inference across 3M+ spatial events with Platt Scaling and liquidity cap
+                  Multi-class simplex booster with isotonic frozen calibration & causal first-trigger execution across 91,000 temporal states
                 </span>
               </button>
 
