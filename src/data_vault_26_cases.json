@@ -1,0 +1,236 @@
+[
+  {
+    "case_letter":"A",
+    "match_id":3817870,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+12.0% EV",
+    "decision_minute":"7' Decision",
+    "zero_stake_ratio":0.791
+  },
+  {
+    "case_letter":"B",
+    "match_id":3825886,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+14.2% EV",
+    "decision_minute":"6' Decision",
+    "zero_stake_ratio":0.495
+  },
+  {
+    "case_letter":"C",
+    "match_id":3878556,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+16.5% EV",
+    "decision_minute":"68' Decision",
+    "zero_stake_ratio":0.747
+  },
+  {
+    "case_letter":"D",
+    "match_id":3837876,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+25.6% EV",
+    "decision_minute":"10' Decision",
+    "zero_stake_ratio":0.396
+  },
+  {
+    "case_letter":"E",
+    "match_id":3754064,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+45.4% EV",
+    "decision_minute":"85' Decision",
+    "zero_stake_ratio":0.934
+  },
+  {
+    "case_letter":"F",
+    "match_id":3837771,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+39.5% EV",
+    "decision_minute":"61' Decision",
+    "zero_stake_ratio":0.341
+  },
+  {
+    "case_letter":"G",
+    "match_id":3825760,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+35.3% EV",
+    "decision_minute":"62' Decision",
+    "zero_stake_ratio":0.418
+  },
+  {
+    "case_letter":"H",
+    "match_id":8658,
+    "archetype":"Alpha Inflection",
+    "status":"PASS",
+    "ev_display":"+50.9% EV",
+    "decision_minute":"64' Decision",
+    "zero_stake_ratio":0.637
+  },
+  {
+    "case_letter":"I",
+    "match_id":3998842,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-5.4% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"J",
+    "match_id":8649,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-5.4% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"K",
+    "match_id":3928993,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-8.5% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"L",
+    "match_id":3928990,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-6.3% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"M",
+    "match_id":303674,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-15.5% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"N",
+    "match_id":3912479,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-4.1% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"O",
+    "match_id":4020846,
+    "archetype":"Elo Defiance",
+    "status":"PASS",
+    "ev_display":"+8.6% EV",
+    "decision_minute":"1' Decision",
+    "zero_stake_ratio":0.934
+  },
+  {
+    "case_letter":"P",
+    "match_id":8650,
+    "archetype":"Elo Defiance",
+    "status":"PASS",
+    "ev_display":"+8.7% EV",
+    "decision_minute":"1' Decision",
+    "zero_stake_ratio":0.769
+  },
+  {
+    "case_letter":"Q",
+    "match_id":8651,
+    "archetype":"Capital Preservation",
+    "status":"FAIL",
+    "ev_display":"-7.4% EV",
+    "decision_minute":"90' Decision",
+    "zero_stake_ratio":1.0
+  },
+  {
+    "case_letter":"R",
+    "match_id":8652,
+    "archetype":"Elo Defiance",
+    "status":"PASS",
+    "ev_display":"+6.0% EV",
+    "decision_minute":"31' Decision",
+    "zero_stake_ratio":0.978
+  },
+  {
+    "case_letter":"S",
+    "match_id":8655,
+    "archetype":"Elo Defiance",
+    "status":"PASS",
+    "ev_display":"+16.8% EV",
+    "decision_minute":"50' Decision",
+    "zero_stake_ratio":0.505
+  },
+  {
+    "case_letter":"T",
+    "match_id":8656,
+    "archetype":"Elo Defiance",
+    "status":"PASS",
+    "ev_display":"+7.5% EV",
+    "decision_minute":"1' Decision",
+    "zero_stake_ratio":0.989
+  },
+  {
+    "case_letter":"U",
+    "match_id":3788750,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+11.1% EV",
+    "decision_minute":"3' Decision",
+    "zero_stake_ratio":0.758
+  },
+  {
+    "case_letter":"V",
+    "match_id":18237,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+17.0% EV",
+    "decision_minute":"12' Decision",
+    "zero_stake_ratio":0.33
+  },
+  {
+    "case_letter":"W",
+    "match_id":9794,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+11.1% EV",
+    "decision_minute":"3' Decision",
+    "zero_stake_ratio":0.429
+  },
+  {
+    "case_letter":"X",
+    "match_id":3802793,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+11.1% EV",
+    "decision_minute":"3' Decision",
+    "zero_stake_ratio":0.407
+  },
+  {
+    "case_letter":"Y",
+    "match_id":3825771,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+20.1% EV",
+    "decision_minute":"14' Decision",
+    "zero_stake_ratio":0.901
+  },
+  {
+    "case_letter":"Z",
+    "match_id":3878594,
+    "archetype":"Draw Convergence",
+    "status":"PASS",
+    "ev_display":"+9.6% EV",
+    "decision_minute":"1' Decision",
+    "zero_stake_ratio":0.956
+  }
+]

@@ -2,15 +2,29 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
-import VAULT_MATCHES from './vault_index.json';
+import VAULT_MATCHES_V10 from './vault_index.json';
+import VAULT_CASES_26 from './data_vault_26_cases.json';
 import CHART_DATA_V10 from './backtest_chart_data.json';
 import CHART_DATA_V12 from './equity_curve_v1.2_oos.json';
 import LiveSportsTicker from './components/LiveSportsTicker';
 
-const VAULT_PASS_COUNT = VAULT_MATCHES.filter(m => m.status === 'PASS').length;
-const VAULT_FAIL_COUNT = VAULT_MATCHES.filter(m => m.status === 'FAIL').length;
-const VAULT_PASS_PERCENT = Math.round((VAULT_PASS_COUNT / VAULT_MATCHES.length) * 100);
-const VAULT_FAIL_PERCENT = Math.round((VAULT_FAIL_COUNT / VAULT_MATCHES.length) * 100);
+// Legacy v1.0 Vault matches alias
+const VAULT_MATCHES = VAULT_MATCHES_V10;
+
+const VAULT_PASS_COUNT_V10 = VAULT_MATCHES_V10.filter(m => m.status === 'PASS').length;
+const VAULT_FAIL_COUNT_V10 = VAULT_MATCHES_V10.filter(m => m.status === 'FAIL').length;
+const VAULT_PASS_PERCENT_V10 = Math.round((VAULT_PASS_COUNT_V10 / VAULT_MATCHES_V10.length) * 100);
+const VAULT_FAIL_PERCENT_V10 = Math.round((VAULT_FAIL_COUNT_V10 / VAULT_MATCHES_V10.length) * 100);
+
+const VAULT_PASS_COUNT_V12 = VAULT_CASES_26.filter(m => m.status === 'PASS').length;
+const VAULT_FAIL_COUNT_V12 = VAULT_CASES_26.filter(m => m.status === 'FAIL').length;
+const VAULT_PASS_PERCENT_V12 = ((VAULT_PASS_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
+const VAULT_FAIL_PERCENT_V12 = ((VAULT_FAIL_COUNT_V12 / VAULT_CASES_26.length) * 100).toFixed(1);
+
+const VAULT_PASS_COUNT = VAULT_PASS_COUNT_V10;
+const VAULT_FAIL_COUNT = VAULT_FAIL_COUNT_V10;
+const VAULT_PASS_PERCENT = VAULT_PASS_PERCENT_V10;
+const VAULT_FAIL_PERCENT = VAULT_FAIL_PERCENT_V10;
 
 const CODE_SNIPPETS = {
   '2022': {
@@ -598,6 +612,8 @@ export default function App() {
   const [glowKey, setGlowKey] = useState(0);
   const glowCoolingRef = useRef(false);
   const [vaultFilter, setVaultFilter] = useState('ALL');
+  // Data Vault version toggle: 'v1.2' (26-Case Portfolio Taxonomy) vs 'v1.0' (Legacy 20-Match Sample)
+  const [vaultVersion, setVaultVersion] = useState('v1.2');
   // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
   const [backtestVersion, setBacktestVersion] = useState('v1.2');
 
@@ -1336,18 +1352,21 @@ export default function App() {
               </button>
 
               <button 
-                onClick={() => navigate('#/vault')} 
+                onClick={() => {
+                  setVaultVersion('v1.2');
+                  navigate('#/vault');
+                }} 
                 className="px-6 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
               >
                 <div className="flex items-center justify-between w-full mb-1">
                   <span className="text-xs text-emerald-400">DATA VAULT</span>
-                  <span className="text-xs text-slate-500 font-normal">{VAULT_PASS_COUNT} PASS / {VAULT_FAIL_COUNT} FAIL</span>
+                  <span className="text-xs text-slate-500 font-normal">19 PASS / 7 FAIL</span>
                 </div>
                 <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
-                  {VAULT_MATCHES.length}-Match Indexed Sample →
+                  26-Case Portfolio Taxonomy →
                 </span>
                 <span className="text-xs font-normal text-slate-400 mt-1">
-                  Explore algorithmic signal screening across {VAULT_MATCHES.length} FIFA World Cup matches
+                  Explore algorithmic signal screening and capital preservation across 26 taxonomical match archetypes (Cases A–Z)
                 </span>
               </button>
             </div>
@@ -1367,18 +1386,21 @@ export default function App() {
                 {/* Modal Header */}
                 <div className="flex items-start justify-between pb-5 border-b border-slate-800">
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                       <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
                         PORTFOLIO DATASET
                       </span>
-                      <span className="text-xs font-mono text-slate-500">2022 FIFA World Cup</span>
+                      <span className="text-xs font-mono text-slate-400">
+                        {vaultVersion === 'v1.2' ? 'Multi-Class Validation Suite' : '2022 FIFA World Cup'}
+                      </span>
                     </div>
                     <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                      PitchAleph Data Vault ({VAULT_MATCHES.length} Match Sample)
+                      {vaultVersion === 'v1.2' ? 'PitchAleph Data Vault (26-Case Taxonomy)' : 'PitchAleph Data Vault (20 Match Sample)'}
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-xl">
-                      Simulated algorithmic screening across a {VAULT_MATCHES.length}-match portfolio sample. 
-                      Evaluate live spatial event playback and signal execution on each match.
+                    <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
+                      {vaultVersion === 'v1.2'
+                        ? 'Simulated algorithmic screening across 26 canonical match archetypes (Cases A through Z). Evaluate in-game variance, alpha inflection, and chaos withholding.'
+                        : 'Simulated algorithmic screening across a 20-match portfolio sample. Evaluate live spatial event playback and signal execution on each match.'}
                     </p>
                   </div>
                   <Tooltip text="Close (Esc)" position="left">
@@ -1392,92 +1414,196 @@ export default function App() {
                   </Tooltip>
                 </div>
 
+                {/* Version Toggle Control Bar */}
+                <div className="flex items-center justify-between flex-wrap gap-3 py-3 border-b border-slate-800/80 bg-slate-950/40 px-2 rounded-lg my-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">TAXONOMY:</span>
+                    <div className="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800">
+                      <button
+                        onClick={() => {
+                          setVaultVersion('v1.0');
+                          setVaultFilter('ALL');
+                        }}
+                        className={`px-3 py-1 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+                          vaultVersion === 'v1.0'
+                            ? 'bg-blue-600 text-white shadow'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        v1.0 Legacy (20)
+                      </button>
+                      <button
+                        onClick={() => {
+                          setVaultVersion('v1.2');
+                          setVaultFilter('ALL');
+                        }}
+                        className={`px-3 py-1 rounded-md font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                          vaultVersion === 'v1.2'
+                            ? 'bg-emerald-500 text-slate-950 shadow'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        <span>v1.2 Production (26 Cases)</span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${vaultVersion === 'v1.2' ? 'bg-slate-950 animate-pulse' : 'bg-emerald-400'}`}></span>
+                      </button>
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-mono text-slate-500">
+                    {vaultVersion === 'v1.2' ? 'Active Institutional Taxonomy' : 'Preserved v1.0 Historical Sample'}
+                  </span>
+                </div>
+
                 {/* Portfolio Stats Bar */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4 border-b border-slate-800 text-center font-mono">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 border-b border-slate-800 text-center font-mono">
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">SAMPLE SIZE</div>
-                    <div className="text-lg font-bold text-white">{VAULT_MATCHES.length} Matches</div>
+                    <div className="text-lg font-bold text-white">
+                      {vaultVersion === 'v1.2' ? '26 Matches' : `${VAULT_MATCHES_V10.length} Matches`}
+                    </div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">ALPHA SIGNALS</div>
-                    <div className="text-lg font-bold text-emerald-400">{VAULT_PASS_COUNT} PASS ({VAULT_PASS_PERCENT}%)</div>
+                    <div className="text-lg font-bold text-emerald-400">
+                      {vaultVersion === 'v1.2'
+                        ? `${VAULT_PASS_COUNT_V12} PASS (${VAULT_PASS_PERCENT_V12}%)`
+                        : `${VAULT_PASS_COUNT_V10} PASS (${VAULT_PASS_PERCENT_V10}%)`}
+                    </div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">RISK FILTERS</div>
-                    <div className="text-lg font-bold text-red-400">{VAULT_FAIL_COUNT} FAIL ({VAULT_FAIL_PERCENT}%)</div>
+                    <div className="text-lg font-bold text-red-400">
+                      {vaultVersion === 'v1.2'
+                        ? `${VAULT_FAIL_COUNT_V12} FAIL (${VAULT_FAIL_PERCENT_V12}%)`
+                        : `${VAULT_FAIL_COUNT_V10} FAIL (${VAULT_FAIL_PERCENT_V10}%)`}
+                    </div>
                   </div>
                   <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
                     <div className="text-[10px] text-slate-500 uppercase">PORTFOLIO WIN RATE</div>
-                    <div className="text-lg font-bold text-slate-300">{VAULT_PASS_PERCENT}% Edge</div>
+                    <div className="text-lg font-bold text-slate-300">
+                      {vaultVersion === 'v1.2' ? `${VAULT_PASS_PERCENT_V12}% Edge` : `${VAULT_PASS_PERCENT_V10}% Edge`}
+                    </div>
                   </div>
                 </div>
 
                 {/* Filter Tabs */}
                 <div className="flex items-center justify-between py-3">
                   <div className="flex gap-2">
-                    {['ALL', 'PASS', 'FAIL'].map((filter) => (
-                      <button
-                        key={filter}
-                        onClick={() => setVaultFilter(filter)}
-                        className={`px-3 py-1 text-xs font-mono font-bold rounded-full transition-all cursor-pointer ${
-                          vaultFilter === filter 
-                            ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' 
-                            : 'bg-slate-800 text-slate-400 hover:text-white'
-                        }`}
-                      >
-                        {filter === 'ALL' ? `ALL (${VAULT_MATCHES.length})` : filter === 'PASS' ? `PASS (${VAULT_PASS_COUNT})` : `FAIL (${VAULT_FAIL_COUNT})`}
-                      </button>
-                    ))}
+                    {['ALL', 'PASS', 'FAIL'].map((filter) => {
+                      const count = vaultVersion === 'v1.2'
+                        ? (filter === 'ALL' ? VAULT_CASES_26.length : filter === 'PASS' ? VAULT_PASS_COUNT_V12 : VAULT_FAIL_COUNT_V12)
+                        : (filter === 'ALL' ? VAULT_MATCHES_V10.length : filter === 'PASS' ? VAULT_PASS_COUNT_V10 : VAULT_FAIL_COUNT_V10);
+                      return (
+                        <button
+                          key={filter}
+                          onClick={() => setVaultFilter(filter)}
+                          className={`px-3 py-1 text-xs font-mono font-bold rounded-full transition-all cursor-pointer ${
+                            vaultFilter === filter 
+                              ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20' 
+                              : 'bg-slate-800 text-slate-400 hover:text-white'
+                          }`}
+                        >
+                          {`${filter} (${count})`}
+                        </button>
+                      );
+                    })}
                   </div>
                   <span className="text-[11px] font-mono text-slate-500 hidden sm:inline">
-                    Click any match to launch 2D pitch simulation
+                    {vaultVersion === 'v1.2' ? 'Cases A–Z across 4 quantitative archetypes' : 'Click any match to launch 2D pitch simulation'}
                   </span>
                 </div>
 
                 {/* Scrollable Matches List */}
                 <div className="overflow-y-auto flex-1 pr-1 space-y-2.5 my-2 hide-scrollbar">
-                  {VAULT_MATCHES
-                    .filter(m => vaultFilter === 'ALL' || m.status === vaultFilter)
-                    .map((m) => (
-                      <div
-                        key={m.id}
-                        className="bg-slate-950/70 border border-slate-800/80 hover:border-emerald-500/40 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/40"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
-                              m.status === 'PASS' 
-                                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
-                                : 'bg-red-500/15 text-red-400 border border-red-500/30'
-                            }`}
-                          >
-                            {m.status}
-                          </span>
-                          <div>
-                            <div className="text-sm sm:text-base font-bold text-white">
-                              {m.title}
-                            </div>
-                            <div className="text-xs font-mono text-slate-500">
-                              {m.date} • Match #{m.id}
+                  {vaultVersion === 'v1.2' ? (
+                    VAULT_CASES_26
+                      .filter(c => vaultFilter === 'ALL' || c.status === vaultFilter)
+                      .map((c) => (
+                        <div
+                          key={`case_${c.case_letter}`}
+                          className="bg-slate-950/70 border border-slate-800/80 hover:border-emerald-500/40 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/40"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                                c.status === 'PASS' 
+                                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
+                                  : 'bg-red-500/15 text-red-400 border border-red-500/30'
+                              }`}
+                            >
+                              {c.status}
+                            </span>
+                            <div>
+                              <div className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                                <span className="text-emerald-400 font-mono text-xs px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+                                  Case {c.case_letter}
+                                </span>
+                                <span>Match #{c.match_id}</span>
+                              </div>
+                              <div className="text-xs font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+                                <span className="text-slate-300 font-semibold">{c.archetype}</span>
+                                <span>•</span>
+                                <span className="text-slate-500">Zero-Stake Ratio: {(c.zero_stake_ratio * 100).toFixed(1)}%</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
-                          <div className="font-mono text-xs text-right">
-                            <div className="text-emerald-400 font-bold">{m.ev ? m.ev.trim() : '+14.2% EV'}</div>
-                            <div className="text-[10px] text-slate-500">{m.minute || "75' Decision"}</div>
+                          <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                            <div className="font-mono text-xs text-right">
+                              <div className={`font-bold ${c.status === 'PASS' ? 'text-emerald-400' : 'text-amber-400'}`}>
+                                {c.ev_display}
+                              </div>
+                              <div className="text-[10px] text-slate-500">{c.decision_minute}</div>
+                            </div>
+                            <span className="px-2.5 py-1 rounded bg-slate-900 text-slate-400 font-mono text-[11px] border border-slate-800">
+                              Archetype Validated
+                            </span>
                           </div>
-                          <button
-                            onClick={() => navigate('#/vault/' + m.id)}
-                            className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
-                          >
-                            <span>Simulate</span>
-                            <IconPlay className="w-3 h-3" />
-                          </button>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                  ) : (
+                    VAULT_MATCHES_V10
+                      .filter(m => vaultFilter === 'ALL' || m.status === vaultFilter)
+                      .map((m) => (
+                        <div
+                          key={m.id}
+                          className="bg-slate-950/70 border border-slate-800/80 hover:border-emerald-500/40 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:bg-slate-800/40"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                                m.status === 'PASS' 
+                                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' 
+                                  : 'bg-red-500/15 text-red-400 border border-red-500/30'
+                              }`}
+                            >
+                              {m.status}
+                            </span>
+                            <div>
+                              <div className="text-sm sm:text-base font-bold text-white">
+                                {m.title}
+                              </div>
+                              <div className="text-xs font-mono text-slate-500">
+                                {m.date} • Match #{m.id}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                            <div className="font-mono text-xs text-right">
+                              <div className="text-emerald-400 font-bold">{m.ev ? m.ev.trim() : '+14.2% EV'}</div>
+                              <div className="text-[10px] text-slate-500">{m.minute || "75' Decision"}</div>
+                            </div>
+                            <button
+                              onClick={() => navigate('#/vault/' + m.id)}
+                              className="px-3.5 py-1.5 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 border border-emerald-500/30 font-mono text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <span>Simulate</span>
+                              <IconPlay className="w-3 h-3" />
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                  )}
                 </div>
 
                 {/* Footer info */}
