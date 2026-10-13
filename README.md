@@ -4,6 +4,7 @@
 > Transforming discrete on-pitch event data into real-time predictive probability models.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-pitchaleph.com-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://pitchaleph.com)
+[![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-PitchAleph%201.2-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/marianopsa/pitch-aleph-1.2)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -20,6 +21,23 @@ Experience the full interactive simulation directly in your browser:
 *Tested and optimized for desktop, tablet, and mobile handheld devices.*
 
 ---
+
+## 🤗 Hugging Face Model Hub (Open Weights)
+
+PitchAleph 1.2 is indexed on the Hugging Face Hub as an open-weights, calibrated in-game tactical inference engine:
+
+### 📦 **[https://huggingface.co/marianopsa/pitch-aleph-1.2](https://huggingface.co/marianopsa/pitch-aleph-1.2)**
+
+- **Architecture**: XGBoost Multi-Class Gradient Booster + Isotonic Calibration (`FrozenEstimator`)
+- **Validation Log Loss**: 0.7640 (80/20 match-stratified split on 1,000 matches / 91,000 temporal states)
+- **Zero-Auth Quickstart**:
+```python
+from huggingface_hub import hf_hub_download
+import joblib
+
+model_path = hf_hub_download(repo_id="marianopsa/pitch-aleph-1.2", filename="model.joblib")
+model = joblib.load(model_path)
+```
 
 ## 📌 Overview
 

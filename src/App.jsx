@@ -461,23 +461,47 @@ const Footer = () => (
       {/* Center: Developer CTA */}
       <div className="flex flex-col sm:flex-row items-center gap-3">
         <span className="text-xs text-slate-400 font-mono">
-          Integrate live predictive states:
+          Run real-time inference on the 1.2 brain:
         </span>
-        <a
-          href="/api/docs"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View Pitch Aleph API Documentation and Swagger UI"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm hover:shadow-emerald-500/10"
-        >
-          <IconCode className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Build with our API</span>
-          <span className="text-[10px] text-emerald-400/80">→</span>
-        </a>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://huggingface.co/marianopsa/pitch-aleph-1.2"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Inspect PitchAleph 1.2 Open Weights on Hugging Face"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+          >
+            <span>🤗</span>
+            <span>Hugging Face</span>
+          </a>
+          <a
+            href="/api/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Test-Drive PitchAleph Betting Engine via Swagger UI"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm hover:shadow-emerald-500/10"
+          >
+            <IconCode className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Test-Drive Engine</span>
+            <span className="text-[10px] text-emerald-400/80">→</span>
+          </a>
+        </div>
       </div>
 
       {/* Right: Social & Contact Links */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        <Tooltip text="Hugging Face Model Hub">
+          <a
+            href="https://huggingface.co/marianopsa/pitch-aleph-1.2"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="PitchAleph 1.2 on Hugging Face Hub"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-400 hover:border-amber-500/40 hover:bg-slate-850 transition-all duration-200 text-sm flex items-center justify-center"
+          >
+            <span className="text-base leading-none">🤗</span>
+          </a>
+        </Tooltip>
+
         <Tooltip text="GitHub Repository">
           <a
             href="https://github.com/yperez83/pitch-aleph"
