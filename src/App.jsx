@@ -1086,7 +1086,7 @@ export default function App() {
                 <ul className="space-y-6 text-slate-300 leading-relaxed text-sm md:text-base">
                   <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
                     <strong className="text-white block text-base mb-1">1. Multi-Class Simplex</strong>
-                    PitchAleph 1.2 outputs an explicit 3-class probability simplex $[P(\text{Home Win}), P(\text{Draw}), P(\text{Away Win})]$ summing strictly to 1.0000, eliminating binary draw distortion across the full 90 minutes.
+                    PitchAleph 1.2 outputs an explicit 3-class probability simplex [P(Home Win), P(Draw), P(Away Win)] summing strictly to 1.0000, eliminating binary draw distortion across the full 90 minutes.
                   </li>
                   <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
                     <strong className="text-white block text-base mb-1">2. Isotonic Frozen Calibration</strong>
