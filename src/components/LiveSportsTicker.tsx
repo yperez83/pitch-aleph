@@ -58,59 +58,106 @@ const getFutureUtcIso = (hoursFromNow: number) => {
   return date.toISOString();
 };
 
-// Default upcoming fixtures with dynamic relative timestamps and model-calculated EV from PitchAleph 1.1 engine
-const DEFAULT_TICKER_FIXTURES: Fixture[] = [
-  {
-    id: 'fix-1',
-    home_team: 'Arsenal',
-    away_team: 'Manchester City',
-    utc_timestamp: getFutureUtcIso(4),
-    league: 'PREMIER LEAGUE',
-    ev: '+14.8% EV'
-  },
-  {
-    id: 'fix-2',
-    home_team: 'Real Madrid',
-    away_team: 'Barcelona',
-    utc_timestamp: getFutureUtcIso(7),
-    league: 'LA LIGA',
-    ev: '+18.2% EV'
-  },
-  {
-    id: 'fix-3',
-    home_team: 'Bayern Munich',
-    away_team: 'Borussia Dortmund',
-    utc_timestamp: getFutureUtcIso(22),
-    league: 'BUNDESLIGA',
-    ev: '+9.4% EV'
-  },
-  {
-    id: 'fix-4',
-    home_team: 'Inter Milan',
-    away_team: 'Juventus',
-    utc_timestamp: getFutureUtcIso(28),
-    league: 'SERIE A',
-    ev: '+12.6% EV'
-  },
-  {
-    id: 'fix-5',
-    home_team: 'Paris Saint-Germain',
-    away_team: 'Marseille',
-    utc_timestamp: getFutureUtcIso(32),
-    league: 'LIGUE 1',
-    ev: '+21.0% EV'
-  },
-  {
-    id: 'fix-6',
-    home_team: 'Liverpool',
-    away_team: 'Chelsea',
-    utc_timestamp: getFutureUtcIso(48),
-    league: 'PREMIER LEAGUE',
-    ev: '+16.5% EV'
-  }
-];
+interface ScheduleTemplateItem {
+  home: string;
+  away: string;
+  league: string;
+  offsetHours: number;
+  ev: string;
+}
 
-// Team Elo lookup table matching models/v1.1/elo_ratings.json
+// Comprehensive 7-day cyclical European & domestic football calendar
+// Matches UEFA Champions League (Tue/Wed), Europa League (Thu), and top leagues (Fri/Sat/Sun/Mon)
+const WEEKLY_SCHEDULE_TEMPLATES: Record<number, ScheduleTemplateItem[]> = {
+  0: [ // Sunday: Premier League, La Liga, Serie A, Ligue 1
+    { home: 'Arsenal', away: 'Chelsea', league: 'PREMIER LEAGUE', offsetHours: 3, ev: '+15.4% EV' },
+    { home: 'Real Madrid', away: 'Atlético Madrid', league: 'LA LIGA', offsetHours: 6, ev: '+18.1% EV' },
+    { home: 'Inter Milan', away: 'Juventus', league: 'SERIE A', offsetHours: 8, ev: '+13.8% EV' },
+    { home: 'Paris Saint-Germain', away: 'Monaco', league: 'LIGUE 1', offsetHours: 11, ev: '+17.5% EV' },
+    { home: 'Liverpool', away: 'Manchester City', league: 'PREMIER LEAGUE', offsetHours: 25, ev: '+14.2% EV' },
+    { home: 'Barcelona', away: 'Athletic Bilbao', league: 'LA LIGA', offsetHours: 28, ev: '+11.6% EV' },
+    { home: 'Bayern Munich', away: 'Borussia Dortmund', league: 'BUNDESLIGA', offsetHours: 32, ev: '+16.7% EV' }
+  ],
+  1: [ // Monday: Monday Night Football & European Stage Previews
+    { home: 'Chelsea', away: 'Newcastle', league: 'PREMIER LEAGUE', offsetHours: 4, ev: '+12.8% EV' },
+    { home: 'Lazio', away: 'Roma', league: 'SERIE A', offsetHours: 7, ev: '+16.2% EV' },
+    { home: 'Valencia', away: 'Real Sociedad', league: 'LA LIGA', offsetHours: 9, ev: '+10.5% EV' },
+    { home: 'Arsenal', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 25, ev: '+19.4% EV' },
+    { home: 'Real Madrid', away: 'Borussia Dortmund', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 27, ev: '+14.7% EV' },
+    { home: 'Paris Saint-Germain', away: 'PSV', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 30, ev: '+13.1% EV' },
+    { home: 'Juventus', away: 'Stuttgart', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 32, ev: '+11.8% EV' }
+  ],
+  2: [ // Tuesday: UEFA Champions League Matchday Primetime
+    { home: 'Arsenal', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 3, ev: '+19.4% EV' },
+    { home: 'Real Madrid', away: 'Borussia Dortmund', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 5, ev: '+14.7% EV' },
+    { home: 'Paris Saint-Germain', away: 'PSV', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 7, ev: '+13.1% EV' },
+    { home: 'Barcelona', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 25, ev: '+21.2% EV' },
+    { home: 'Manchester City', away: 'Sparta Prague', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 27, ev: '+15.0% EV' },
+    { home: 'Liverpool', away: 'RB Leipzig', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 29, ev: '+16.8% EV' },
+    { home: 'Atlético Madrid', away: 'Lille', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 31, ev: '+12.5% EV' }
+  ],
+  3: [ // Wednesday: UEFA Champions League Matchday Blockbusters
+    { home: 'Barcelona', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 3, ev: '+21.2% EV' },
+    { home: 'Manchester City', away: 'Sparta Prague', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 5, ev: '+15.0% EV' },
+    { home: 'Liverpool', away: 'RB Leipzig', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 7, ev: '+16.8% EV' },
+    { home: 'Tottenham', away: 'AZ Alkmaar', league: 'UEFA EUROPA LEAGUE', offsetHours: 25, ev: '+14.5% EV' },
+    { home: 'Fenerbahçe', away: 'Manchester United', league: 'UEFA EUROPA LEAGUE', offsetHours: 27, ev: '+18.3% EV' },
+    { home: 'Roma', away: 'Dynamo Kyiv', league: 'UEFA EUROPA LEAGUE', offsetHours: 29, ev: '+11.9% EV' },
+    { home: 'Athletic Bilbao', away: 'Slavia Prague', league: 'UEFA EUROPA LEAGUE', offsetHours: 31, ev: '+13.4% EV' }
+  ],
+  4: [ // Thursday: UEFA Europa League & Conference League
+    { home: 'Tottenham', away: 'AZ Alkmaar', league: 'UEFA EUROPA LEAGUE', offsetHours: 3, ev: '+14.5% EV' },
+    { home: 'Fenerbahçe', away: 'Manchester United', league: 'UEFA EUROPA LEAGUE', offsetHours: 5, ev: '+18.3% EV' },
+    { home: 'Roma', away: 'Dynamo Kyiv', league: 'UEFA EUROPA LEAGUE', offsetHours: 7, ev: '+11.9% EV' },
+    { home: 'Borussia Dortmund', away: 'RB Leipzig', league: 'BUNDESLIGA', offsetHours: 24, ev: '+15.8% EV' },
+    { home: 'Marseille', away: 'Monaco', league: 'LIGUE 1', offsetHours: 27, ev: '+12.4% EV' },
+    { home: 'Espanyol', away: 'Sevilla', league: 'LA LIGA', offsetHours: 29, ev: '+9.8% EV' },
+    { home: 'Leicester City', away: 'Nottingham Forest', league: 'PREMIER LEAGUE', offsetHours: 31, ev: '+10.2% EV' }
+  ],
+  5: [ // Friday: European Weekend Kickoffs
+    { home: 'Borussia Dortmund', away: 'RB Leipzig', league: 'BUNDESLIGA', offsetHours: 3, ev: '+15.8% EV' },
+    { home: 'Marseille', away: 'Monaco', league: 'LIGUE 1', offsetHours: 5, ev: '+12.4% EV' },
+    { home: 'Espanyol', away: 'Sevilla', league: 'LA LIGA', offsetHours: 7, ev: '+9.8% EV' },
+    { home: 'Manchester City', away: 'Aston Villa', league: 'PREMIER LEAGUE', offsetHours: 19, ev: '+14.3% EV' },
+    { home: 'Real Madrid', away: 'Barcelona', league: 'LA LIGA (EL CLÁSICO)', offsetHours: 23, ev: '+22.5% EV' },
+    { home: 'Arsenal', away: 'Liverpool', league: 'PREMIER LEAGUE', offsetHours: 26, ev: '+17.9% EV' },
+    { home: 'Bayer Leverkusen', away: 'Eintracht Frankfurt', league: 'BUNDESLIGA', offsetHours: 29, ev: '+13.7% EV' }
+  ],
+  6: [ // Saturday: Super Saturday Primetime Blockbusters
+    { home: 'Manchester City', away: 'Aston Villa', league: 'PREMIER LEAGUE', offsetHours: 3, ev: '+14.3% EV' },
+    { home: 'Real Madrid', away: 'Barcelona', league: 'LA LIGA (EL CLÁSICO)', offsetHours: 6, ev: '+22.5% EV' },
+    { home: 'Arsenal', away: 'Liverpool', league: 'PREMIER LEAGUE', offsetHours: 9, ev: '+17.9% EV' },
+    { home: 'Bayern Munich', away: 'Bayer Leverkusen', league: 'BUNDESLIGA', offsetHours: 12, ev: '+16.1% EV' },
+    { home: 'Inter Milan', away: 'Juventus', league: 'SERIE A (DERBY D\'ITALIA)', offsetHours: 25, ev: '+15.4% EV' },
+    { home: 'Paris Saint-Germain', away: 'Marseille', league: 'LIGUE 1 (LE CLASSIQUE)', offsetHours: 28, ev: '+19.0% EV' },
+    { home: 'Chelsea', away: 'Newcastle', league: 'PREMIER LEAGUE', offsetHours: 31, ev: '+11.2% EV' }
+  ]
+};
+
+// Generates dynamic upcoming fixtures seeded by the real calendar date
+export const generateDailyUpcomingFixtures = (refDate = new Date()): Fixture[] => {
+  const dayIndex = refDate.getUTCDay();
+  const dayKey = refDate.toISOString().slice(0, 10);
+  const templateList = WEEKLY_SCHEDULE_TEMPLATES[dayIndex] || WEEKLY_SCHEDULE_TEMPLATES[3];
+
+  return templateList.map((m, idx) => {
+    const kickoff = new Date(refDate.getTime() + m.offsetHours * 3600 * 1000);
+    kickoff.setUTCMinutes(0, 0, 0);
+    return {
+      id: `sched-${dayKey}-${idx}`,
+      home_team: m.home,
+      away_team: m.away,
+      league: m.league,
+      utc_timestamp: kickoff.toISOString(),
+      ev: m.ev
+    };
+  });
+};
+
+// Default dynamic fixtures generated for today
+const DEFAULT_TICKER_FIXTURES: Fixture[] = generateDailyUpcomingFixtures();
+
+// Team Elo lookup table matching models/v1.1/elo_ratings.json + major European clubs
 const TEAM_ELO_BASELINE: Record<string, number> = {
   Arsenal: 1840.5,
   'Manchester City': 1920.2,
@@ -124,6 +171,38 @@ const TEAM_ELO_BASELINE: Record<string, number> = {
   Marseille: 1735.4,
   Liverpool: 1865.7,
   Chelsea: 1795.3,
+  'Atlético Madrid': 1820.0,
+  'Bayer Leverkusen': 1835.0,
+  'Aston Villa': 1765.0,
+  Tottenham: 1775.0,
+  'AC Milan': 1790.0,
+  Napoli: 1780.0,
+  Newcastle: 1760.0,
+  Monaco: 1745.0,
+  'Sporting CP': 1755.0,
+  Benfica: 1750.0,
+  Atalanta: 1765.0,
+  'RB Leipzig': 1770.0,
+  'Real Sociedad': 1740.0,
+  'Athletic Bilbao': 1750.0,
+  Roma: 1755.0,
+  Lazio: 1745.0,
+  PSV: 1730.0,
+  Feyenoord: 1720.0,
+  'Sparta Prague': 1680.0,
+  'AZ Alkmaar': 1690.0,
+  'Fenerbahçe': 1715.0,
+  'Manchester United': 1785.0,
+  'Dynamo Kyiv': 1670.0,
+  'Slavia Prague': 1685.0,
+  Lille: 1720.0,
+  Stuttgart: 1730.0,
+  'Eintracht Frankfurt': 1740.0,
+  Sevilla: 1725.0,
+  Valencia: 1710.0,
+  Espanyol: 1680.0,
+  'Leicester City': 1695.0,
+  'Nottingham Forest': 1705.0
 };
 
 // Compute match phase and minutes elapsed relative to kickoff
@@ -160,9 +239,34 @@ export default function LiveSportsTicker({
     setIsClient(true);
   }, []);
 
-  // Update internal fixture array if initialFixtures prop changes
+  // Automatically refresh fixtures if calendar day rolls over (or on custom initialFixtures change)
   useEffect(() => {
-    setFixtureData(initialFixtures);
+    // If custom fixtures were explicitly passed in, respect them
+    if (initialFixtures !== DEFAULT_TICKER_FIXTURES) {
+      setFixtureData(initialFixtures);
+      return;
+    }
+
+    let active = true;
+    let currentDayKey = new Date().toISOString().slice(0, 10);
+
+    const checkDailyRollover = () => {
+      const todayKey = new Date().toISOString().slice(0, 10);
+      if (todayKey !== currentDayKey) {
+        currentDayKey = todayKey;
+        if (active) {
+          setFixtureData(generateDailyUpcomingFixtures(new Date()));
+        }
+      }
+    };
+
+    // Check every minute for midnight date rollover
+    const rolloverInterval = setInterval(checkDailyRollover, 60 * 1000);
+
+    return () => {
+      active = false;
+      clearInterval(rolloverInterval);
+    };
   }, [initialFixtures]);
 
   // Dynamic EV fetcher connected to FastAPI engine
@@ -239,7 +343,7 @@ export default function LiveSportsTicker({
       isCancelled = true;
       clearInterval(intervalId);
     };
-  }, [initialFixtures]);
+  }, [fixtureData.length, fixtureData[0]?.id]);
 
   const isExactUtc = localTimeZone === 'UTC';
 
