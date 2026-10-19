@@ -510,6 +510,19 @@ export default function LiveSportsTicker({
             )}
           </div>
         </div>
+
+        {/* Right Dev Blog Navigation Pill */}
+        <div className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
+          <a
+            href="/dev-blog"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
+            title="Read Quantitative Research & Dev Blog Dispatches"
+          >
+            <span>📰</span>
+            <span className="hidden sm:inline">DEV BLOG</span>
+            <span className="text-[10px]">→</span>
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -1362,10 +1362,10 @@ export default function App() {
             <h2 className="text-xs font-mono text-slate-500 tracking-widest mb-4 uppercase text-left">
               Cloud Architecture & Scaled Backtesting
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button 
                 onClick={() => navigate('#/1k_sim')} 
-                className="px-6 py-4 bg-emerald-950/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(16,185,129,0.1)] hover:shadow-[0_0_35px_rgba(16,185,129,0.2)] cursor-pointer"
+                className="px-5 py-4 bg-emerald-950/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(16,185,129,0.1)] hover:shadow-[0_0_35px_rgba(16,185,129,0.2)] cursor-pointer"
               >
                 <div className="flex items-center justify-between w-full mb-1">
                   <span className="text-xs text-emerald-400 flex items-center gap-1.5">
@@ -1387,7 +1387,7 @@ export default function App() {
                   setVaultVersion('v1.2');
                   navigate('#/vault');
                 }} 
-                className="px-6 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
+                className="px-5 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10"
               >
                 <div className="flex items-center justify-between w-full mb-1">
                   <span className="text-xs text-emerald-400">DATA VAULT</span>
@@ -1400,6 +1400,25 @@ export default function App() {
                   Explore algorithmic signal screening and capital preservation across 26 taxonomical match archetypes (Cases A–Z)
                 </span>
               </button>
+
+              <a
+                href="/dev-blog"
+                className="px-5 py-4 bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 text-slate-300 font-mono font-bold rounded-xl text-left flex flex-col transition-all group cursor-pointer shadow-lg hover:shadow-emerald-500/10 no-underline"
+              >
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className="text-xs text-emerald-400 flex items-center gap-1.5">
+                    <span>DEV BLOG</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </span>
+                  <span className="text-xs text-emerald-400 font-normal">POSTPARTICLE CMS</span>
+                </div>
+                <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
+                  Engineering & Research Dispatches →
+                </span>
+                <span className="text-xs font-normal text-slate-400 mt-1">
+                  Read live published research on spatial simulation geometry, isotonic probability curves, and market microstructure
+                </span>
+              </a>
             </div>
           </div>
 
