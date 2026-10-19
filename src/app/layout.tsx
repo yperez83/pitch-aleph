@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../index.css';
+import VisitoringAnalytics from '../components/VisitoringAnalytics';
 
 export const metadata: Metadata = {
   title: 'Pitch Aleph | Betting Engine',
@@ -19,7 +20,11 @@ export default function RootLayout({
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </head>
-      <body>{children}</body>
+      <body>
+        <VisitoringAnalytics>
+          {children}
+        </VisitoringAnalytics>
+      </body>
     </html>
   );
 }
