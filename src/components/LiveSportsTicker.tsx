@@ -135,7 +135,7 @@ const WEEKLY_SCHEDULE_TEMPLATES: Record<number, ScheduleTemplateItem[]> = {
 };
 
 // Generates dynamic upcoming fixtures seeded by the real calendar date
-export const generateDailyUpcomingFixtures = (refDate = new Date()): Fixture[] => {
+const generateDailyUpcomingFixtures = (refDate = new Date()): Fixture[] => {
   const dayIndex = refDate.getUTCDay();
   const dayKey = refDate.toISOString().slice(0, 10);
   const templateList = WEEKLY_SCHEDULE_TEMPLATES[dayIndex] || WEEKLY_SCHEDULE_TEMPLATES[3];

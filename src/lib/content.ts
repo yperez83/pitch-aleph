@@ -34,7 +34,7 @@ export interface ArticleQuery {
   pageSize?: number;
 }
 
-export interface PublicDocument<T = unknown> {
+interface PublicDocument<T = unknown> {
   key: string;
   title: string;
   tags: string[];
@@ -46,7 +46,7 @@ const cmsUrl = process.env.POSTPARTICLE_URL || "https://postparticle.vercel.app"
 const project = process.env.POSTPARTICLE_PROJECT || "pitchaleph";
 const organizationId = process.env.POSTPARTICLE_ORGANIZATION_ID || "df3d1b36-32b4-4960-bdbf-966ebac0396b";
 
-export class ContentError extends Error {
+class ContentError extends Error {
   constructor(public status: number, message?: string) {
     super(message || `Postparticle returned ${status}`);
     this.name = "ContentError";
@@ -102,7 +102,7 @@ export async function getArticle(slug: string): Promise<PublicArticle> {
   }
 }
 
-export async function getDocument<T = unknown>(key: string): Promise<PublicDocument<T>> {
+async function getDocument<T = unknown>(key: string): Promise<PublicDocument<T>> {
   try {
     return await get<PublicDocument<T>>(`documents/${encodeURIComponent(key)}`);
   } catch (error) {
