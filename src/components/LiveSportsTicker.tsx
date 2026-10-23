@@ -480,7 +480,7 @@ export default function LiveSportsTicker({
                   href="/fixtures"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
                 >
-                  <span>View Full Dedicated Page</span>
+                  <span>View Full Page</span>
                   <span>→</span>
                 </Link>
               </div>
