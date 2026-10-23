@@ -1,18 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Fixture, generateDailyUpcomingFixtures } from '@/lib/fixtures';
 
-export interface Fixture {
-  id?: string | number;
-  home_team: string;
-  away_team: string;
-  utc_timestamp: string; // ISO 8601 string, e.g. "2026-10-10T19:00:00Z"
-  league?: string;
-  odds_home?: string;
-  odds_draw?: string;
-  odds_away?: string;
-  ev?: string | null;
-}
+export type { Fixture };
 
 export interface LiveSportsTickerProps {
   fixtures?: Fixture[];
@@ -56,102 +48,6 @@ const getFutureUtcIso = (hoursFromNow: number) => {
   const date = new Date(Date.now() + hoursFromNow * 3600 * 1000);
   date.setUTCMinutes(0, 0, 0);
   return date.toISOString();
-};
-
-interface ScheduleTemplateItem {
-  home: string;
-  away: string;
-  league: string;
-  offsetHours: number;
-  ev: string;
-}
-
-// Comprehensive 7-day cyclical European & domestic football calendar
-// Matches UEFA Champions League (Tue/Wed), Europa League (Thu), and top leagues (Fri/Sat/Sun/Mon)
-const WEEKLY_SCHEDULE_TEMPLATES: Record<number, ScheduleTemplateItem[]> = {
-  0: [ // Sunday: Premier League, La Liga, Serie A, Ligue 1
-    { home: 'Arsenal', away: 'Chelsea', league: 'PREMIER LEAGUE', offsetHours: 3, ev: '+15.4% EV' },
-    { home: 'Real Madrid', away: 'Atlético Madrid', league: 'LA LIGA', offsetHours: 6, ev: '+18.1% EV' },
-    { home: 'Inter Milan', away: 'Juventus', league: 'SERIE A', offsetHours: 8, ev: '+13.8% EV' },
-    { home: 'Paris Saint-Germain', away: 'Monaco', league: 'LIGUE 1', offsetHours: 11, ev: '+17.5% EV' },
-    { home: 'Liverpool', away: 'Manchester City', league: 'PREMIER LEAGUE', offsetHours: 25, ev: '+14.2% EV' },
-    { home: 'Barcelona', away: 'Athletic Bilbao', league: 'LA LIGA', offsetHours: 28, ev: '+11.6% EV' },
-    { home: 'Bayern Munich', away: 'Borussia Dortmund', league: 'BUNDESLIGA', offsetHours: 32, ev: '+16.7% EV' }
-  ],
-  1: [ // Monday: Monday Night Football & European Stage Previews
-    { home: 'Chelsea', away: 'Newcastle', league: 'PREMIER LEAGUE', offsetHours: 4, ev: '+12.8% EV' },
-    { home: 'Lazio', away: 'Roma', league: 'SERIE A', offsetHours: 7, ev: '+16.2% EV' },
-    { home: 'Valencia', away: 'Real Sociedad', league: 'LA LIGA', offsetHours: 9, ev: '+10.5% EV' },
-    { home: 'Arsenal', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 25, ev: '+19.4% EV' },
-    { home: 'Real Madrid', away: 'Borussia Dortmund', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 27, ev: '+14.7% EV' },
-    { home: 'Paris Saint-Germain', away: 'PSV', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 30, ev: '+13.1% EV' },
-    { home: 'Juventus', away: 'Stuttgart', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 32, ev: '+11.8% EV' }
-  ],
-  2: [ // Tuesday: UEFA Champions League Matchday Primetime
-    { home: 'Arsenal', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 3, ev: '+19.4% EV' },
-    { home: 'Real Madrid', away: 'Borussia Dortmund', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 5, ev: '+14.7% EV' },
-    { home: 'Paris Saint-Germain', away: 'PSV', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 7, ev: '+13.1% EV' },
-    { home: 'Barcelona', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 25, ev: '+21.2% EV' },
-    { home: 'Manchester City', away: 'Sparta Prague', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 27, ev: '+15.0% EV' },
-    { home: 'Liverpool', away: 'RB Leipzig', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 29, ev: '+16.8% EV' },
-    { home: 'Atlético Madrid', away: 'Lille', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 31, ev: '+12.5% EV' }
-  ],
-  3: [ // Wednesday: UEFA Champions League Matchday Blockbusters
-    { home: 'Barcelona', away: 'Bayern Munich', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 3, ev: '+21.2% EV' },
-    { home: 'Manchester City', away: 'Sparta Prague', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 5, ev: '+15.0% EV' },
-    { home: 'Liverpool', away: 'RB Leipzig', league: 'UEFA CHAMPIONS LEAGUE', offsetHours: 7, ev: '+16.8% EV' },
-    { home: 'Tottenham', away: 'AZ Alkmaar', league: 'UEFA EUROPA LEAGUE', offsetHours: 25, ev: '+14.5% EV' },
-    { home: 'Fenerbahçe', away: 'Manchester United', league: 'UEFA EUROPA LEAGUE', offsetHours: 27, ev: '+18.3% EV' },
-    { home: 'Roma', away: 'Dynamo Kyiv', league: 'UEFA EUROPA LEAGUE', offsetHours: 29, ev: '+11.9% EV' },
-    { home: 'Athletic Bilbao', away: 'Slavia Prague', league: 'UEFA EUROPA LEAGUE', offsetHours: 31, ev: '+13.4% EV' }
-  ],
-  4: [ // Thursday: UEFA Europa League & Conference League
-    { home: 'Tottenham', away: 'AZ Alkmaar', league: 'UEFA EUROPA LEAGUE', offsetHours: 3, ev: '+14.5% EV' },
-    { home: 'Fenerbahçe', away: 'Manchester United', league: 'UEFA EUROPA LEAGUE', offsetHours: 5, ev: '+18.3% EV' },
-    { home: 'Roma', away: 'Dynamo Kyiv', league: 'UEFA EUROPA LEAGUE', offsetHours: 7, ev: '+11.9% EV' },
-    { home: 'Borussia Dortmund', away: 'RB Leipzig', league: 'BUNDESLIGA', offsetHours: 24, ev: '+15.8% EV' },
-    { home: 'Marseille', away: 'Monaco', league: 'LIGUE 1', offsetHours: 27, ev: '+12.4% EV' },
-    { home: 'Espanyol', away: 'Sevilla', league: 'LA LIGA', offsetHours: 29, ev: '+9.8% EV' },
-    { home: 'Leicester City', away: 'Nottingham Forest', league: 'PREMIER LEAGUE', offsetHours: 31, ev: '+10.2% EV' }
-  ],
-  5: [ // Friday: European Weekend Kickoffs
-    { home: 'Borussia Dortmund', away: 'RB Leipzig', league: 'BUNDESLIGA', offsetHours: 3, ev: '+15.8% EV' },
-    { home: 'Marseille', away: 'Monaco', league: 'LIGUE 1', offsetHours: 5, ev: '+12.4% EV' },
-    { home: 'Espanyol', away: 'Sevilla', league: 'LA LIGA', offsetHours: 7, ev: '+9.8% EV' },
-    { home: 'Manchester City', away: 'Aston Villa', league: 'PREMIER LEAGUE', offsetHours: 19, ev: '+14.3% EV' },
-    { home: 'Real Madrid', away: 'Barcelona', league: 'LA LIGA (EL CLÁSICO)', offsetHours: 23, ev: '+22.5% EV' },
-    { home: 'Arsenal', away: 'Liverpool', league: 'PREMIER LEAGUE', offsetHours: 26, ev: '+17.9% EV' },
-    { home: 'Bayer Leverkusen', away: 'Eintracht Frankfurt', league: 'BUNDESLIGA', offsetHours: 29, ev: '+13.7% EV' }
-  ],
-  6: [ // Saturday: Super Saturday Primetime Blockbusters
-    { home: 'Manchester City', away: 'Aston Villa', league: 'PREMIER LEAGUE', offsetHours: 3, ev: '+14.3% EV' },
-    { home: 'Real Madrid', away: 'Barcelona', league: 'LA LIGA (EL CLÁSICO)', offsetHours: 6, ev: '+22.5% EV' },
-    { home: 'Arsenal', away: 'Liverpool', league: 'PREMIER LEAGUE', offsetHours: 9, ev: '+17.9% EV' },
-    { home: 'Bayern Munich', away: 'Bayer Leverkusen', league: 'BUNDESLIGA', offsetHours: 12, ev: '+16.1% EV' },
-    { home: 'Inter Milan', away: 'Juventus', league: 'SERIE A (DERBY D\'ITALIA)', offsetHours: 25, ev: '+15.4% EV' },
-    { home: 'Paris Saint-Germain', away: 'Marseille', league: 'LIGUE 1 (LE CLASSIQUE)', offsetHours: 28, ev: '+19.0% EV' },
-    { home: 'Chelsea', away: 'Newcastle', league: 'PREMIER LEAGUE', offsetHours: 31, ev: '+11.2% EV' }
-  ]
-};
-
-// Generates dynamic upcoming fixtures seeded by the real calendar date
-const generateDailyUpcomingFixtures = (refDate = new Date()): Fixture[] => {
-  const dayIndex = refDate.getUTCDay();
-  const dayKey = refDate.toISOString().slice(0, 10);
-  const templateList = WEEKLY_SCHEDULE_TEMPLATES[dayIndex] || WEEKLY_SCHEDULE_TEMPLATES[3];
-
-  return templateList.map((m, idx) => {
-    const kickoff = new Date(refDate.getTime() + m.offsetHours * 3600 * 1000);
-    kickoff.setUTCMinutes(0, 0, 0);
-    return {
-      id: `sched-${dayKey}-${idx}`,
-      home_team: m.home,
-      away_team: m.away,
-      league: m.league,
-      utc_timestamp: kickoff.toISOString(),
-      ev: m.ev
-    };
-  });
 };
 
 // Default dynamic fixtures generated for today
@@ -228,6 +124,7 @@ export default function LiveSportsTicker({
   const [isClient, setIsClient] = useState(false);
   const [localTimeZone, setLocalTimeZone] = useState<string>('UTC');
   const [fixtureData, setFixtureData] = useState<Fixture[]>(initialFixtures);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -473,14 +370,22 @@ export default function LiveSportsTicker({
       aria-label="Upcoming Match Fixtures Live Ticker"
     >
       <div className="flex items-center w-full">
-        {/* Left Ticker Label Pill */}
-        <div className="z-20 shrink-0 bg-slate-900/95 border-r border-slate-800 px-3.5 py-2 flex items-center gap-2 shadow-[4px_0_12px_rgba(0,0,0,0.5)]">
+        {/* Left Ticker Label Pill - Interactive button */}
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="z-20 shrink-0 bg-slate-900/95 hover:bg-slate-850 border-r border-slate-800 px-3.5 py-2 flex items-center gap-2 shadow-[4px_0_12px_rgba(0,0,0,0.5)] cursor-pointer group/label transition-colors text-left"
+          title={isExpanded ? 'Collapse list preview' : 'Click to drop down full fixtures preview'}
+        >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="font-mono text-[11px] font-bold tracking-widest text-emerald-400 uppercase whitespace-nowrap">
-            UPCOMING FIXTURES
+          <span className="font-mono text-[11px] font-bold tracking-widest text-emerald-400 group-hover/label:text-emerald-300 uppercase whitespace-nowrap flex items-center gap-1.5">
+            <span>UPCOMING FIXTURES</span>
+            <span className={`text-[10px] text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-emerald-400' : ''}`}>
+              ▼
+            </span>
           </span>
           {isClient && !isExactUtc && (
             <span
@@ -490,10 +395,22 @@ export default function LiveSportsTicker({
               {localTimeZone.split('/').pop()?.replace(/_/g, ' ')}
             </span>
           )}
-        </div>
+        </button>
 
-        {/* Marquee Scroller container with edge gradient fades */}
-        <div className="relative overflow-hidden flex-1 group">
+        {/* Marquee Scroller container with edge gradient fades - Clickable to toggle */}
+        <div
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="relative overflow-hidden flex-1 group cursor-pointer"
+          title={isExpanded ? 'Collapse list' : 'Click to expand fixtures list'}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setIsExpanded(!isExpanded);
+            }
+          }}
+        >
           {/* Subtle gradient masks for smooth edge fade */}
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-slate-950 to-transparent z-10"></div>
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-slate-950 to-transparent z-10"></div>
@@ -511,8 +428,17 @@ export default function LiveSportsTicker({
           </div>
         </div>
 
-        {/* Right Dev Blog Navigation Pill */}
-        <div className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
+        {/* Right Action Navigation Pill */}
+        <div className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center gap-2 shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
+          <Link
+            href="/fixtures"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700 font-mono text-[11px] font-semibold transition-all"
+            title="Open Dedicated Full Fixtures Page"
+          >
+            <span>📅</span>
+            <span className="hidden xl:inline">FIXTURES PAGE</span>
+            <span className="text-[10px]">↗</span>
+          </Link>
           <a
             href="/dev-blog"
             className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
@@ -524,6 +450,129 @@ export default function LiveSportsTicker({
           </a>
         </div>
       </div>
+
+      {/* Accordion Dropdown Preview with Staggered Cascading Animation */}
+      {isExpanded && (
+        <div className="w-full border-t border-slate-800/90 bg-slate-950/98 backdrop-blur-xl px-4 py-5 animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="max-w-6xl mx-auto space-y-4">
+            {/* Dropdown Header & Quick Action */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800/70 font-mono text-xs">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span className="font-bold text-white tracking-wide uppercase">
+                  Upcoming Match Calendar ({fixtureData.length} Fixtures)
+                </span>
+                <span className="text-slate-500">|</span>
+                <span className="text-slate-400">
+                  {isExactUtc ? 'UTC' : localTimeZone.split('/').pop()?.replace(/_/g, ' ')}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsExpanded(false)}
+                  className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  ✕ Close
+                </button>
+                <Link
+                  href="/fixtures"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                >
+                  <span>View Full Dedicated Page</span>
+                  <span>→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Bullet Point List with One-by-One Dropdown Animation */}
+            <ul className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800">
+              {fixtureData.map((fixture, index) => {
+                const utcFormatted = formatUtcTime(fixture.utc_timestamp);
+                const localFormatted = isClient
+                  ? formatLocalTime(fixture.utc_timestamp, localTimeZone)
+                  : null;
+                const delayMs = index * 45; // Staggered drop-down animation delay
+
+                return (
+                  <li
+                    key={fixture.id || index}
+                    style={{
+                      animationDelay: `${delayMs}ms`,
+                      animationFillMode: 'both'
+                    }}
+                    className="animate-in fade-in slide-in-from-top-2 duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 hover:bg-slate-900/90 transition-all text-xs"
+                  >
+                    {/* Left: Traditional bullet accent + league + match */}
+                    <div className="flex items-center gap-3">
+                      {/* Traditional bullet point symbol */}
+                      <span className="w-2 h-2 rounded-full bg-emerald-400/90 flex-shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
+                      
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-mono text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/60">
+                          {fixture.league || 'SOCCER'}
+                        </span>
+                        <span className="font-bold text-slate-100 hover:text-emerald-300 transition-colors">
+                          {fixture.home_team}
+                        </span>
+                        <span className="text-slate-500 font-mono text-[11px]">vs</span>
+                        <span className="font-bold text-slate-100 hover:text-emerald-300 transition-colors">
+                          {fixture.away_team}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right: Kickoff + EV + Link */}
+                    <div className="flex items-center justify-between sm:justify-end gap-3 pl-5 sm:pl-0 font-mono text-[11px]">
+                      {/* Kickoff */}
+                      <div className="text-slate-400">
+                        {isClient && !isExactUtc && localFormatted ? (
+                          <span>
+                            <strong className="text-slate-200">{localFormatted.date}</strong> {localFormatted.time}
+                          </span>
+                        ) : (
+                          <span>
+                            <strong className="text-slate-200">{utcFormatted.date}</strong> {utcFormatted.time} UTC
+                          </span>
+                        )}
+                      </div>
+
+                      {/* EV Badge */}
+                      {fixture.ev && (
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-bold text-[10px]">
+                          {fixture.ev}
+                        </span>
+                      )}
+
+                      {/* Simulate Shortcut */}
+                      <Link
+                        href={`/?home=${encodeURIComponent(fixture.home_team)}&away=${encodeURIComponent(fixture.away_team)}`}
+                        onClick={() => setIsExpanded(false)}
+                        className="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-slate-300 border border-slate-700 text-[10px] font-bold transition-all whitespace-nowrap"
+                        title="Simulate in Pitch Aleph Engine"
+                      >
+                        Simulate →
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* Bottom Callout banner */}
+            <div className="pt-2 flex items-center justify-between font-mono text-[11px] text-slate-500">
+              <span>Click on any fixture to pre-populate and simulate match scenarios in the Monte Carlo engine.</span>
+              <Link
+                href="/fixtures"
+                className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 flex-shrink-0"
+              >
+                Open Full Schedule Page →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

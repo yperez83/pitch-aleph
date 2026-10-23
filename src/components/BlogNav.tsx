@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 interface BlogHeaderProps {
-  current?: 'list' | 'article';
+  current?: 'list' | 'article' | 'fixtures';
 }
 
 export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
@@ -39,6 +39,28 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
                 Engine
               </Link>
             </>
+          ) : current === 'fixtures' ? (
+            <>
+              <Link
+                href="/"
+                className="text-slate-400 hover:text-white transition-colors"
+              >
+                ← Back to App
+              </Link>
+              <Link
+                href="/dev-blog"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                Dev Blog
+              </Link>
+              <Link
+                href="/api/docs"
+                target="_blank"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                API Docs ↗
+              </Link>
+            </>
           ) : (
             <>
               <Link
@@ -46,6 +68,12 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
                 className="text-slate-400 hover:text-white transition-colors"
               >
                 ← Back to App
+              </Link>
+              <Link
+                href="/fixtures"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                Fixtures
               </Link>
               <Link
                 href="/dev-blog"
