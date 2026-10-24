@@ -431,17 +431,26 @@ export default function LiveSportsTicker({
         {/* Right Action Navigation Pill */}
         <div className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center gap-2 shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
           <Link
+            href="/news"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
+            title="Read Live Match Case Studies & Audits"
+          >
+            <span>📊</span>
+            <span className="hidden lg:inline">CASE STUDIES</span>
+            <span className="text-[10px]">→</span>
+          </Link>
+          <Link
             href="/fixtures"
             className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700 font-mono text-[11px] font-semibold transition-all"
             title="Open Dedicated Full Fixtures Page"
           >
             <span>📅</span>
-            <span className="hidden xl:inline">FIXTURES PAGE</span>
+            <span className="hidden xl:inline">FIXTURES</span>
             <span className="text-[10px]">↗</span>
           </Link>
           <a
             href="/dev-blog"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 font-mono text-[11px] font-medium transition-all"
             title="Read Quantitative Research & Dev Blog Dispatches"
           >
             <span>📰</span>
@@ -561,14 +570,22 @@ export default function LiveSportsTicker({
             </ul>
 
             {/* Bottom Callout banner */}
-            <div className="pt-2 flex items-center justify-between font-mono text-[11px] text-slate-500">
+            <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono text-[11px] text-slate-500">
               <span>Click on any fixture to pre-populate and simulate match scenarios in the Monte Carlo engine.</span>
-              <Link
-                href="/fixtures"
-                className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4 flex-shrink-0"
-              >
-                Open Full Schedule Page →
-              </Link>
+              <div className="flex items-center gap-4 flex-shrink-0">
+                <Link
+                  href="/news"
+                  className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
+                >
+                  Latest Match Case Studies →
+                </Link>
+                <Link
+                  href="/fixtures"
+                  className="text-slate-400 hover:text-white underline underline-offset-4"
+                >
+                  Full Schedule →
+                </Link>
+              </div>
             </div>
           </div>
         </div>

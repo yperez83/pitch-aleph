@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 interface BlogHeaderProps {
-  current?: 'list' | 'article' | 'fixtures';
+  current?: 'list' | 'article' | 'fixtures' | 'news';
 }
 
 export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
@@ -33,6 +33,12 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
                 ← All Articles
               </Link>
               <Link
+                href="/news"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                News
+              </Link>
+              <Link
                 href="/"
                 className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
               >
@@ -48,6 +54,12 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
                 ← Back to App
               </Link>
               <Link
+                href="/news"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                News
+              </Link>
+              <Link
                 href="/dev-blog"
                 className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
               >
@@ -56,7 +68,35 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
               <Link
                 href="/api/docs"
                 target="_blank"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
+              >
+                API Docs ↗
+              </Link>
+            </>
+          ) : current === 'news' ? (
+            <>
+              <Link
+                href="/"
+                className="text-slate-400 hover:text-white transition-colors"
+              >
+                ← Back to App
+              </Link>
+              <Link
+                href="/fixtures"
                 className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                Fixtures
+              </Link>
+              <Link
+                href="/dev-blog"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                Dev Blog
+              </Link>
+              <Link
+                href="/api/docs"
+                target="_blank"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
               >
                 API Docs ↗
               </Link>
@@ -68,6 +108,12 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
                 className="text-slate-400 hover:text-white transition-colors"
               >
                 ← Back to App
+              </Link>
+              <Link
+                href="/news"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+              >
+                News
               </Link>
               <Link
                 href="/fixtures"
@@ -84,7 +130,7 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
               <Link
                 href="/api/docs"
                 target="_blank"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
+                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
               >
                 API Docs ↗
               </Link>

@@ -511,9 +511,17 @@ const Footer = () => (
             <span>Hugging Face</span>
           </a>
           <a
+            href="/news"
+            aria-label="Read PitchAleph Quantitative Case Studies and Telemetry Audits"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+          >
+            <span>📊</span>
+            <span>Case Studies</span>
+          </a>
+          <a
             href="/dev-blog"
             aria-label="Read PitchAleph Quantitative Engineering Dispatches"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
           >
             <span>📰</span>
             <span>Dev Blog</span>
