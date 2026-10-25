@@ -569,45 +569,42 @@ const Footer = () => (
         </div>
       </div>
 
-      {/* Center: Developer CTA */}
-      <div className="flex flex-col sm:flex-row items-center gap-3">
-        <span className="text-xs text-slate-400 font-mono">
-          Run real-time inference on the 1.2 brain:
-        </span>
-        <div className="flex flex-wrap items-center gap-2">
+      {/* Center: Developer Links */}
+      <div className="flex-1 max-w-2xl px-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full">
           <a
             href="https://huggingface.co/marianopsa/pitch-aleph-1.2"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Inspect PitchAleph 1.2 Open Weights on Hugging Face"
-            className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="h-9 w-full px-3 inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm text-center truncate"
           >
-            <span>🤗</span>
-            <span>Hugging Face</span>
+            <span className="shrink-0">🤗</span>
+            <span className="truncate">Hugging Face</span>
           </a>
           <a
             href="/launchpad"
             aria-label="Deploy PitchAleph 1.2 Autonomous In-Play Monitor"
-            className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="h-9 w-full px-3 inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm text-center truncate"
           >
-            <span>🚀</span>
-            <span>Launchpad</span>
+            <span className="shrink-0">🚀</span>
+            <span className="truncate">Launchpad</span>
           </a>
           <a
             href="/news"
             aria-label="Read PitchAleph Quantitative Live Tests and Telemetry Audits"
-            className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="h-9 w-full px-3 inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm text-center truncate"
           >
-            <span>📊</span>
-            <span>Live Tests</span>
+            <span className="shrink-0">📊</span>
+            <span className="truncate">Live Tests</span>
           </a>
           <a
             href="/dev-blog"
             aria-label="Read PitchAleph Quantitative Engineering Dispatches"
-            className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="h-9 w-full px-3 inline-flex items-center justify-center gap-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm text-center truncate"
           >
-            <span>📰</span>
-            <span>Dev Blog</span>
+            <span className="shrink-0">📰</span>
+            <span className="truncate">Dev Blog</span>
           </a>
         </div>
       </div>
@@ -727,6 +724,8 @@ export default function App() {
   const [vaultVersion, setVaultVersion] = useState('v1.2');
   // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
   const [backtestVersion, setBacktestVersion] = useState('v1.2');
+  // Archives collapsible state
+  const [archivesExpanded, setArchivesExpanded] = useState(true);
 
   // Interactive zoom state for 1,000-Match Backtest Chart
   const [chartZoomLeft, setChartZoomLeft] = useState('dataMin');
@@ -2008,23 +2007,32 @@ export default function App() {
           {/* ─── ARCHIVES & CORE STUDIES ─── */}
           <div className="w-full border-t border-slate-800/80 pt-8 mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
-              <div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href="/archives"
-                    className="text-xs font-mono text-slate-300 hover:text-emerald-400 font-bold tracking-widest uppercase transition-colors flex items-center gap-1.5"
-                  >
-                    <span>📁</span>
-                    <span>Archives</span>
-                    <span className="text-slate-500 font-normal">→</span>
-                  </a>
-                </div>
-                <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-                  Foundational stress-tests and validation benchmarks used to calibrate PitchAleph v1.0
-                </p>
-              </div>
+              {/* Expandable line with icon, triangle indicator, and title */}
+              <button
+                type="button"
+                onClick={() => setArchivesExpanded((prev) => !prev)}
+                className="group flex items-center gap-2 text-left cursor-pointer select-none"
+                aria-expanded={archivesExpanded}
+                aria-label="Toggle Archives 4 Core Case Studies"
+              >
+                <span className="text-base">📁</span>
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-slate-300 group-hover:text-emerald-400 transition-colors">
+                  Archives
+                </span>
+                <span
+                  className={`text-xs text-slate-500 group-hover:text-emerald-400 transition-transform duration-200 inline-block ${
+                    archivesExpanded ? 'rotate-90' : 'rotate-0'
+                  }`}
+                  aria-hidden="true"
+                >
+                  ▶
+                </span>
+                <span className="hidden sm:inline-block text-[11px] text-slate-500 font-mono ml-2 group-hover:text-slate-400 transition-colors">
+                  — Foundational stress-tests and validation benchmarks used to calibrate PitchAleph v1.0
+                </span>
+              </button>
 
-              {/* Nested Action Buttons */}
+              {/* Nested Action Button: Core Case Studies */}
               <div className="flex items-center gap-2">
                 <a
                   href="/archives#core-studies"
@@ -2032,85 +2040,79 @@ export default function App() {
                 >
                   <span>🧪</span>
                   <span>Core Case Studies</span>
-                </a>
-                <a
-                  href="/api/docs"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-8 px-3 inline-flex items-center gap-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
-                >
-                  <IconCode className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>API Docs</span>
-                  <span className="text-[10px] text-slate-500">↗</span>
+                  <span className="text-[10px] text-emerald-400/70">→</span>
                 </a>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full">
-              {/* Test 01 - Big Success (Green) */}
-              <button
-                onClick={() => navigate('#/case/2022')}
-                className="px-5 py-4 bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500 text-emerald-400 font-mono font-bold rounded-xl hover:bg-emerald-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
-              >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-slate-400 font-mono">TEST 01: ALPHA GENERATION</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase font-semibold">
-                    Big Success
+            {/* Collapsible 4 Core Case Studies Grid */}
+            {archivesExpanded && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full animate-fadeIn">
+                {/* Test 01 - Big Success (Green) */}
+                <button
+                  onClick={() => navigate('#/case/2022')}
+                  className="px-5 py-4 bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500 text-emerald-400 font-mono font-bold rounded-xl hover:bg-emerald-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
+                >
+                  <div className="flex items-center justify-between w-full mb-1">
+                    <span className="text-xs text-slate-400 font-mono">TEST 01: ALPHA GENERATION</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase font-semibold">
+                      Big Success
+                    </span>
+                  </div>
+                  <span className="text-base sm:text-lg text-emerald-300 group-hover:text-emerald-200">
+                    ARG vs FRA (2022)
                   </span>
-                </div>
-                <span className="text-base sm:text-lg text-emerald-300 group-hover:text-emerald-200">
-                  ARG vs FRA (2022)
-                </span>
-              </button>
+                </button>
 
-              {/* Test 02 - Mitigated Loss (Orange) */}
-              <button
-                onClick={() => navigate('#/case/2018')}
-                className="px-5 py-4 bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 text-amber-400 font-mono font-bold rounded-xl hover:bg-amber-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
-              >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-slate-400 font-mono">TEST 02: TAIL RISK / VARIANCE</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase font-semibold">
-                    Mitigated Loss
+                {/* Test 02 - Mitigated Loss (Orange) */}
+                <button
+                  onClick={() => navigate('#/case/2018')}
+                  className="px-5 py-4 bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 text-amber-400 font-mono font-bold rounded-xl hover:bg-amber-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
+                >
+                  <div className="flex items-center justify-between w-full mb-1">
+                    <span className="text-xs text-slate-400 font-mono">TEST 02: TAIL RISK / VARIANCE</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase font-semibold">
+                      Mitigated Loss
+                    </span>
+                  </div>
+                  <span className="text-base sm:text-lg text-amber-300 group-hover:text-amber-200">
+                    GER vs KOR (2018)
                   </span>
-                </div>
-                <span className="text-base sm:text-lg text-amber-300 group-hover:text-amber-200">
-                  GER vs KOR (2018)
-                </span>
-              </button>
+                </button>
 
-              {/* Test 03 - Big Success (Green) */}
-              <button
-                onClick={() => navigate('#/case/ksa')}
-                className="px-5 py-4 bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500 text-emerald-400 font-mono font-bold rounded-xl hover:bg-emerald-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
-              >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-slate-400 font-mono">TEST 03: UNDERDOG INEFFICIENCY</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase font-semibold">
-                    Big Success
+                {/* Test 03 - Big Success (Green) */}
+                <button
+                  onClick={() => navigate('#/case/ksa')}
+                  className="px-5 py-4 bg-emerald-500/10 border border-emerald-500/40 hover:border-emerald-500 text-emerald-400 font-mono font-bold rounded-xl hover:bg-emerald-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
+                >
+                  <div className="flex items-center justify-between w-full mb-1">
+                    <span className="text-xs text-slate-400 font-mono">TEST 03: UNDERDOG INEFFICIENCY</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 uppercase font-semibold">
+                      Big Success
+                    </span>
+                  </div>
+                  <span className="text-base sm:text-lg text-emerald-300 group-hover:text-emerald-200">
+                    KSA vs ARG (2022)
                   </span>
-                </div>
-                <span className="text-base sm:text-lg text-emerald-300 group-hover:text-emerald-200">
-                  KSA vs ARG (2022)
-                </span>
-              </button>
+                </button>
 
-              {/* Test 04 - Mitigated Loss (Orange) */}
-              <button
-                onClick={() => navigate('#/case/ned')}
-                className="px-5 py-4 bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 text-amber-400 font-mono font-bold rounded-xl hover:bg-amber-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
-              >
-                <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-slate-400 font-mono">TEST 04: DYNAMIC HEDGING</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase font-semibold">
-                    Mitigated Loss
+                {/* Test 04 - Mitigated Loss (Orange) */}
+                <button
+                  onClick={() => navigate('#/case/ned')}
+                  className="px-5 py-4 bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 text-amber-400 font-mono font-bold rounded-xl hover:bg-amber-500/15 text-left flex flex-col transition-all cursor-pointer shadow-sm group"
+                >
+                  <div className="flex items-center justify-between w-full mb-1">
+                    <span className="text-xs text-slate-400 font-mono">TEST 04: DYNAMIC HEDGING</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase font-semibold">
+                      Mitigated Loss
+                    </span>
+                  </div>
+                  <span className="text-base sm:text-lg text-amber-300 group-hover:text-amber-200">
+                    NED vs ARG (2022)
                   </span>
-                </div>
-                <span className="text-base sm:text-lg text-amber-300 group-hover:text-amber-200">
-                  NED vs ARG (2022)
-                </span>
-              </button>
-            </div>
+                </button>
+              </div>
+            )}
           </div>
 
         </div>
