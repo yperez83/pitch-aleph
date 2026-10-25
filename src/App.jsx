@@ -724,8 +724,8 @@ export default function App() {
   const [vaultVersion, setVaultVersion] = useState('v1.2');
   // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
   const [backtestVersion, setBacktestVersion] = useState('v1.2');
-  // Archives collapsible state
-  const [archivesExpanded, setArchivesExpanded] = useState(true);
+  // Archives collapsible state (default collapsed / nested)
+  const [archivesExpanded, setArchivesExpanded] = useState(false);
 
   // Interactive zoom state for 1,000-Match Backtest Chart
   const [chartZoomLeft, setChartZoomLeft] = useState('dataMin');
