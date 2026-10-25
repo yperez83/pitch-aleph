@@ -1447,11 +1447,11 @@ export default function App() {
                 className="px-5 py-4 bg-emerald-950/20 border border-emerald-500/40 hover:border-emerald-400 text-emerald-400 font-mono font-bold rounded-xl text-left flex flex-col transition-all group shadow-[0_0_25px_rgba(16,185,129,0.1)] hover:shadow-[0_0_35px_rgba(16,185,129,0.2)] cursor-pointer"
               >
                 <div className="flex items-center justify-between w-full mb-1">
-                  <span className="text-xs text-emerald-400 flex items-center gap-1.5">
-                    <span>PRODUCTION ENGINE v1.2</span>
+                  <span className="text-xs text-emerald-400 flex items-center gap-1.5 font-bold">
+                    <span>ENGINE v1.2</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   </span>
-                  <span className="text-xs text-emerald-400 font-normal">+$5,588 (55.88% ROI)</span>
+                  <span className="text-xs text-emerald-400 font-semibold shrink-0">+$5.6K (~56% ROI)</span>
                 </div>
                 <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
                   Production Engine: Backtest Analytics →
