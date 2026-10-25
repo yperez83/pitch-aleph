@@ -586,9 +586,17 @@ const Footer = () => (
             <span>Hugging Face</span>
           </a>
           <a
+            href="/launchpad"
+            aria-label="Deploy PitchAleph 1.2 Autonomous In-Play Monitor"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 hover:text-emerald-200 border border-emerald-500/40 hover:border-emerald-500/60 font-mono text-xs font-bold transition-all duration-200 shadow-sm shadow-emerald-500/10"
+          >
+            <span>🚀</span>
+            <span>Launchpad</span>
+          </a>
+          <a
             href="/news"
             aria-label="Read PitchAleph Quantitative Live Tests and Telemetry Audits"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/80 hover:border-slate-600 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
           >
             <span>📊</span>
             <span>Live Tests</span>

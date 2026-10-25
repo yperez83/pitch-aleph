@@ -2,8 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 
 interface BlogHeaderProps {
-  current?: 'list' | 'article' | 'fixtures' | 'news';
+  current?: 'list' | 'article' | 'fixtures' | 'news' | 'launchpad';
 }
+
+const NAV_LINKS = [
+  { href: '/launchpad', label: 'Launchpad', id: 'launchpad' },
+  { href: '/news', label: 'News', id: 'news' },
+  { href: '/fixtures', label: 'Fixtures', id: 'fixtures' },
+  { href: '/dev-blog', label: 'Dev Blog', id: 'list' }
+];
 
 export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
   return (
@@ -25,131 +32,70 @@ export function BlogHeader({ current = 'list' }: BlogHeaderProps) {
 
         <nav className="flex items-center gap-3 sm:gap-4 font-mono text-xs">
           {current === 'article' ? (
-            <>
-              <Link
-                href="/dev-blog"
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                ← All Articles
-              </Link>
-              <Link
-                href="/news"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                News
-              </Link>
-              <Link
-                href="/"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                Engine
-              </Link>
-            </>
-          ) : current === 'fixtures' ? (
-            <>
-              <Link
-                href="/"
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                ← Back to App
-              </Link>
-              <Link
-                href="/news"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                News
-              </Link>
-              <Link
-                href="/dev-blog"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                Dev Blog
-              </Link>
-              <Link
-                href="/api/docs"
-                target="_blank"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
-              >
-                API Docs ↗
-              </Link>
-            </>
-          ) : current === 'news' ? (
-            <>
-              <Link
-                href="/"
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                ← Back to App
-              </Link>
-              <Link
-                href="/fixtures"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                Fixtures
-              </Link>
-              <Link
-                href="/dev-blog"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                Dev Blog
-              </Link>
-              <Link
-                href="/api/docs"
-                target="_blank"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
-              >
-                API Docs ↗
-              </Link>
-            </>
+            <Link
+              href="/dev-blog"
+              className="text-slate-400 hover:text-white transition-colors"
+            >
+              ← All Articles
+            </Link>
           ) : (
-            <>
-              <Link
-                href="/"
-                className="text-slate-400 hover:text-white transition-colors"
-              >
-                ← Back to App
-              </Link>
-              <Link
-                href="/news"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                News
-              </Link>
-              <Link
-                href="/fixtures"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden sm:inline"
-              >
-                Fixtures
-              </Link>
-              <Link
-                href="/dev-blog"
-                className="px-2.5 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold"
-              >
-                Dev Blog
-              </Link>
-              <Link
-                href="/api/docs"
-                target="_blank"
-                className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
-              >
-                API Docs ↗
-              </Link>
-            </>
+            <Link
+              href="/"
+              className="text-slate-400 hover:text-white transition-colors"
+            >
+              ← Back to App
+            </Link>
           )}
+
+          {NAV_LINKS.filter((item) => (current === 'article' ? item.id !== 'list' : true)).map(
+            (item) => {
+              const isCurrent =
+                current === item.id || (current === 'article' && item.id === 'list');
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`hidden sm:inline transition-colors ${
+                    isCurrent
+                      ? 'text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30'
+                      : 'text-slate-400 hover:text-emerald-400'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+          )}
+
+          <Link
+            href="/api/docs"
+            target="_blank"
+            className="text-slate-400 hover:text-emerald-400 transition-colors hidden md:inline"
+          >
+            API Docs ↗
+          </Link>
         </nav>
       </div>
     </header>
   );
 }
 
-export function BlogFooter({ showPoweredBy = false }: { showPoweredBy?: boolean }) {
+export function BlogFooter({ showPoweredBy = false }: { showPoweredBy?: boolean } = {}) {
   return (
-    <footer className="w-full border-t border-slate-800/80 bg-slate-950/80 py-8 px-4 sm:px-6 text-center text-xs font-mono text-slate-500 z-10">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span>© {new Date().getFullYear()} Pitch Aleph · Quantitative Sports Simulation</span>
+    <footer className="w-full border-t border-slate-800/80 bg-slate-950 py-8 px-4 sm:px-6 mt-16 font-mono text-xs text-slate-500">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span>PitchAleph ℵ₀ Quantitative Research Dispatch</span>
+        </div>
         <div className="flex items-center gap-4">
           <Link href="/" className="hover:text-slate-300 transition-colors">
-            Engine Dashboard
+            Engine
+          </Link>
+          <Link href="/launchpad" className="hover:text-emerald-400 transition-colors">
+            Launchpad
+          </Link>
+          <Link href="/news" className="hover:text-emerald-400 transition-colors">
+            Live Tests
           </Link>
           <Link href="/dev-blog" className="text-emerald-400 hover:text-emerald-300 transition-colors">
             Dev Blog
@@ -159,9 +105,9 @@ export function BlogFooter({ showPoweredBy = false }: { showPoweredBy?: boolean 
               href="https://postparticle.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-slate-300 transition-colors"
+              className="text-slate-400 hover:text-white transition-colors"
             >
-              Powered by Postparticle
+              Postparticle CMS ↗
             </a>
           )}
         </div>

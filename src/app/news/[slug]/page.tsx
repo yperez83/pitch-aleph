@@ -305,9 +305,9 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
               </Link>
             ) : (
               <Link
-                href="/"
+                href="/launchpad"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-md shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer"
-                title="Launch Pitch Aleph Monte Carlo Simulator Engine"
+                title="Launch Pitch Aleph 1.2 In-Play Launchpad"
               >
                 <span>Launch Engine</span>
                 <span>→</span>
