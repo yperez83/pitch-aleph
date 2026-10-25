@@ -418,21 +418,72 @@ const IconCode = ({ className = "w-3.5 h-3.5" }) => (
 // ─── REUSABLE CUSTOM TOOLTIP COMPONENT ────────────────────────
 const Tooltip = ({ text, children, position = "top", className = "" }) => {
   const [visible, setVisible] = useState(false);
-  const positionClasses = {
-    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
-    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
-    left: "right-full top-1/2 -translate-y-1/2 mr-2",
-    right: "left-full top-1/2 -translate-y-1/2 ml-2"
-  };
-  const arrowClasses = {
-    top: "top-full left-1/2 -translate-x-1/2 border-t-slate-800 border-x-transparent border-b-transparent border-t-4 border-x-4 border-b-0",
-    bottom: "bottom-full left-1/2 -translate-x-1/2 border-b-slate-800 border-x-transparent border-t-transparent border-b-4 border-x-4 border-t-0",
-    left: "left-full top-1/2 -translate-y-1/2 border-l-slate-800 border-y-transparent border-r-transparent border-l-4 border-y-4 border-r-0",
-    right: "right-full top-1/2 -translate-y-1/2 border-r-slate-800 border-y-transparent border-l-transparent border-r-4 border-y-4 border-l-0"
-  };
+  const [coords, setCoords] = useState(null);
+  const triggerRef = React.useRef(null);
+  const tooltipRef = React.useRef(null);
+
+  const updatePosition = React.useCallback(() => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const padding = 8;
+    const arrowOffset = 8;
+
+    let top = 0;
+    let left = 0;
+
+    // Get approximate tooltip size or measurement if available
+    const tooltipWidth = tooltipRef.current?.offsetWidth || 180;
+    const tooltipHeight = tooltipRef.current?.offsetHeight || 32;
+
+    if (position === "top") {
+      top = rect.top - tooltipHeight - arrowOffset;
+      left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    } else if (position === "bottom") {
+      top = rect.bottom + arrowOffset;
+      left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    } else if (position === "left") {
+      top = rect.top + rect.height / 2 - tooltipHeight / 2;
+      left = rect.left - tooltipWidth - arrowOffset;
+    } else if (position === "right") {
+      top = rect.top + rect.height / 2 - tooltipHeight / 2;
+      left = rect.right + arrowOffset;
+    }
+
+    // Keep tooltip within window viewport bounds
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const clampedLeft = Math.max(padding, Math.min(left, viewportWidth - tooltipWidth - padding));
+    const clampedTop = Math.max(padding, Math.min(top, viewportHeight - tooltipHeight - padding));
+
+    // Calculate arrow relative to trigger center
+    const triggerCenterX = rect.left + rect.width / 2;
+    const arrowX = Math.max(12, Math.min(triggerCenterX - clampedLeft, tooltipWidth - 12));
+
+    setCoords({
+      top: clampedTop,
+      left: clampedLeft,
+      arrowX,
+      actualPosition: position
+    });
+  }, [position]);
+
+  React.useEffect(() => {
+    if (visible) {
+      updatePosition();
+      const handleScrollOrResize = () => updatePosition();
+      window.addEventListener("scroll", handleScrollOrResize, true);
+      window.addEventListener("resize", handleScrollOrResize);
+      return () => {
+        window.removeEventListener("scroll", handleScrollOrResize, true);
+        window.removeEventListener("resize", handleScrollOrResize);
+      };
+    }
+  }, [visible, updatePosition]);
 
   return (
     <div
+      ref={triggerRef}
       className={`relative inline-flex items-center ${className}`}
       onMouseEnter={() => setVisible(true)}
       onMouseLeave={() => setVisible(false)}
@@ -440,13 +491,37 @@ const Tooltip = ({ text, children, position = "top", className = "" }) => {
       onBlur={() => setVisible(false)}
     >
       {children}
-      {visible && text && (
+      {visible && text && typeof document !== "undefined" && (
         <div
+          ref={tooltipRef}
           role="tooltip"
-          className={`absolute ${positionClasses[position] || positionClasses.top} z-50 pointer-events-none whitespace-nowrap bg-slate-900/95 backdrop-blur-md text-slate-200 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md border border-slate-700/80 shadow-2xl transition-all duration-150 tooltip-bubble`}
+          style={{
+            position: "fixed",
+            top: coords ? `${coords.top}px` : "-9999px",
+            left: coords ? `${coords.left}px` : "-9999px",
+            zIndex: 9999
+          }}
+          className="pointer-events-none whitespace-nowrap bg-slate-900/98 backdrop-blur-md text-slate-200 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md border border-slate-700/80 shadow-2xl transition-opacity duration-150 tooltip-bubble"
         >
           {text}
-          <span className={`absolute w-0 h-0 border-solid ${arrowClasses[position] || arrowClasses.top}`} />
+          {coords && coords.actualPosition === "top" && (
+            <span
+              style={{ left: `${coords.arrowX}px` }}
+              className="absolute top-full -translate-x-1/2 w-0 h-0 border-solid border-t-slate-800 border-x-transparent border-b-transparent border-t-4 border-x-4 border-b-0"
+            />
+          )}
+          {coords && coords.actualPosition === "bottom" && (
+            <span
+              style={{ left: `${coords.arrowX}px` }}
+              className="absolute bottom-full -translate-x-1/2 w-0 h-0 border-solid border-b-slate-800 border-x-transparent border-t-transparent border-b-4 border-x-4 border-t-0"
+            />
+          )}
+          {coords && coords.actualPosition === "left" && (
+            <span className="absolute left-full top-1/2 -translate-y-1/2 w-0 h-0 border-solid border-l-slate-800 border-y-transparent border-r-transparent border-l-4 border-y-4 border-r-0" />
+          )}
+          {coords && coords.actualPosition === "right" && (
+            <span className="absolute right-full top-1/2 -translate-y-1/2 w-0 h-0 border-solid border-r-slate-800 border-y-transparent border-l-transparent border-r-4 border-y-4 border-l-0" />
+          )}
         </div>
       )}
     </div>
@@ -1759,43 +1834,45 @@ export default function App() {
                   <label htmlFor="base-stake-input" className="text-emerald-400 font-mono text-xs sm:text-sm font-bold">
                     BASE STAKE:
                   </label>
-                  <div className="relative flex items-center">
-                    <span className="absolute left-2.5 text-emerald-400 font-mono text-sm pointer-events-none font-bold">$</span>
-                    <input
-                      id="base-stake-input"
-                      type="number"
-                      min="1"
-                      max="1000000"
-                      step="50"
-                      value={calcStake}
-                      onChange={(e) => {
-                        const val = Number(e.target.value);
-                        if (!isNaN(val) && val >= 0) {
-                          setCalcStake(val);
-                        }
-                      }}
-                      className="w-36 bg-slate-950/80 border border-slate-700 focus:border-emerald-500 rounded-lg pl-7 pr-7 py-1 text-right text-white font-mono text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors no-spinner"
-                      placeholder="1,000"
-                    />
-                    <div className="absolute right-1 inset-y-1 flex flex-col justify-center gap-0.5">
-                      <Tooltip text="Increase stake (+$50)" position="left">
+                  <div className="flex items-center gap-1.5">
+                    <div className="relative flex items-center">
+                      <span className="absolute left-2.5 text-emerald-400 font-mono text-sm pointer-events-none font-bold">$</span>
+                      <input
+                        id="base-stake-input"
+                        type="number"
+                        min="1"
+                        max="1000000"
+                        step="50"
+                        value={calcStake}
+                        onChange={(e) => {
+                          const val = Number(e.target.value);
+                          if (!isNaN(val) && val >= 0) {
+                            setCalcStake(val);
+                          }
+                        }}
+                        className="w-28 bg-slate-950/80 border border-slate-700 focus:border-emerald-500 rounded-lg pl-7 pr-2.5 py-1 text-right text-white font-mono text-sm font-bold focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-colors no-spinner"
+                        placeholder="1,000"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-0.5 shrink-0">
+                      <Tooltip text="Increase stake (+$50)" position="top">
                         <button
                           type="button"
                           onClick={() => setCalcStake(prev => Math.min(1000000, Math.max(1, (Number(prev) || 0) + 50)))}
-                          className="w-5 h-3.5 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-750 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
+                          className="w-6 h-4 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
                           aria-label="Increase stake by $50"
                         >
-                          <IconChevronUp className="w-2.5 h-2.5" />
+                          <IconChevronUp className="w-3 h-3" />
                         </button>
                       </Tooltip>
-                      <Tooltip text="Decrease stake (-$50)" position="left">
+                      <Tooltip text="Decrease stake (-$50)" position="bottom">
                         <button
                           type="button"
                           onClick={() => setCalcStake(prev => Math.min(1000000, Math.max(1, (Number(prev) || 0) - 50)))}
-                          className="w-5 h-3.5 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-750 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
+                          className="w-6 h-4 bg-slate-800/80 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/40 rounded flex items-center justify-center transition-colors cursor-pointer"
                           aria-label="Decrease stake by $50"
                         >
-                          <IconChevronDown className="w-2.5 h-2.5" />
+                          <IconChevronDown className="w-3 h-3" />
                         </button>
                       </Tooltip>
                     </div>
