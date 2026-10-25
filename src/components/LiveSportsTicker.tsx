@@ -125,6 +125,23 @@ export default function LiveSportsTicker({
   const [localTimeZone, setLocalTimeZone] = useState<string>('UTC');
   const [fixtureData, setFixtureData] = useState<Fixture[]>(initialFixtures);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const navMenuRef = React.useRef<HTMLDivElement>(null);
+
+  // Close nav dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navMenuRef.current && !navMenuRef.current.contains(event.target as Node)) {
+        setIsNavOpen(false);
+      }
+    };
+    if (isNavOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isNavOpen]);
 
   useEffect(() => {
     try {
@@ -428,35 +445,102 @@ export default function LiveSportsTicker({
           </div>
         </div>
 
-        {/* Right Action Navigation Pill */}
-        <div className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center gap-2 shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
-          <Link
-            href="/news"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
-            title="Read Live Match Audits & Tests"
+        {/* Right Action Navigation Dropdown Menu */}
+        <div ref={navMenuRef} className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center relative shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
+          <button
+            type="button"
+            onClick={() => setIsNavOpen(!isNavOpen)}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-bold transition-all cursor-pointer shadow-sm shadow-emerald-500/10"
+            aria-expanded={isNavOpen}
+            aria-haspopup="true"
+            title="Open Platform Navigation Menu"
           >
-            <span>📊</span>
-            <span className="hidden lg:inline">LIVE TESTS</span>
-            <span className="text-[10px]">→</span>
-          </Link>
-          <Link
-            href="/fixtures"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700 font-mono text-[11px] font-semibold transition-all"
-            title="Open Dedicated Full Fixtures Page"
-          >
-            <span>📅</span>
-            <span className="hidden xl:inline">FIXTURES</span>
-            <span className="text-[10px]">↗</span>
-          </Link>
-          <a
-            href="/dev-blog"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 font-mono text-[11px] font-medium transition-all"
-            title="Read Quantitative Research & Dev Blog Dispatches"
-          >
-            <span>📰</span>
-            <span className="hidden sm:inline">DEV BLOG</span>
-            <span className="text-[10px]">→</span>
-          </a>
+            <span>🧭</span>
+            <span>EXPLORE</span>
+            <span className={`text-[10px] transition-transform duration-200 ${isNavOpen ? 'rotate-180' : ''}`}>
+              ▼
+            </span>
+          </button>
+
+          {/* Nested Dropdown Menu Popover */}
+          {isNavOpen && (
+            <div className="absolute right-3 top-full mt-2 w-56 rounded-xl bg-slate-950/98 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/90 p-2 z-50 font-mono text-xs animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="px-2.5 py-1.5 text-[10px] text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-800/80 mb-1">
+                Platform Navigation
+              </div>
+
+              <div className="space-y-1">
+                <Link
+                  href="/launchpad"
+                  onClick={() => setIsNavOpen(false)}
+                  className="flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-200 hover:text-emerald-300 hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">🚀</span>
+                    <span className="font-bold">Launchpad</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Run →
+                  </span>
+                </Link>
+
+                <Link
+                  href="/news"
+                  onClick={() => setIsNavOpen(false)}
+                  className="flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-200 hover:text-emerald-300 hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">📊</span>
+                    <span className="font-bold">Live Tests</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Audit →
+                  </span>
+                </Link>
+
+                <Link
+                  href="/fixtures"
+                  onClick={() => setIsNavOpen(false)}
+                  className="flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-200 hover:text-emerald-300 hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">📅</span>
+                    <span className="font-bold">Fixtures</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 group-hover:text-emerald-400 transition-colors">
+                    Schedule ↗
+                  </span>
+                </Link>
+
+                <a
+                  href="/dev-blog"
+                  onClick={() => setIsNavOpen(false)}
+                  className="flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-200 hover:text-emerald-300 hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">📰</span>
+                    <span className="font-bold">Dev Blog</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 group-hover:text-emerald-400 transition-colors">
+                    Read →
+                  </span>
+                </a>
+
+                <div className="pt-1 mt-1 border-t border-slate-800/80">
+                  <a
+                    href="/api/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsNavOpen(false)}
+                    className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-900 transition-all text-[11px]"
+                  >
+                    <span>⚡ Swagger API Docs</span>
+                    <span>↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
