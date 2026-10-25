@@ -383,7 +383,7 @@ export default function LiveSportsTicker({
 
   return (
     <div
-      className={`w-full bg-slate-950/95 border-y border-slate-800/80 backdrop-blur-md overflow-hidden select-none relative z-30 shadow-inner ${className}`}
+      className={`w-full bg-slate-950/95 border-y border-slate-800/80 backdrop-blur-md select-none relative z-30 shadow-inner ${className}`}
       aria-label="Upcoming Match Fixtures Live Ticker"
     >
       <div className="flex items-center w-full">
@@ -446,10 +446,13 @@ export default function LiveSportsTicker({
         </div>
 
         {/* Right Action Navigation Dropdown Menu */}
-        <div ref={navMenuRef} className="z-20 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center relative shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
+        <div ref={navMenuRef} className="z-30 shrink-0 bg-slate-900/95 border-l border-slate-800 px-3 py-2 flex items-center relative shadow-[-4px_0_12px_rgba(0,0,0,0.5)]">
           <button
             type="button"
-            onClick={() => setIsNavOpen(!isNavOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsNavOpen((prev) => !prev);
+            }}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-bold transition-all cursor-pointer shadow-sm shadow-emerald-500/10"
             aria-expanded={isNavOpen}
             aria-haspopup="true"
@@ -464,7 +467,10 @@ export default function LiveSportsTicker({
 
           {/* Nested Dropdown Menu Popover */}
           {isNavOpen && (
-            <div className="absolute right-3 top-full mt-2 w-56 rounded-xl bg-slate-950/98 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/90 p-2 z-50 font-mono text-xs animate-in fade-in slide-in-from-top-2 duration-200">
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="absolute right-2 top-full mt-2 w-56 rounded-xl bg-slate-950/98 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-black/90 p-2 z-50 font-mono text-xs animate-in fade-in slide-in-from-top-2 duration-200"
+            >
               <div className="px-2.5 py-1.5 text-[10px] text-slate-500 uppercase tracking-wider font-semibold border-b border-slate-800/80 mb-1">
                 Platform Navigation
               </div>
