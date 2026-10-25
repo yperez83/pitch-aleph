@@ -2,13 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 
 interface BlogHeaderProps {
-  current?: 'list' | 'article' | 'fixtures' | 'news' | 'launchpad';
+  current?: 'list' | 'article' | 'fixtures' | 'news' | 'launchpad' | 'archives';
 }
 
 const NAV_LINKS = [
   { href: '/launchpad', label: 'Launchpad', id: 'launchpad' },
-  { href: '/news', label: 'News', id: 'news' },
+  { href: '/news', label: 'Live Tests', id: 'news' },
   { href: '/fixtures', label: 'Fixtures', id: 'fixtures' },
+  { href: '/archives', label: 'Archives', id: 'archives' },
   { href: '/dev-blog', label: 'Dev Blog', id: 'list' }
 ];
 
@@ -96,6 +97,9 @@ export function BlogFooter({ showPoweredBy = false }: { showPoweredBy?: boolean 
           </Link>
           <Link href="/news" className="hover:text-emerald-400 transition-colors">
             Live Tests
+          </Link>
+          <Link href="/archives" className="hover:text-emerald-400 transition-colors">
+            Archives
           </Link>
           <Link href="/dev-blog" className="text-emerald-400 hover:text-emerald-300 transition-colors">
             Dev Blog

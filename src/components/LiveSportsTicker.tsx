@@ -518,6 +518,20 @@ export default function LiveSportsTicker({
                   </span>
                 </Link>
 
+                <Link
+                  href="/archives"
+                  onClick={() => setIsNavOpen(false)}
+                  className="flex items-center justify-between px-2.5 py-2 rounded-lg text-slate-200 hover:text-emerald-300 hover:bg-emerald-500/10 border border-transparent hover:border-emerald-500/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">📚</span>
+                    <span className="font-bold">Archives</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 group-hover:text-emerald-400 transition-colors">
+                    v1.0 →
+                  </span>
+                </Link>
+
                 <a
                   href="/dev-blog"
                   onClick={() => setIsNavOpen(false)}
