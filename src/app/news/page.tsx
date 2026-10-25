@@ -7,12 +7,12 @@ import { getLedgerEntryBySlug } from '@/lib/newsLedger';
 import PortfolioBottomTicker from '@/components/news/PortfolioBottomTicker';
 
 export const metadata: Metadata = {
-  title: 'News & Match Case Studies | Pitch Aleph',
+  title: 'News & Live Tests | Pitch Aleph',
   description:
-    'Live in-play quantitative post-mortems, match execution reports, and telemetry case studies from the PitchAleph 1.2 betting engine, organized chronologically.',
+    'Live in-play quantitative post-mortems, match execution reports, and telemetry live tests from the PitchAleph 1.2 betting engine, organized chronologically.',
   openGraph: {
-    title: 'News & Case Studies | Pitch Aleph',
-    description: 'Empirical quantitative case studies and real-time telemetry match audits.',
+    title: 'News & Live Tests | Pitch Aleph',
+    description: 'Empirical quantitative live tests and real-time telemetry match audits.',
     type: 'website'
   }
 };
@@ -33,14 +33,14 @@ export default function NewsPage() {
             LIVE PRODUCTION VERIFICATION AUDITS
           </div>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
-            News & Match Case Studies
+            News & Live Tests
           </h1>
           <p className="text-slate-400 text-sm mt-2 max-w-2xl leading-relaxed">
             Real-time field telemetry audits and post-game quantitative breakdowns from PitchAleph 1.2 in-play execution runs. Organized chronologically with newest matches first.
           </p>
         </div>
 
-        {/* Case Studies List */}
+        {/* Live Tests List */}
         <div className="space-y-6">
           {caseStudies.map((study) => {
             const ledgerEntry = getLedgerEntryBySlug(study.slug);
@@ -56,6 +56,10 @@ export default function NewsPage() {
                     <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs text-slate-400">
                       <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold uppercase">
                         {study.competition}
+                      </span>
+                      <span>•</span>
+                      <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-semibold">
+                        Live Test
                       </span>
                       <span>•</span>
                       <span>{study.matchday}</span>
@@ -122,7 +126,7 @@ export default function NewsPage() {
                     href={`/news/${study.slug}`}
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-md shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer"
                   >
-                    <span>Read Full Case Study</span>
+                    <span>View Live Test</span>
                     <span>→</span>
                   </Link>
                 </div>

@@ -29,7 +29,7 @@ export default function PortfolioBottomTicker() {
 
   return (
     <aside
-      aria-label="PitchAleph Live Portfolio Ledger"
+      aria-label="PitchAleph Live Test Portfolio Ledger"
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl pointer-events-auto"
     >
       <div className="bg-slate-950/90 backdrop-blur-md border border-slate-800/90 rounded-2xl shadow-2xl shadow-black/80 px-4 sm:px-6 py-3 transition-all hover:border-slate-700">
@@ -41,7 +41,7 @@ export default function PortfolioBottomTicker() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>LIVE LEDGER</span>
+              <span>LIVE TEST PORTFOLIO</span>
             </div>
 
             <div className="flex items-baseline gap-2">

@@ -433,10 +433,10 @@ export default function LiveSportsTicker({
           <Link
             href="/news"
             className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-[11px] font-bold transition-all"
-            title="Read Live Match Case Studies & Audits"
+            title="Read Live Match Audits & Tests"
           >
             <span>📊</span>
-            <span className="hidden lg:inline">CASE STUDIES</span>
+            <span className="hidden lg:inline">LIVE TESTS</span>
             <span className="text-[10px]">→</span>
           </Link>
           <Link
@@ -577,7 +577,7 @@ export default function LiveSportsTicker({
                   href="/news"
                   className="text-emerald-400 hover:text-emerald-300 underline underline-offset-4"
                 >
-                  Latest Match Case Studies →
+                  Latest Match Live Tests →
                 </Link>
                 <Link
                   href="/fixtures"

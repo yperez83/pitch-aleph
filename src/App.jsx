@@ -512,11 +512,11 @@ const Footer = () => (
           </a>
           <a
             href="/news"
-            aria-label="Read PitchAleph Quantitative Case Studies and Telemetry Audits"
+            aria-label="Read PitchAleph Quantitative Live Tests and Telemetry Audits"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/60 font-mono text-xs font-semibold transition-all duration-200 shadow-sm"
           >
             <span>📊</span>
-            <span>Case Studies</span>
+            <span>Live Tests</span>
           </a>
           <a
             href="/dev-blog"

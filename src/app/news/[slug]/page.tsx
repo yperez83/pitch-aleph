@@ -12,10 +12,10 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const study = getCaseStudyBySlug(slug);
-  if (!study) return { title: 'Case Study Not Found | Pitch Aleph' };
+  if (!study) return { title: 'Live Test Not Found | Pitch Aleph' };
 
   return {
-    title: `${study.title} | Pitch Aleph News`,
+    title: `${study.title} | Pitch Aleph Live Test`,
     description: study.subtitle,
     openGraph: {
       title: study.title,
@@ -27,11 +27,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CaseStudyDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const study = getCaseStudyBySlug(slug);
+  const allStudies = getAllCaseStudies(); // sorted newest first
+  const currentIndex = allStudies.findIndex((s) => s.slug === slug);
 
-  if (!study) {
+  if (currentIndex === -1) {
     notFound();
   }
+
+  const study = allStudies[currentIndex];
+
+  // Chronological navigation:
+  // allStudies[0] is newest (Chelsea vs Spurs, Oct 24)
+  // allStudies[1] is older (Ipswich vs Forest, Oct 23)
+  // Therefore:
+  // For Ipswich (index 1): nextTest is index - 1 (Chelsea)
+  // For Chelsea (index 0): prevTest is index + 1 (Ipswich)
+  const nextTest = currentIndex > 0 ? allStudies[currentIndex - 1] : undefined;
+  const prevTest = currentIndex < allStudies.length - 1 ? allStudies[currentIndex + 1] : undefined;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
@@ -40,18 +52,18 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 md:py-12 space-y-12">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
+          <Link href="/" className="hover:text-white transition-colors">Pitch Aleph</Link>
           <span>/</span>
-          <Link href="/news" className="hover:text-emerald-400 transition-colors">News & Case Studies</Link>
+          <Link href="/news" className="hover:text-emerald-400 transition-colors">Live Test</Link>
           <span>/</span>
-          <span className="text-slate-500 truncate max-w-[200px] sm:max-w-md">{study.homeTeam} vs {study.awayTeam}</span>
+          <span className="text-slate-500 truncate max-w-[200px] sm:max-w-md">{study.title}</span>
         </div>
 
         {/* 1. Hero Header */}
         <header className="space-y-4 border-b border-slate-800/80 pb-8">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            REAL-TIME FIELD TELEMETRY CASE STUDY
+            LIVE TEST POST-MORTEM
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
@@ -101,13 +113,19 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
             <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-inner">
               <div className="text-4xl font-black text-emerald-400">+{study.metrics.peakEdgePercent.toFixed(1)}%</div>
               <div className="text-xs font-bold text-slate-200 mt-2">Peak Statistical Edge</div>
-              <div className="text-[11px] text-slate-400 mt-1 leading-snug">Captured on Ipswich at minute 52&apos;.</div>
+              <div className="text-[11px] text-slate-400 mt-1 leading-snug">
+                {study.homeTeam === 'Chelsea FC' ? 'Captured at 78\' on stale feed.' : 'Captured on Ipswich at minute 52\'.'}
+              </div>
             </div>
 
             <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-inner">
               <div className="text-4xl font-black text-cyan-400">{study.metrics.drawSimplexPercent.toFixed(1)}%</div>
-              <div className="text-xs font-bold text-slate-200 mt-2">Draw Probability</div>
-              <div className="text-[11px] text-slate-400 mt-1 leading-snug">Simplex mass at minute 88&apos;.</div>
+              <div className="text-xs font-bold text-slate-200 mt-2">
+                {study.homeTeam === 'Chelsea FC' ? 'Peak Draw Mass' : 'Terminal Draw Mass'}
+              </div>
+              <div className="text-[11px] text-slate-400 mt-1 leading-snug">
+                {study.homeTeam === 'Chelsea FC' ? 'Simplex hedge mass at minute 69\'.' : 'Simplex mass at minute 88\'.'}
+              </div>
             </div>
 
             <div className="p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-inner">
@@ -175,7 +193,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
                     <td className="py-3 px-3.5 whitespace-nowrap">{row.bestPrice}</td>
                     <td className="py-3 px-3.5 font-bold text-emerald-400 whitespace-nowrap">{row.edge}</td>
                     <td className="py-3 px-3.5 whitespace-nowrap font-bold">
-                      <span className={row.action.includes('ALLOCATE') ? 'text-emerald-400' : 'text-slate-400'}>
+                      <span className={row.action.includes('ALLOCATE') || row.action.includes('LOCK') ? 'text-emerald-400' : 'text-slate-400'}>
                         {row.action}
                       </span>
                     </td>
@@ -187,7 +205,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-[11px] text-slate-500 px-1">
             <span>*All entries enforced under PitchAleph Quarter-Kelly sizing with a $500 hard safety cap.</span>
-            <span className="text-emerald-400">Full-Time Result Verified: 1–1 Settlement</span>
+            <span className="text-emerald-400">Full-Time Result Verified: {study.finalScore} Settlement</span>
           </div>
         </section>
 
@@ -250,34 +268,53 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-        {/* 6. Ready for Slate Banner */}
-        <section className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950/20 p-8 text-center space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
-            SYSTEM READY FOR SATURDAY SLATE
+        {/* 6. Dynamic Chronological Live Test Navigation Footer */}
+        <nav
+          aria-label="Live Test Chronological Navigation"
+          className="border border-slate-800/80 bg-slate-900/60 rounded-xl p-5 flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          {/* Status (Left) */}
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Settled &amp; Reconciled (+{study.metrics.netRoiPercent.toFixed(2)}% ROI)</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight max-w-xl mx-auto">
-            Empirical Alpha Validated on Live Premier League Turf
-          </h2>
-
-          <p className="text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">
-            From API discovery to execution settlement, PitchAleph proved its ability to capture structural sportsbook friction in real time.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4 font-mono text-xs">
-            {study.nextTarget && (
-              <span className="px-3.5 py-2 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300">
-                Next Target: <strong className="text-white">{study.nextTarget.match}</strong> ({study.nextTarget.time})
-              </span>
+          {/* Navigation Action (Right) */}
+          <div className="flex items-center flex-wrap gap-4 font-mono text-xs">
+            {prevTest && (
+              <Link
+                href={`/news/${prevTest.slug}`}
+                className="text-slate-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5"
+                title={`Previous Live Test: ${prevTest.homeTeam} vs ${prevTest.awayTeam}`}
+              >
+                <span>← Previous Live Test:</span>
+                <span className="text-slate-200 hover:text-emerald-300 font-semibold underline underline-offset-4">
+                  {prevTest.homeTeam.replace(' FC', '')} vs {prevTest.awayTeam.replace(' Hotspur', '').replace(' Town', '')}
+                </span>
+              </Link>
             )}
-            <Link
-              href="/"
-              className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-lg shadow-emerald-500/20"
-            >
-              Open Monte Carlo Engine →
-            </Link>
+
+            {nextTest ? (
+              <Link
+                href={`/news/${nextTest.slug}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/50 font-bold transition-all shadow-sm shadow-emerald-500/10 cursor-pointer"
+                title={`Next Live Test: ${nextTest.homeTeam} vs ${nextTest.awayTeam}`}
+              >
+                <span>Next Live Test: {nextTest.homeTeam.replace(' FC', '')} vs {nextTest.awayTeam.replace(' Hotspur', '').replace(' Town', '')}</span>
+                <span>→</span>
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-md shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer"
+                title="Launch Pitch Aleph Monte Carlo Simulator Engine"
+              >
+                <span>Launch Engine</span>
+                <span>→</span>
+              </Link>
+            )}
           </div>
-        </section>
+        </nav>
       </main>
     </div>
   );
