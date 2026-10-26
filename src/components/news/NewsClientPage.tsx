@@ -14,11 +14,8 @@ import PortfolioBottomTicker from '@/components/news/PortfolioBottomTicker';
 
 export default function NewsClientPage() {
   const [version, setVersion] = useState<EngineVersion>('v1.2.1-smart');
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({
-    'barcelona-vs-real-madrid-2026-10-25': true,
-    'chelsea-vs-tottenham-hotspur-2026-10-24': false,
-    'ipswich-town-vs-nottingham-forest-2026-10-23': false
-  });
+  // All games nested/collapsed by default
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   const isSmart = version === 'v1.2.1-smart';
   const summary = getPortfolioSummary(version);
@@ -347,11 +344,8 @@ export default function NewsClientPage() {
 
       </main>
 
-      {/* Persistent Floating Bottom Ticker with Version Switcher */}
-      <PortfolioBottomTicker
-        version={version}
-        onVersionChange={(newVer) => setVersion(newVer)}
-      />
+      {/* Persistent Floating Bottom Ticker (controlled strictly by top Execution Mode) */}
+      <PortfolioBottomTicker version={version} />
     </div>
   );
 }

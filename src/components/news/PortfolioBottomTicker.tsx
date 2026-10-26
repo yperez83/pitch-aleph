@@ -5,12 +5,10 @@ import { getPortfolioSummary, EngineVersion } from '@/lib/newsLedger';
 
 interface PortfolioBottomTickerProps {
   version?: EngineVersion;
-  onVersionChange?: (version: EngineVersion) => void;
 }
 
 export default function PortfolioBottomTicker({
-  version = 'v1.2.1-smart',
-  onVersionChange
+  version = 'v1.2.1-smart'
 }: PortfolioBottomTickerProps) {
   const summary = getPortfolioSummary(version);
   const isSmart = version === 'v1.2.1-smart';
@@ -18,98 +16,74 @@ export default function PortfolioBottomTicker({
   const formattedBankroll = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(summary.currentBankroll);
 
   const formattedProfit = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(summary.netRealizedProfit);
 
   const formattedRouted = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
   }).format(summary.totalCapitalRouted);
 
   return (
     <aside
       aria-label="PitchAleph Live Test Portfolio Ledger"
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl pointer-events-auto"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-4xl pointer-events-auto"
     >
-      <div className="bg-slate-950/92 backdrop-blur-md border border-slate-800/90 rounded-2xl shadow-2xl shadow-black/90 px-4 sm:px-6 py-3 transition-all hover:border-slate-700">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          {/* Left: Indicator & Bankroll headline */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30 shrink-0">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>{isSmart ? 'v1.2.1 SMART LEDGER' : 'v1.2 NAIVE LEDGER'}</span>
+      <div className="bg-[#080808]/95 backdrop-blur-md border border-[#222] rounded-xl shadow-2xl shadow-black/90 px-3.5 sm:px-5 py-2.5 transition-all">
+        <div className="flex items-center justify-between gap-3 text-xs font-mono">
+          
+          {/* Left: Badge + Bankroll */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>{isSmart ? 'v1.2.1' : 'v1.2'}</span>
             </div>
 
-            <div className="flex items-baseline gap-2">
-              <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider hidden sm:inline">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-[10px] text-slate-500 uppercase tracking-wider hidden sm:inline">
                 Bankroll:
               </span>
-              <span className="font-mono font-black text-white text-base md:text-lg tracking-tight">
+              <span className="font-extrabold text-white text-sm sm:text-base tracking-tight">
                 {formattedBankroll}
               </span>
             </div>
           </div>
 
-          {/* Center & Right: Metric pills + Interactive Toggle */}
-          <div className="flex items-center flex-wrap gap-2.5 sm:gap-4 font-mono text-xs">
+          {/* Right: Metrics Summarized & Tight */}
+          <div className="flex items-center gap-2.5 sm:gap-4 text-[11px] shrink-0">
             {/* Net Realized PnL */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-slate-400 text-[11px]">Net PnL:</span>
+            <div className="flex items-center gap-1">
+              <span className="text-slate-500 text-[10px] hidden sm:inline">PnL:</span>
               <span className="text-emerald-400 font-bold">+{formattedProfit}</span>
             </div>
 
-            {/* Total Yield Pill */}
-            <div className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold text-[11px] shadow-sm shadow-emerald-500/10">
-              +{summary.totalYieldPct.toFixed(2)}% Total Yield
-            </div>
+            {/* Yield Badge */}
+            <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-bold text-[10px]">
+              +{summary.totalYieldPct.toFixed(1)}%
+            </span>
 
             {/* Capital Routed */}
-            <div className="hidden lg:flex items-center gap-1.5 text-slate-300">
-              <span className="text-slate-400 text-[11px]">Routed:</span>
-              <span className="font-medium text-slate-200">{formattedRouted}</span>
+            <div className="hidden md:flex items-center gap-1 text-slate-400">
+              <span className="text-slate-500 text-[10px]">Vol:</span>
+              <span className="text-slate-300 font-medium">{formattedRouted}</span>
             </div>
 
-            {/* Version Switcher Pill */}
-            {onVersionChange && (
-              <div className="flex items-center rounded-lg bg-slate-900 border border-slate-800 p-0.5 text-[11px]">
-                <button
-                  type="button"
-                  onClick={() => onVersionChange('v1.2.1-smart')}
-                  className={`px-2 py-0.5 rounded-md font-bold transition-all cursor-pointer ${
-                    isSmart
-                      ? 'bg-emerald-500 text-slate-950 shadow-sm'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  v1.2.1 Smart
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onVersionChange('v1.2-naive')}
-                  className={`px-2 py-0.5 rounded-md font-bold transition-all cursor-pointer ${
-                    !isSmart
-                      ? 'bg-slate-700 text-white shadow-sm'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  v1.2 Naive
-                </button>
-              </div>
-            )}
+            {/* Record */}
+            <div className="flex items-center gap-1 text-cyan-400 font-bold pl-2 border-l border-[#222]">
+              <span>{summary.profitableMatches}W-0L</span>
+            </div>
           </div>
+
         </div>
       </div>
     </aside>
