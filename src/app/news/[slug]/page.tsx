@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { BlogHeader } from '@/components/BlogNav';
 import { getCaseStudyBySlug, getAllCaseStudies } from '@/lib/caseStudies';
+import { getLedgerEntryBySlug } from '@/lib/newsLedger';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -35,6 +36,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
   }
 
   const study = allStudies[currentIndex];
+  const ledger = getLedgerEntryBySlug(slug);
 
   // Chronological navigation:
   // allStudies[0] is newest (Chelsea vs Spurs, Oct 24)
@@ -61,9 +63,23 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
 
         {/* 1. Hero Header */}
         <header className="space-y-4 border-b border-slate-800/80 pb-8">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            LIVE TEST POST-MORTEM
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              LIVE TEST POST-MORTEM • v1.2.1 SMART UPGRADE
+            </div>
+
+            {ledger && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 font-mono text-xs text-slate-300">
+                <span className="text-slate-500">v1.2.1 Smart Bankroll:</span>
+                <span className="text-white font-bold">
+                  ${ledger.endingBankrollSmart.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </span>
+                <span className="text-emerald-400 font-semibold text-[11px] bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                  +${ledger.realizedProfitSmart.toLocaleString('en-US', { minimumFractionDigits: 2 })} (+{ledger.compoundingGainPctSmart.toFixed(1)}%)
+                </span>
+              </div>
+            )}
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
@@ -84,8 +100,10 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
               <div className="text-cyan-400 font-bold mt-0.5">FT: {study.finalScore} (Verified)</div>
             </div>
             <div>
-              <div className="text-slate-500 uppercase tracking-wider text-[10px]">NET REALIZED ROI</div>
-              <div className="text-emerald-400 font-bold mt-0.5">+{study.metrics.netRoiPercent}%</div>
+              <div className="text-slate-500 uppercase tracking-wider text-[10px]">v1.2.1 SMART YIELD</div>
+              <div className="text-emerald-400 font-bold mt-0.5">
+                +{ledger ? ledger.matchRoiPctSmart.toFixed(1) : study.metrics.netRoiPercent}%
+              </div>
             </div>
             <div>
               <div className="text-slate-500 uppercase tracking-wider text-[10px]">VENUE</div>
@@ -93,6 +111,47 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
             </div>
           </div>
         </header>
+
+        {/* Model Architecture Comparison Callout (Pre-Game vs Naive vs Smart) */}
+        {ledger && (
+          <section className="rounded-2xl p-6 bg-slate-900/40 border border-slate-800/80 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <h2 className="text-base font-bold text-white flex items-center gap-2">
+                <span>⚡</span>
+                <span>Execution Performance by Architecture</span>
+              </h2>
+              <span className="text-xs font-mono text-slate-500">
+                v1.2.1 introduces causal memory state &amp; smart defense
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono">
+              <div className="bg-black/40 p-4 rounded-xl border border-slate-800">
+                <span className="text-[11px] text-slate-500 uppercase block mb-1">Pre-Game Bet</span>
+                <div className={`text-xl font-bold ${ledger.comparison.preGame.profit >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                  {ledger.comparison.preGame.profit >= 0 ? '+' : ''}${ledger.comparison.preGame.profit.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </div>
+                <p className="text-xs text-slate-400 font-sans mt-1">{ledger.comparison.preGame.text}</p>
+              </div>
+
+              <div className="bg-black/40 p-4 rounded-xl border border-slate-800">
+                <span className="text-[11px] text-slate-400 uppercase block mb-1">v1.2 Naive</span>
+                <div className="text-xl font-bold text-emerald-400">
+                  +${ledger.comparison.naive.profit.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </div>
+                <p className="text-xs text-slate-400 font-sans mt-1">{ledger.comparison.naive.text}</p>
+              </div>
+
+              <div className="bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/40 shadow-sm shadow-emerald-500/10">
+                <span className="text-[11px] text-emerald-400 uppercase font-bold block mb-1">v1.2.1 Smart (Active)</span>
+                <div className="text-xl font-black text-emerald-300">
+                  +${ledger.comparison.smart.profit.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                </div>
+                <p className="text-xs text-emerald-400/90 font-sans mt-1 font-medium">{ledger.comparison.smart.text}</p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* 2. Performance Audit Overview Cards */}
         <section className="space-y-4">

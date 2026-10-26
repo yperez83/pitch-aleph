@@ -1,10 +1,19 @@
 'use client';
 
 import React from 'react';
-import { getPortfolioSummary } from '@/lib/newsLedger';
+import { getPortfolioSummary, EngineVersion } from '@/lib/newsLedger';
 
-export default function PortfolioBottomTicker() {
-  const summary = getPortfolioSummary();
+interface PortfolioBottomTickerProps {
+  version?: EngineVersion;
+  onVersionChange?: (version: EngineVersion) => void;
+}
+
+export default function PortfolioBottomTicker({
+  version = 'v1.2.1-smart',
+  onVersionChange
+}: PortfolioBottomTickerProps) {
+  const summary = getPortfolioSummary(version);
+  const isSmart = version === 'v1.2.1-smart';
 
   const formattedBankroll = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -32,7 +41,7 @@ export default function PortfolioBottomTicker() {
       aria-label="PitchAleph Live Test Portfolio Ledger"
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl pointer-events-auto"
     >
-      <div className="bg-slate-950/90 backdrop-blur-md border border-slate-800/90 rounded-2xl shadow-2xl shadow-black/80 px-4 sm:px-6 py-3 transition-all hover:border-slate-700">
+      <div className="bg-slate-950/92 backdrop-blur-md border border-slate-800/90 rounded-2xl shadow-2xl shadow-black/90 px-4 sm:px-6 py-3 transition-all hover:border-slate-700">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
           {/* Left: Indicator & Bankroll headline */}
           <div className="flex items-center gap-3">
@@ -41,7 +50,7 @@ export default function PortfolioBottomTicker() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>LIVE TEST PORTFOLIO</span>
+              <span>{isSmart ? 'v1.2.1 SMART LEDGER' : 'v1.2 NAIVE LEDGER'}</span>
             </div>
 
             <div className="flex items-baseline gap-2">
@@ -54,7 +63,7 @@ export default function PortfolioBottomTicker() {
             </div>
           </div>
 
-          {/* Center & Right: Metric pills */}
+          {/* Center & Right: Metric pills + Interactive Toggle */}
           <div className="flex items-center flex-wrap gap-2.5 sm:gap-4 font-mono text-xs">
             {/* Net Realized PnL */}
             <div className="flex items-center gap-1.5">
@@ -73,16 +82,33 @@ export default function PortfolioBottomTicker() {
               <span className="font-medium text-slate-200">{formattedRouted}</span>
             </div>
 
-            {/* Record / Strike Rate */}
-            <div className="hidden sm:flex items-center gap-1.5 text-slate-300 pl-2 border-l border-slate-800">
-              <span className="text-slate-400 text-[11px]">Record:</span>
-              <span className="text-cyan-400 font-bold">
-                {summary.profitableMatches}W - {summary.totalMatches - summary.profitableMatches}L
-              </span>
-              <span className="text-[10px] text-slate-500">
-                ({summary.strikeRatePct.toFixed(0)}% Strike)
-              </span>
-            </div>
+            {/* Version Switcher Pill */}
+            {onVersionChange && (
+              <div className="flex items-center rounded-lg bg-slate-900 border border-slate-800 p-0.5 text-[11px]">
+                <button
+                  type="button"
+                  onClick={() => onVersionChange('v1.2.1-smart')}
+                  className={`px-2 py-0.5 rounded-md font-bold transition-all cursor-pointer ${
+                    isSmart
+                      ? 'bg-emerald-500 text-slate-950 shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  v1.2.1 Smart
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onVersionChange('v1.2-naive')}
+                  className={`px-2 py-0.5 rounded-md font-bold transition-all cursor-pointer ${
+                    !isSmart
+                      ? 'bg-slate-700 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  v1.2 Naive
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
