@@ -56,6 +56,161 @@ export interface MatchCaseStudy {
 
 const CASE_STUDIES: MatchCaseStudy[] = [
   {
+    slug: 'barcelona-vs-real-madrid-2026-10-25',
+    title: 'FC Barcelona vs Real Madrid (1 – 2 FT)',
+    subtitle:
+      'Autonomous in-play simplex rebalancing, structural hedging, and stoppage-time latency capture across 42 execution cycles.',
+    matchId: '1589240',
+    oddsApiId: 'el-clasico-2026-10-25',
+    competition: 'La Liga EA Sports',
+    matchday: 'Matchday 11',
+    venue: 'Estadi Olímpic Lluís Companys, Barcelona',
+    kickoffDate: '2026-10-25T20:00:00Z',
+    kickoffDisplay: 'Sunday, October 25, 2026 @ 20:00 UTC / 22:00 CEST',
+    finalScore: '1–2',
+    homeTeam: 'FC Barcelona',
+    awayTeam: 'Real Madrid',
+    quantArchetype: 'Multi-Regime Simplex Rebalancing & Latency Capture',
+    summary:
+      'The session for Barcelona vs Real Madrid (1–2 FT) demonstrates multi-regime execution: PitchAleph placed bets across all three match outcomes (Real Madrid, Draw, and Barcelona) dynamically. When goals occurred, the engine attacked lagging bookmaker quotes. During quiet stretches, it constructed a synthetic structural hedge on the Draw. Winning wagers struck at inflated odds (3.82, 4.79, 7.80, and 8.50) completely absorbed hedging losses, generating +$11,206.51 net profit (+75.31% single-match capital yield).',
+    executivePhases: [
+      {
+        title: "1. 0–0 Stagnation & Draw Drift (Cycles #1 to #3: Minutes 28'–40')",
+        description:
+          "Barcelona maintained possession without clinical finishing. As clock time burned, empirical draw likelihood climbed to ~35% while retail consensus lagged at 5.10, 5.00, and 4.50. The engine committed $894.13 across 3 draw tranches ($207.49 @ 5.10, $258.64 @ 5.00, $428.00 @ 4.50)."
+      },
+      {
+        title: "2. Mbappé 41' Goal & Halftime Latency (Cycles #4 to #8: Minutes 41'–46')",
+        description:
+          "Mbappé broke through to put Madrid up 0–1. Pinnacle and offshore books lagged in adjusting live screens, quoting Real Madrid at a generous 3.82. The engine hit maximum stake caps on Real Madrid ($1,302.90 accumulated across cycles #4, #7, #8 at 3.82, 2.38, 2.34) while keeping small draw hedges ($1,022.23 committed) in case Barcelona equalized."
+      },
+      {
+        title: "3. 1–1 Equalizer & Deadlock Shield (Cycles #18 to #35: Minutes 61'–87')",
+        description:
+          "Raphinha leveled the score 1–1. Madrid win probability collapsed and the engine withheld further Madrid wagers ($0.00). With 25 minutes left, a Draw became statistically dominant (~60%–80%). PitchAleph constructed a synthetic shield: $1,000.00 on Barcelona at inflated post-goal odds (4.33, 4.10) and $4,423.35 across Draw lines (3.80 down to 2.41 with seven consecutive $500 max bets)."
+      },
+      {
+        title: "4. Mbappé 87' Late Decider & Cascade (Cycles #36 to #42: Minutes 88'–90'+)",
+        description:
+          "Mbappé scored his brace at 87' to make it 1–2. With ~87% true win probability, sportsbooks suffered extreme desynchronization: Coolbet offered 8.50 (+75.30% edge), Marathon Bet 7.80 (+74.25% edge), and Pinnacle 4.79 (+66.19% edge). The engine deployed $3,500.00 in max allocations on Real Madrid alongside minor tail insurance."
+      }
+    ],
+    metrics: {
+      liveIngestCycles: 42,
+      peakEdgePercent: 75.3,
+      drawSimplexPercent: 74.2,
+      netPnL: 11206.51,
+      netRoiPercent: 75.31,
+      totalCapitalDeployed: 14881.42,
+      totalGrossReturn: 26087.93
+    },
+    chronology: [
+      {
+        cycle: '#1–#3',
+        min: "28'–40'",
+        scoreShotsPoss: '0–0 | Stagnation',
+        bestPrice: 'Draw 5.10 / 5.00 / 4.50',
+        simplex: '42.0% / 35.0% / 23.0%',
+        edge: '+18.40%',
+        action: 'ALLOCATE $894.13 (Draw Hedge)'
+      },
+      {
+        cycle: '#4',
+        min: "41'",
+        scoreShotsPoss: '0–1 | Mbappé Strike',
+        bestPrice: 'Real Madrid 3.82 (Pinnacle)',
+        simplex: '14.2% / 28.5% / 57.3%',
+        edge: '+31.10%',
+        action: 'ALLOCATE $500.00 Max (Madrid)'
+      },
+      {
+        cycle: '#7–#8',
+        min: "44'–46'",
+        scoreShotsPoss: '0–1 | Halftime Squeeze',
+        bestPrice: 'Real Madrid 2.38 / 2.34',
+        simplex: '12.0% / 26.0% / 62.0%',
+        edge: '+19.20%',
+        action: 'ALLOCATE $802.90 (Madrid)'
+      },
+      {
+        cycle: '#18–#35',
+        min: "61'–87'",
+        scoreShotsPoss: '1–1 | Raphinha Equalizer',
+        bestPrice: 'Draw 3.80 → 2.41 / Barça 4.33',
+        simplex: '24.0% / 68.0% / 8.0%',
+        edge: '+26.80%',
+        action: 'SHIELD: $5,423.35 (Draw & Barça)'
+      },
+      {
+        cycle: '#36',
+        min: "88'",
+        scoreShotsPoss: '1–2 | Mbappé Winner',
+        bestPrice: 'Real Madrid 8.50 (Coolbet)',
+        simplex: '2.5% / 10.2% / 87.3%',
+        edge: '+75.30%',
+        action: 'ALLOCATE $500.00 Max (Coolbet)'
+      },
+      {
+        cycle: '#37',
+        min: "90'",
+        scoreShotsPoss: '1–2 | Desync Stoppage',
+        bestPrice: 'Real Madrid 7.80 (Marathon Bet)',
+        simplex: '1.8% / 8.5% / 89.7%',
+        edge: '+74.25%',
+        action: 'ALLOCATE $500.00 Max (Marathon)'
+      },
+      {
+        cycle: '#38–#42',
+        min: "90'+",
+        scoreShotsPoss: '1–2 | Final Stoppage Wave',
+        bestPrice: 'Real Madrid 4.79 (Pinnacle)',
+        simplex: '0.8% / 5.2% / 94.0%',
+        edge: '+66.19%',
+        action: 'ALLOCATE $2,500.00 (5x $500 Wave)'
+      }
+    ],
+    ledger: [
+      {
+        leg: 'Real Madrid Positions (Cycles #4–8, #36–42)',
+        description: '$6,802.90 staked across Mbappé goals @ 3.82, 2.38, 2.34, 8.50, 7.80, 4.79. Won.',
+        amount: 6802.9,
+        odds: 3.83,
+        outcome: 'Won',
+        netPnl: 19285.03
+      },
+      {
+        leg: 'Draw Stagnation & Deadlock Shield (Cycles #1–3, #4–8, #18–35, late stabs)',
+        description: '$6,505.70 staked on Draw across 0–0 and 1–1 phases to insulate capital. Expired.',
+        amount: 6505.7,
+        odds: 2.85,
+        outcome: 'Unrealized (Lost)',
+        netPnl: -6505.7
+      },
+      {
+        leg: 'Barcelona In-Play & Turnaround Straddles (Cycles #18–35, #36–42)',
+        description: '$1,572.82 staked on Barcelona post-equalizer and late tail stabs. Expired.',
+        amount: 1572.82,
+        odds: 4.15,
+        outcome: 'Unrealized (Lost)',
+        netPnl: -1572.82
+      }
+    ],
+    takeaways: [
+      {
+        title: 'Multi-Regime Simplex Rebalancing',
+        text: 'The engine actively routed capital to all three 1X2 outcomes depending on real-time game dynamics rather than rigid one-sided conviction.'
+      },
+      {
+        title: 'Insulation via High-Odds Convexity',
+        text: '$8,078.52 was committed to expired hedge positions on Draw and Barcelona. However, winning Madrid tickets struck at average odds of ~3.83 completely absorbed losses and yielded +$11,206.51.'
+      },
+      {
+        title: 'Stoppage-Time Latency Exploitation',
+        text: 'Bookmaker desynchronization after the 87th-minute winner permitted 5 consecutive $500 max bets at odds of 8.50, 7.80, and 4.79 against an empirical >87% win probability.'
+      }
+    ]
+  },
+  {
     slug: 'chelsea-vs-tottenham-hotspur-2026-10-24',
     title: 'Chelsea FC vs Tottenham Hotspur (0 – 2 FT)',
     subtitle:
@@ -317,11 +472,7 @@ const CASE_STUDIES: MatchCaseStudy[] = [
         title: 'Causal Position Protection',
         text: 'Quarter-Kelly safety bounds prevented redundant allocations while dynamic hedging protected principal and locked in a net +24.62% match ROI.'
       }
-    ],
-    nextTarget: {
-      match: 'Arsenal vs Everton',
-      time: '14:00 UTC'
-    }
+    ]
   }
 ];
 

@@ -219,7 +219,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left Column: Ledger */}
             <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 space-y-5">
-              <h3 className="font-bold text-white text-base">Dual-Leg Execution Ledger</h3>
+              <h3 className="font-bold text-white text-base">Execution Settlement Ledger</h3>
 
               <div className="space-y-4 font-mono text-xs divide-y divide-slate-800/70">
                 {study.ledger.map((trade, idx) => (

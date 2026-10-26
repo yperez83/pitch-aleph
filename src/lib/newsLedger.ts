@@ -41,6 +41,20 @@ const CASE_STUDY_LEDGER: CaseStudyLedgerEntry[] = [
     endingBankroll: 11270.5,
     matchRoiPct: 90.13,
     compoundingGainPct: 8.69
+  },
+  {
+    id: 'barcelona-real-madrid-2026-10-25',
+    slug: 'barcelona-vs-real-madrid-2026-10-25',
+    match: 'FC Barcelona vs Real Madrid',
+    date: '2026-10-25',
+    matchday: 11,
+    score: '1–2 FT',
+    startingBankroll: 11270.5,
+    deployedCapital: 14881.42,
+    realizedProfit: 11206.51,
+    endingBankroll: 22477.01,
+    matchRoiPct: 75.31,
+    compoundingGainPct: 99.43
   }
 ];
 
