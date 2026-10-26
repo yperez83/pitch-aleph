@@ -35,8 +35,8 @@ export default function NewsClientPage() {
     <div className="min-h-screen bg-[#050505] text-[#ededed] flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950 relative">
       <BlogHeader current="news" />
 
-      {/* pb-32 ensures content and footer never collide with the persistent floating bottom ticker */}
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 md:py-12 pb-32 space-y-10">
+      {/* pb-56 / md:pb-64 ensures content and cards never get occluded by the fixed floating ticker */}
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 md:py-12 pb-56 md:pb-64 space-y-10">
         
         {/* Page Top Header with Version Switcher */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#222] pb-6">
