@@ -271,23 +271,23 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
         {/* 6. Dynamic Chronological Live Test Navigation Footer */}
         <nav
           aria-label="Live Test Chronological Navigation"
-          className="border border-slate-800/80 bg-slate-900/60 rounded-xl p-5 flex flex-col md:flex-row items-center justify-between gap-4"
+          className="border border-slate-800/80 bg-slate-900/60 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           {/* Status (Left) */}
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-400">
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-400 whitespace-nowrap shrink-0">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>Settled &amp; Reconciled (+{study.metrics.netRoiPercent.toFixed(2)}% ROI)</span>
           </div>
 
           {/* Navigation Action (Right) */}
-          <div className="flex items-center flex-wrap gap-4 font-mono text-xs">
+          <div className="flex items-center flex-wrap justify-center sm:justify-end gap-3 sm:gap-4 font-mono text-xs">
             {prevTest && (
               <Link
                 href={`/news/${prevTest.slug}`}
-                className="text-slate-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5"
+                className="text-slate-400 hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5 whitespace-nowrap"
                 title={`Previous Live Test: ${prevTest.homeTeam} vs ${prevTest.awayTeam}`}
               >
-                <span>← Previous Live Test:</span>
+                <span>← Previous:</span>
                 <span className="text-slate-200 hover:text-emerald-300 font-semibold underline underline-offset-4">
                   {prevTest.homeTeam.replace(' FC', '')} vs {prevTest.awayTeam.replace(' Hotspur', '').replace(' Town', '')}
                 </span>
@@ -297,7 +297,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
             {nextTest ? (
               <Link
                 href={`/news/${nextTest.slug}`}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/50 font-bold transition-all shadow-sm shadow-emerald-500/10 cursor-pointer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-500/50 font-bold transition-all shadow-sm shadow-emerald-500/10 cursor-pointer whitespace-nowrap"
                 title={`Next Live Test: ${nextTest.homeTeam} vs ${nextTest.awayTeam}`}
               >
                 <span>Next Live Test: {nextTest.homeTeam.replace(' FC', '')} vs {nextTest.awayTeam.replace(' Hotspur', '').replace(' Town', '')}</span>
@@ -306,7 +306,7 @@ export default async function CaseStudyDetailPage({ params }: PageProps) {
             ) : (
               <Link
                 href="/launchpad"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-md shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all shadow-md shadow-emerald-500/20 hover:scale-[1.02] cursor-pointer whitespace-nowrap"
                 title="Launch Pitch Aleph 1.2 In-Play Launchpad"
               >
                 <span>Launch Engine</span>
