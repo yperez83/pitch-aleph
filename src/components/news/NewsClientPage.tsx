@@ -88,7 +88,7 @@ export default function NewsClientPage() {
         <section className="space-y-3">
           <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-slate-500">
             <span>Global Portfolio Summary ({isSmart ? 'v1.2.1 Smart' : 'v1.2 Naive'})</span>
-            <span className="text-emerald-400">3 Matches Settled</span>
+            <span className="text-emerald-400">{summary.totalMatches} Matches Settled</span>
           </div>
 
           <div className="rounded-2xl p-6 md:p-8 bg-[#0f0f0f]/80 backdrop-blur-md border border-[#222] border-t-2 border-t-emerald-500/50 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
