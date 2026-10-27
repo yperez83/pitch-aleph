@@ -178,6 +178,66 @@ export const CASE_STUDY_LEDGER: CaseStudyLedgerEntry[] = [
         badgeType: 'slush-fund'
       }
     ]
+  },
+  {
+    id: 'sevilla-osasuna-2026-10-26',
+    slug: 'sevilla-vs-osasuna-2026-10-26',
+    match: 'Sevilla FC vs Osasuna',
+    date: '2026-10-26',
+    matchday: 11,
+    score: '2–0 FT',
+    startingBankrollNaive: 22477.01,
+    deployedCapitalNaive: 3000.0,
+    realizedProfitNaive: 1585.0,
+    endingBankrollNaive: 24062.01,
+    matchRoiPctNaive: 52.83,
+    compoundingGainPctNaive: 7.05,
+    startingBankrollSmart: 28300.0,
+    deployedCapitalSmart: 1500.0,
+    realizedProfitSmart: 1500.0,
+    endingBankrollSmart: 29800.0,
+    matchRoiPctSmart: 100.0,
+    compoundingGainPctSmart: 5.3,
+    comparison: {
+      preGame: {
+        profit: 475.0,
+        text: 'Pre-match Sevilla @ 1.95 on +45 ELO delta.'
+      },
+      naive: {
+        profit: 1585.0,
+        text: 'Tied up $3,000 across 4 cycles. Low-edge churn.'
+      },
+      smart: {
+        profit: 1500.0,
+        text: 'Flawless 27\' Slush Strike ($1,500 @ 2.00). Bowed out.'
+      }
+    },
+    timeline: [
+      {
+        timeLabel: "3' (0-0)",
+        naiveText: "Allocates $500.00 @ 1.95 odds on +3.82% edge.",
+        smartText: "Bows out. +3.82% edge falls below the 4.50% Smart Base Hurdle.",
+        badgeType: 'default'
+      },
+      {
+        timeLabel: "27' (1-0 Sevilla Goal)",
+        naiveText: "Allocates $500.00 @ 2.00 on +31.49% latency edge.",
+        smartText: "SLUSH FUND UNLOCKED (>25% Edge). Deploys $1,500 Slush Strike on Sky Bet latency @ 2.00 odds.",
+        badgeType: 'slush-fund'
+      },
+      {
+        timeLabel: "53' - 72' (1-0 Stagnation)",
+        naiveText: "Churns $1,000 across 2 cycles on low +3.87% to +2.09% edges (1.27 to 1.22 odds).",
+        smartText: "Bows out. Phase 2 capital protection rejects edges failing dynamic hurdle.",
+        badgeType: 'default'
+      },
+      {
+        timeLabel: "83' - 90' (2-0 Lead Lock)",
+        naiveText: "Allocates $1,000 across 2 cycles on 1.22 to 1.13 odds.",
+        smartText: "Bows out. Filters out sub-2% Osasuna/Draw stoppage longshots (501.00-751.00 odds).",
+        badgeType: 'default'
+      }
+    ]
   }
 ];
 

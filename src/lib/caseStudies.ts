@@ -56,6 +56,126 @@ export interface MatchCaseStudy {
 
 const CASE_STUDIES: MatchCaseStudy[] = [
   {
+    slug: 'sevilla-vs-osasuna-2026-10-26',
+    title: 'Sevilla FC vs Osasuna (2 – 0 FT)',
+    subtitle:
+      'v1.2.1 Smart Slush Fund execution: 100.00% single-match yield via precision 27\' latency strike and zero-churn capital protection.',
+    matchId: '1570431',
+    oddsApiId: 'soccer_spain_la_liga',
+    competition: 'La Liga EA Sports',
+    matchday: 'Matchday 11',
+    venue: 'Ramón Sánchez-Pizjuán, Seville',
+    kickoffDate: '2026-10-26T20:00:00Z',
+    kickoffDisplay: 'Monday, October 26, 2026 @ 20:00 UTC / 21:00 CET',
+    finalScore: '2–0',
+    homeTeam: 'Sevilla FC',
+    awayTeam: 'Osasuna',
+    quantArchetype: 'Slush Strike & Dynamic Hurdle Capital Protection',
+    summary:
+      'Sevilla vs Osasuna illustrates the profound architectural divergence between v1.2 Naive and v1.2.1 Smart. The Naive model functioned as a memoryless accumulator, committing $3,000 across multiple low-edge cycles (down to 1.13 odds). The upgraded v1.2.1 Smart Engine filtered out early noise (<4.5% hurdle), unlocked a $1,500 Slush Strike during the 27th-minute Sky Bet latency window at 2.00 odds (+31.49% real edge), and invoked the Bow-Out protocol for the entire remainder of the match—securing $1,500.00 net profit (100.00% match ROI) while tying up half the capital.',
+    executivePhases: [
+      {
+        title: "1. Phase 1 Edge Hurdle Enforcement (Cycle #1: Minute 3')",
+        description:
+          "Sevilla held pre-match ELO superiority (+45 ELO). At minute 3' (0–0), model edge stood at +3.82% at 1.95 odds. While Naive fired a premature $500 stake, v1.2.1 Smart enforced its 4.50% base hurdle and bowed out, withholding capital."
+      },
+      {
+        title: "2. 27' Goal & ⚡ Slush Strike Activation (Cycle #5: Minute 27')",
+        description:
+          "Sevilla broke the deadlock (1–0). Sky Bet lagged significantly behind real-time pitch telemetry, keeping Sevilla quoted at 2.00 against an empirical 65.7% true probability (+31.49% edge). Detecting edge >25%, Smart unlocked its Slush Fund and struck with a consolidated $1,500.00 allocation."
+      },
+      {
+        title: "3. Phase 2 Dynamic Hurdle & Bow-Out (Cycles #11–#24: Minutes 53'–72')",
+        description:
+          "With Sevilla leading 1–0, live edges compressed between +2.09% and +3.87% on low 1.22–1.27 lines. Naive bled capital by churning $1,000 across 2 cycles. Smart recognized decaying risk-reward and fully protected profits through its Bow-Out protocol."
+      },
+      {
+        title: "4. Stoppage-Time Lead Lock & Tail Filter (Cycles #31–#37: Minutes 83'–90')",
+        description:
+          "Sevilla sealed victory at 2–0. Smart's probability-weighted tail filter automatically disregarded massive longshot quotes (501.00–751.00) on Osasuna and Draw with sub-2% likelihood, avoiding superfluous execution fees and settling with +$1,500.00 pure profit."
+      }
+    ],
+    metrics: {
+      liveIngestCycles: 37,
+      peakEdgePercent: 31.49,
+      drawSimplexPercent: 12.4,
+      netPnL: 1500.0,
+      netRoiPercent: 100.0,
+      totalCapitalDeployed: 1500.0,
+      totalGrossReturn: 3000.0
+    },
+    chronology: [
+      {
+        cycle: '#1',
+        min: "3'",
+        scoreShotsPoss: '0–0 | Early Baseline',
+        bestPrice: 'Sevilla 1.95',
+        simplex: '53.2% / 28.4% / 18.4%',
+        edge: '+3.82%',
+        action: 'SMART BOW-OUT (< 4.5% Hurdle)'
+      },
+      {
+        cycle: '#5',
+        min: "27'",
+        scoreShotsPoss: '1–0 | Sevilla Breakthrough',
+        bestPrice: 'Sevilla 2.00 (Sky Bet)',
+        simplex: '65.7% / 21.9% / 12.4%',
+        edge: '+31.49%',
+        action: '⚡ SLUSH STRIKE: $1,500.00 (Won)'
+      },
+      {
+        cycle: '#11–#24',
+        min: "53'–72'",
+        scoreShotsPoss: '1–0 | Midfield Control',
+        bestPrice: 'Sevilla 1.27 → 1.22',
+        simplex: '78.5% / 15.2% / 6.3%',
+        edge: '+3.87% → +2.09%',
+        action: 'SMART BOW-OUT (Capital Protected)'
+      },
+      {
+        cycle: '#31–#37',
+        min: "83'–90'",
+        scoreShotsPoss: '2–0 | Final Whistle Lead Lock',
+        bestPrice: 'Sevilla 1.13',
+        simplex: '98.5% / 1.1% / 0.4%',
+        edge: '+10.25%',
+        action: 'SETTLED: +$1,500.00 (100% ROI)'
+      }
+    ],
+    ledger: [
+      {
+        leg: '27\' Slush Latency Strike (Sky Bet)',
+        description: '$1,500.00 allocation @ 2.00 on +31.49% goal latency edge. Won.',
+        amount: 1500.0,
+        odds: 2.0,
+        outcome: 'Won',
+        netPnl: 1500.0
+      },
+      {
+        leg: 'v1.2 Naive Churn Comparison (Informational)',
+        description: 'Naive staked $3,000 across cycles 1, 5, 11–24, 31–37 returning +$1,585 (52.8% ROI).',
+        amount: 3000.0,
+        odds: 1.53,
+        outcome: 'Won',
+        netPnl: 1585.0
+      }
+    ],
+    takeaways: [
+      {
+        title: 'Precision Slush Deployment',
+        text: 'Waiting for high-conviction latency disconnects (>25% edge) allowed the engine to double its capital on a single clean ticket.'
+      },
+      {
+        title: 'Hurdle-Based Bow-Out Protocol',
+        text: 'Enforcing a dynamic edge hurdle eliminated 3 unnecessary cycles of capital lockup on cramped 1.22 odds.'
+      },
+      {
+        title: 'Capital Efficiency Dominance',
+        text: 'v1.2.1 Smart generated nearly identical net profit ($1,500 vs $1,585) while risking 50% less capital than the Naive model.'
+      }
+    ]
+  },
+  {
     slug: 'barcelona-vs-real-madrid-2026-10-25',
     title: 'FC Barcelona vs Real Madrid (1 – 2 FT)',
     subtitle:
