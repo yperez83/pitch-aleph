@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, ReferenceArea } from 'recharts';
 import VAULT_MATCHES_V10 from './vault_index.json';
 import VAULT_CASES_26 from './data_vault_26_cases.json';
-import CHART_DATA_V10 from './backtest_chart_data.json';
 import CHART_DATA_V12 from './equity_curve_v1.2_oos.json';
 import { BACKTEST_MODELS } from './lib/backtestData';
 import LiveSportsTicker from './components/LiveSportsTicker';
@@ -723,7 +722,7 @@ export default function App() {
   const [vaultSort, setVaultSort] = useState('desc');
   // Data Vault version toggle: 'v1.2' (26-Case Portfolio Taxonomy) vs 'v1.0' (Legacy 20-Match Sample)
   const [vaultVersion, setVaultVersion] = useState('v1.2');
-  // Backtest analytics version toggle: 'v1.2.1' (Active Smart Engine), 'v1.2' (Production OOS), 'v1.0' (Spatial Legacy)
+  // Backtest analytics version toggle: 'v1.2.1' (Active Smart Engine) vs 'v1.2' (Production OOS)
   const [backtestVersion, setBacktestVersion] = useState('v1.2.1');
   // Archives collapsible state (default collapsed / nested)
   const [archivesExpanded, setArchivesExpanded] = useState(false);
@@ -734,7 +733,7 @@ export default function App() {
   const [chartRefLeft, setChartRefLeft] = useState('');
   const [chartRefRight, setChartRefRight] = useState('');
 
-  const currentMaxTrades = backtestVersion === 'v1.2.1' ? 148 : (backtestVersion === 'v1.2' ? 168 : 522);
+  const currentMaxTrades = backtestVersion === 'v1.2.1' ? 148 : 168;
 
   const handleChartZoom = useCallback(() => {
     if (chartRefLeft === chartRefRight || chartRefRight === '') {
@@ -1075,7 +1074,7 @@ export default function App() {
     const currentModel = BACKTEST_MODELS[backtestVersion] || BACKTEST_MODELS['v1.2.1'];
     const currentChartData = backtestVersion === 'v1.2.1' 
       ? BACKTEST_MODELS['v1.2.1'].equityCurve 
-      : (backtestVersion === 'v1.2' ? CHART_DATA_V12 : CHART_DATA_V10);
+      : CHART_DATA_V12;
 
     return (
       <div className="min-h-screen bg-slate-950 font-sans text-white relative p-6 sm:p-8 md:p-16 overflow-y-auto">
@@ -1094,22 +1093,16 @@ export default function App() {
               <span className={`px-2.5 py-0.5 rounded text-xs font-mono font-bold border ${
                 backtestVersion === 'v1.2.1'
                   ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
-                  : backtestVersion === 'v1.2'
-                  ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
-                  : 'bg-blue-500/20 text-blue-400 border-blue-500/40'
+                  : 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
               }`}>
                 {backtestVersion === 'v1.2.1'
                   ? 'PRIMARY INSTITUTIONAL BENCHMARK (ACTIVE)'
-                  : backtestVersion === 'v1.2'
-                  ? 'OUT-OF-SAMPLE BENCHMARK'
-                  : 'SPATIAL LEGACY RUN'}
+                  : 'PREVIOUS OOS BENCHMARK'}
               </span>
               <span className="text-slate-400 font-mono text-xs">
                 {backtestVersion === 'v1.2.1'
                   ? '148 Calibrated Executions Across 98 Held-Out Matches'
-                  : backtestVersion === 'v1.2'
-                  ? 'Held-Out Test Set (1,000 Matches / 91,000 States)'
-                  : '3,000,000+ Spatial Events Processed'}
+                  : 'Held-Out Test Set (1,000 Matches / 91,000 States)'}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">
@@ -1118,9 +1111,7 @@ export default function App() {
             <p className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-3xl">
               {backtestVersion === 'v1.2.1'
                 ? 'Out-of-sample evaluation of the calibrated PitchAleph 1.2.1 multi-class booster under stateful tranche exposure, stagnation filtering, and autonomous slush fund allocation.'
-                : backtestVersion === 'v1.2'
-                ? 'Out-of-sample evaluation of the calibrated PitchAleph 1.2 multi-class booster under strict causal first-trigger execution.'
-                : 'Validating historical algorithmic performance across a 3,000,000+ spatial event Data Lake using XGBoost, Platt Scaling, and liquidity constraints.'}
+                : 'Out-of-sample evaluation of the calibrated PitchAleph 1.2 multi-class booster under strict causal first-trigger execution.'}
             </p>
           </div>
 
@@ -1131,23 +1122,10 @@ export default function App() {
               <div className="inline-flex rounded-lg bg-slate-950 p-1 border border-slate-800">
                 <button
                   onClick={() => {
-                    setBacktestVersion('v1.0');
-                    handleChartZoomReset();
-                  }}
-                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
-                    backtestVersion === 'v1.0'
-                      ? 'bg-blue-600 text-white shadow'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  v1.0 Spatial Legacy
-                </button>
-                <button
-                  onClick={() => {
                     setBacktestVersion('v1.2');
                     handleChartZoomReset();
                   }}
-                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
                     backtestVersion === 'v1.2'
                       ? 'bg-cyan-600 text-white shadow'
                       : 'text-slate-400 hover:text-white'
@@ -1160,7 +1138,7 @@ export default function App() {
                     setBacktestVersion('v1.2.1');
                     handleChartZoomReset();
                   }}
-                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3.5 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                     backtestVersion === 'v1.2.1'
                       ? 'bg-emerald-500 text-slate-950 shadow'
                       : 'text-slate-400 hover:text-white'
@@ -1177,13 +1155,9 @@ export default function App() {
                 <span className="text-emerald-400/90 flex items-center gap-1">
                   <span>●</span> Primary Institutional Benchmark
                 </span>
-              ) : backtestVersion === 'v1.2' ? (
+              ) : (
                 <span className="text-cyan-400/90 flex items-center gap-1">
                   <span>●</span> Previous Calibrated OOS Baseline
-                </span>
-              ) : (
-                <span className="text-blue-400/90 flex items-center gap-1">
-                  <span>●</span> Preserved Historical Baseline
                 </span>
               )}
             </div>
@@ -1195,34 +1169,34 @@ export default function App() {
               <div className="text-xs font-mono text-slate-500 mb-2 uppercase">EXECUTIONS</div>
               <div className="text-3xl md:text-4xl font-extrabold text-white">{currentModel.executions}</div>
               <div className="text-[11px] font-mono text-slate-500 mt-1">
-                {backtestVersion === 'v1.2.1' ? 'Held-Out Test Set (98 Matches)' : backtestVersion === 'v1.2' ? 'Held-Out Test Set' : 'Filtered from 1,000 matches'}
+                {backtestVersion === 'v1.2.1' ? 'Held-Out Test Set (98 Matches)' : 'Held-Out Test Set'}
               </div>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
               <div className="text-xs font-mono text-slate-500 mb-2 uppercase">WIN RATE</div>
-              <div className={`text-3xl md:text-4xl font-extrabold ${backtestVersion === 'v1.0' ? 'text-blue-400' : 'text-emerald-400'}`}>
+              <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">
                 {currentModel.winRate}
               </div>
               <div className="text-[11px] font-mono text-slate-500 mt-1">
-                {backtestVersion === 'v1.2.1' ? 'Multi-class 3-way calibrated' : backtestVersion === 'v1.2' ? 'Multi-class 3-way calibrated' : 'High-odds underdog edge'}
+                Multi-class 3-way calibrated
               </div>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
               <div className="text-xs font-mono text-slate-500 mb-2 uppercase">NET PROFIT</div>
-              <div className={`text-3xl md:text-4xl font-extrabold ${currentModel.netProfit.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>
+              <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">
                 {currentModel.netProfit}
               </div>
               <div className="text-[11px] font-mono text-slate-500 mt-1">
-                {backtestVersion === 'v1.2.1' ? 'Net after market friction' : backtestVersion === 'v1.2' ? 'Net after market friction' : 'Net after 5% market vig'}
+                Net after market friction
               </div>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
               <div className="text-xs font-mono text-slate-500 mb-2 uppercase">TOTAL ROI</div>
-              <div className={`text-3xl md:text-4xl font-extrabold ${currentModel.roi.startsWith('-') ? 'text-rose-400' : 'text-emerald-400'}`}>
+              <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">
                 {currentModel.roi}
               </div>
               <div className="text-[11px] font-mono text-slate-500 mt-1">
-                {backtestVersion === 'v1.2.1' ? 'Unlevered OOS portfolio yield' : backtestVersion === 'v1.2' ? 'Unlevered OOS portfolio yield' : 'Unlevered portfolio yield'}
+                Unlevered OOS portfolio yield
               </div>
             </div>
           </div>
@@ -1233,13 +1207,11 @@ export default function App() {
               <h3 className={`text-2xl font-bold mb-6 ${
                 backtestVersion === 'v1.2.1'
                   ? 'text-emerald-400'
-                  : backtestVersion === 'v1.2'
-                  ? 'text-cyan-400'
-                  : 'text-blue-400'
+                  : 'text-cyan-400'
               }`}>
                 {backtestVersion === 'v1.2.1' 
                   ? 'PitchAleph 1.2.1 Architecture' 
-                  : (backtestVersion === 'v1.2' ? 'PitchAleph 1.2 Architecture' : 'Architecture & Constraints')}
+                  : 'PitchAleph 1.2 Architecture'}
               </h3>
 
               <ul className="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base">
@@ -1276,9 +1248,7 @@ export default function App() {
                   <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
                     {backtestVersion === 'v1.2.1'
                       ? `Execution curve across 148 trades (Ending: ${currentModel.endingBankroll}).`
-                      : backtestVersion === 'v1.2'
-                      ? 'Out-of-sample execution curve across 168 held-out trades.'
-                      : 'Interactive execution ledger across 522 constrained market conditions.'}
+                      : 'Out-of-sample execution curve across 168 held-out trades.'}
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 self-start sm:self-auto shrink-0">
@@ -1329,16 +1299,11 @@ export default function App() {
                     { label: 'T1–50', start: 1, end: 50 },
                     { label: 'T50–100', start: 50, end: 100 },
                     { label: 'T100–148', start: 100, end: 148 }
-                  ] : backtestVersion === 'v1.2' ? [
+                  ] : [
                     { label: 'ALL (168)', start: 'dataMin', end: 'dataMax' },
                     { label: 'T1–50', start: 1, end: 50 },
                     { label: 'T50–110', start: 50, end: 110 },
                     { label: 'T110–168', start: 110, end: 168 }
-                  ] : [
-                    { label: 'ALL (522)', start: 'dataMin', end: 'dataMax' },
-                    { label: 'T1–150', start: 1, end: 150 },
-                    { label: 'T150–350', start: 150, end: 350 },
-                    { label: 'T350–522', start: 350, end: 522 }
                   ]).map(p => {
                     const isActive = chartZoomLeft === p.start && chartZoomRight === p.end;
                     return (
@@ -1402,10 +1367,10 @@ export default function App() {
                     <Line 
                       type="monotone" 
                       dataKey="bankroll" 
-                      stroke={backtestVersion === 'v1.2.1' ? '#10b981' : (backtestVersion === 'v1.2' ? '#06b6d4' : '#38bdf8')} 
+                      stroke={backtestVersion === 'v1.2.1' ? '#10b981' : '#06b6d4'} 
                       strokeWidth={3}
                       dot={false}
-                      activeDot={{ r: 6, fill: backtestVersion === 'v1.2.1' ? '#10b981' : (backtestVersion === 'v1.2' ? '#06b6d4' : '#38bdf8'), stroke: '#0f172a', strokeWidth: 2 }}
+                      activeDot={{ r: 6, fill: backtestVersion === 'v1.2.1' ? '#10b981' : '#06b6d4', stroke: '#0f172a', strokeWidth: 2 }}
                       isAnimationActive={false}
                     />
                     {chartRefLeft && chartRefRight && (

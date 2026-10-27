@@ -1,5 +1,5 @@
 export interface BacktestSummary {
-  id: 'v1.0' | 'v1.2' | 'v1.2.1';
+  id: 'v1.2' | 'v1.2.1';
   label: string;
   isDefault: boolean;
   badge?: string;
@@ -188,44 +188,6 @@ export const BACKTEST_MODELS: Record<string, BacktestSummary> = {
       { trade: 91, bankroll: 12700, pnl: 900 },
       { trade: 136, bankroll: 13400, pnl: 700 },
       { trade: 168, bankroll: 15588, pnl: 2188 }
-    ]
-  },
-  'v1.0': {
-    id: 'v1.0',
-    label: 'v1.0 Spatial Legacy',
-    isDefault: false,
-    executions: 201,
-    winRate: '0.50%',
-    netProfit: '-$9,792',
-    roi: '-97.92%',
-    startingBankroll: '$10,000.00',
-    endingBankroll: '$207.54',
-    architectureCards: [
-      {
-        title: '1. Uncalibrated Raw Boosting',
-        description:
-          'Legacy gradient-boosted spatial kinematic trees prone to severe probability distortion and retail favorite bias without non-parametric calibration wrapping.',
-        highlight: 'Raw Kinematic Trees'
-      },
-      {
-        title: '2. Static Hurdle Thresholding',
-        description:
-          'Fixed 15% edge requirement on simulated 10.0 (+900) next-goal markets lacking dynamic game-state memory or defensive stagnation awareness.',
-        highlight: 'Static Cooldown'
-      },
-      {
-        title: '3. Unbounded Drawdown Exposure',
-        description:
-          'Uncontrolled risk allocation suffering catastrophic capital erosion during sustained non-scoring passages of play.',
-        highlight: '97.92% Max Drawdown'
-      }
-    ],
-    equityCurve: [
-      { trade: 0, bankroll: 10000, pnl: 0 },
-      { trade: 50, bankroll: 4200, pnl: -5800 },
-      { trade: 100, bankroll: 1800, pnl: -2400 },
-      { trade: 150, bankroll: 600, pnl: -1200 },
-      { trade: 201, bankroll: 207.54, pnl: -392.46 }
     ]
   }
 };
