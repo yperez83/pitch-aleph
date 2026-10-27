@@ -6,6 +6,7 @@ import VAULT_MATCHES_V10 from './vault_index.json';
 import VAULT_CASES_26 from './data_vault_26_cases.json';
 import CHART_DATA_V10 from './backtest_chart_data.json';
 import CHART_DATA_V12 from './equity_curve_v1.2_oos.json';
+import { BACKTEST_MODELS } from './lib/backtestData';
 import LiveSportsTicker from './components/LiveSportsTicker';
 
 // Legacy v1.0 Vault matches alias
@@ -722,18 +723,18 @@ export default function App() {
   const [vaultSort, setVaultSort] = useState('desc');
   // Data Vault version toggle: 'v1.2' (26-Case Portfolio Taxonomy) vs 'v1.0' (Legacy 20-Match Sample)
   const [vaultVersion, setVaultVersion] = useState('v1.2');
-  // Backtest analytics version toggle: 'v1.2' (Active Production OOS) vs 'v1.0' (Spatial Legacy)
-  const [backtestVersion, setBacktestVersion] = useState('v1.2');
+  // Backtest analytics version toggle: 'v1.2.1' (Active Smart Engine), 'v1.2' (Production OOS), 'v1.0' (Spatial Legacy)
+  const [backtestVersion, setBacktestVersion] = useState('v1.2.1');
   // Archives collapsible state (default collapsed / nested)
   const [archivesExpanded, setArchivesExpanded] = useState(false);
 
-  // Interactive zoom state for 1,000-Match Backtest Chart
+  // Interactive zoom state for Backtest Chart
   const [chartZoomLeft, setChartZoomLeft] = useState('dataMin');
   const [chartZoomRight, setChartZoomRight] = useState('dataMax');
   const [chartRefLeft, setChartRefLeft] = useState('');
   const [chartRefRight, setChartRefRight] = useState('');
 
-  const currentMaxTrades = backtestVersion === 'v1.2' ? 168 : 522;
+  const currentMaxTrades = backtestVersion === 'v1.2.1' ? 148 : (backtestVersion === 'v1.2' ? 168 : 522);
 
   const handleChartZoom = useCallback(() => {
     if (chartRefLeft === chartRefRight || chartRefRight === '') {
@@ -1071,6 +1072,11 @@ export default function App() {
 
   // ─── DEDICATED VIEW: 1,000-MATCH CLOUD SIMULATION ────────────
   if (activeCase === '1k_sim') {
+    const currentModel = BACKTEST_MODELS[backtestVersion] || BACKTEST_MODELS['v1.2.1'];
+    const currentChartData = backtestVersion === 'v1.2.1' 
+      ? BACKTEST_MODELS['v1.2.1'].equityCurve 
+      : (backtestVersion === 'v1.2' ? CHART_DATA_V12 : CHART_DATA_V10);
+
     return (
       <div className="min-h-screen bg-slate-950 font-sans text-white relative p-6 sm:p-8 md:p-16 overflow-y-auto">
         <button
@@ -1086,21 +1092,33 @@ export default function App() {
           <div className="mb-8 border-b border-slate-800 pb-8">
             <div className="flex items-center gap-2 mb-3">
               <span className={`px-2.5 py-0.5 rounded text-xs font-mono font-bold border ${
-                backtestVersion === 'v1.2'
+                backtestVersion === 'v1.2.1'
                   ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
+                  : backtestVersion === 'v1.2'
+                  ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40'
                   : 'bg-blue-500/20 text-blue-400 border-blue-500/40'
               }`}>
-                {backtestVersion === 'v1.2' ? 'PRODUCTION OUT-OF-SAMPLE BENCHMARK' : 'SPATIAL LEGACY RUN'}
+                {backtestVersion === 'v1.2.1'
+                  ? 'PRIMARY INSTITUTIONAL BENCHMARK (ACTIVE)'
+                  : backtestVersion === 'v1.2'
+                  ? 'OUT-OF-SAMPLE BENCHMARK'
+                  : 'SPATIAL LEGACY RUN'}
               </span>
               <span className="text-slate-400 font-mono text-xs">
-                {backtestVersion === 'v1.2' ? 'Held-Out Test Set (1,000 Matches / 91,000 States)' : '3,000,000+ Spatial Events Processed'}
+                {backtestVersion === 'v1.2.1'
+                  ? '148 Calibrated Executions Across 98 Held-Out Matches'
+                  : backtestVersion === 'v1.2'
+                  ? 'Held-Out Test Set (1,000 Matches / 91,000 States)'
+                  : '3,000,000+ Spatial Events Processed'}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-white">
               Production Engine: Backtest Analytics
             </h1>
             <p className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-3xl">
-              {backtestVersion === 'v1.2'
+              {backtestVersion === 'v1.2.1'
+                ? 'Out-of-sample evaluation of the calibrated PitchAleph 1.2.1 multi-class booster under stateful tranche exposure, stagnation filtering, and autonomous slush fund allocation.'
+                : backtestVersion === 'v1.2'
                 ? 'Out-of-sample evaluation of the calibrated PitchAleph 1.2 multi-class booster under strict causal first-trigger execution.'
                 : 'Validating historical algorithmic performance across a 3,000,000+ spatial event Data Lake using XGBoost, Platt Scaling, and liquidity constraints.'}
             </p>
@@ -1129,22 +1147,39 @@ export default function App() {
                     setBacktestVersion('v1.2');
                     handleChartZoomReset();
                   }}
-                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer ${
                     backtestVersion === 'v1.2'
+                      ? 'bg-cyan-600 text-white shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  v1.2 Out-of-Sample
+                </button>
+                <button
+                  onClick={() => {
+                    setBacktestVersion('v1.2.1');
+                    handleChartZoomReset();
+                  }}
+                  className={`px-3 py-1.5 rounded-md font-mono text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    backtestVersion === 'v1.2.1'
                       ? 'bg-emerald-500 text-slate-950 shadow'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  <span>v1.2 Out-of-Sample (Active)</span>
-                  <span className={`w-1.5 h-1.5 rounded-full ${backtestVersion === 'v1.2' ? 'bg-slate-950 animate-pulse' : 'bg-emerald-400'}`}></span>
+                  <span>v1.2.1 Smart Engine (Active)</span>
+                  <span className={`w-1.5 h-1.5 rounded-full ${backtestVersion === 'v1.2.1' ? 'bg-slate-950 animate-pulse' : 'bg-emerald-400'}`}></span>
                 </button>
               </div>
             </div>
 
             <div className="text-xs font-mono text-slate-500">
-              {backtestVersion === 'v1.2' ? (
+              {backtestVersion === 'v1.2.1' ? (
                 <span className="text-emerald-400/90 flex items-center gap-1">
                   <span>●</span> Primary Institutional Benchmark
+                </span>
+              ) : backtestVersion === 'v1.2' ? (
+                <span className="text-cyan-400/90 flex items-center gap-1">
+                  <span>●</span> Previous Calibrated OOS Baseline
                 </span>
               ) : (
                 <span className="text-blue-400/90 flex items-center gap-1">
@@ -1155,90 +1190,82 @@ export default function App() {
           </div>
 
           {/* ─── DYNAMIC METRIC CARDS ─── */}
-          {backtestVersion === 'v1.2' ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">EXECUTIONS</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-white">168</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Held-Out Test Set</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">WIN RATE</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">54.17%</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Multi-class 3-way calibrated</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">NET PROFIT</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">+$5,588</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Net after market friction</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">TOTAL ROI</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">55.88%</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Unlevered OOS portfolio yield</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
+              <div className="text-xs font-mono text-slate-500 mb-2 uppercase">EXECUTIONS</div>
+              <div className="text-3xl md:text-4xl font-extrabold text-white">{currentModel.executions}</div>
+              <div className="text-[11px] font-mono text-slate-500 mt-1">
+                {backtestVersion === 'v1.2.1' ? 'Held-Out Test Set (98 Matches)' : backtestVersion === 'v1.2' ? 'Held-Out Test Set' : 'Filtered from 1,000 matches'}
               </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">EXECUTIONS</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-white">522</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Filtered from 1,000 matches</div>
+            <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
+              <div className="text-xs font-mono text-slate-500 mb-2 uppercase">WIN RATE</div>
+              <div className={`text-3xl md:text-4xl font-extrabold ${backtestVersion === 'v1.0' ? 'text-blue-400' : 'text-emerald-400'}`}>
+                {currentModel.winRate}
               </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">WIN RATE</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-blue-400">38.31%</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">High-odds underdog edge</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">NET PROFIT</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">+$10,152</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Net after 5% market vig</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
-                <div className="text-xs font-mono text-slate-500 mb-2 uppercase">TOTAL ROI</div>
-                <div className="text-3xl md:text-4xl font-extrabold text-emerald-400">101.53%</div>
-                <div className="text-[11px] font-mono text-slate-500 mt-1">Unlevered portfolio yield</div>
+              <div className="text-[11px] font-mono text-slate-500 mt-1">
+                {backtestVersion === 'v1.2.1' ? 'Multi-class 3-way calibrated' : backtestVersion === 'v1.2' ? 'Multi-class 3-way calibrated' : 'High-odds underdog edge'}
               </div>
             </div>
-          )}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
+              <div className="text-xs font-mono text-slate-500 mb-2 uppercase">NET PROFIT</div>
+              <div className={`text-3xl md:text-4xl font-extrabold ${currentModel.netProfit.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>
+                {currentModel.netProfit}
+              </div>
+              <div className="text-[11px] font-mono text-slate-500 mt-1">
+                {backtestVersion === 'v1.2.1' ? 'Net after market friction' : backtestVersion === 'v1.2' ? 'Net after market friction' : 'Net after 5% market vig'}
+              </div>
+            </div>
+            <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
+              <div className="text-xs font-mono text-slate-500 mb-2 uppercase">TOTAL ROI</div>
+              <div className={`text-3xl md:text-4xl font-extrabold ${currentModel.roi.startsWith('-') ? 'text-rose-400' : 'text-emerald-400'}`}>
+                {currentModel.roi}
+              </div>
+              <div className="text-[11px] font-mono text-slate-500 mt-1">
+                {backtestVersion === 'v1.2.1' ? 'Unlevered OOS portfolio yield' : backtestVersion === 'v1.2' ? 'Unlevered OOS portfolio yield' : 'Unlevered portfolio yield'}
+              </div>
+            </div>
+          </div>
 
           {/* ─── DYNAMIC ARCHITECTURE CARDS & CHART ─── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <div>
-              <h3 className={`text-2xl font-bold mb-6 ${backtestVersion === 'v1.2' ? 'text-emerald-400' : 'text-blue-400'}`}>
-                {backtestVersion === 'v1.2' ? 'PitchAleph 1.2 Architecture' : 'Architecture & Constraints'}
+              <h3 className={`text-2xl font-bold mb-6 ${
+                backtestVersion === 'v1.2.1'
+                  ? 'text-emerald-400'
+                  : backtestVersion === 'v1.2'
+                  ? 'text-cyan-400'
+                  : 'text-blue-400'
+              }`}>
+                {backtestVersion === 'v1.2.1' 
+                  ? 'PitchAleph 1.2.1 Architecture' 
+                  : (backtestVersion === 'v1.2' ? 'PitchAleph 1.2 Architecture' : 'Architecture & Constraints')}
               </h3>
-              {backtestVersion === 'v1.2' ? (
-                <ul className="space-y-6 text-slate-300 leading-relaxed text-sm md:text-base">
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">1. Multi-Class Simplex</strong>
-                    PitchAleph 1.2 outputs an explicit 3-class probability simplex [P(Home Win), P(Draw), P(Away Win)] summing strictly to 1.0000, eliminating binary draw distortion across the full 90 minutes.
+
+              <ul className="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base">
+                {currentModel.architectureCards.map((card, idx) => (
+                  <li key={idx} className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
+                    <strong className="text-white block text-base mb-1">{card.title}</strong>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{card.description}</p>
                   </li>
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">2. Isotonic Frozen Calibration</strong>
-                    Non-parametric isotonic regression wrapped in <code className="text-emerald-400 bg-slate-950 px-1 py-0.5 rounded text-xs">FrozenEstimator</code> recalibrates raw boosting probabilities, removing retail favorite bias and reducing Log Loss to 0.7640 on held-out matches.
-                  </li>
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">3. Causal First-Trigger Execution</strong>
-                    Positions are locked strictly at the moment of earliest positive expectation, enforcing Quarter-Kelly staking ($500 cap) and eliminating survivorship bias with zero lookahead leakage.
-                  </li>
-                </ul>
-              ) : (
-                <ul className="space-y-6 text-slate-300 leading-relaxed text-sm md:text-base">
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">1. Spatial Geometry / xT</strong>
-                    The engine was trained on a 1,000-match historical dataset, computing rolling Expected Threat (xT) and spatial geometry to map sequences into continuous goal-generation probabilities.
-                  </li>
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">2. Platt Scaling Calibration</strong>
-                    Raw tree-based models suffer from algorithmic overconfidence. By applying Platt Scaling (Sigmoid curve), the engine throttled false-positive triggers, aggressively dropping its Brier Score to 0.019.
-                  </li>
-                  <li className="bg-slate-900/50 p-4 rounded-lg border border-slate-800/80">
-                    <strong className="text-white block text-base mb-1">3. Market Liquidity Injection</strong>
-                    To ensure statistical realism, a $10,000 maximum liquidity cap and a 5% sportsbook "vig" were injected into the simulator, ensuring the 101.53% ROI represents withdrawable, real-world alpha.
-                  </li>
-                </ul>
+                ))}
+              </ul>
+
+              {currentModel.trancheBreakdown && (
+                <div className="mt-6 p-4 rounded-lg bg-slate-900/60 border border-slate-800">
+                  <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-bold flex items-center justify-between">
+                    <span>Tranche Breakdown</span>
+                    <span className="text-emerald-400 text-[11px]">Max DD: 10.15% ($3,165)</span>
+                  </div>
+                  <div className="divide-y divide-slate-800 text-xs font-mono">
+                    {currentModel.trancheBreakdown.map((t, i) => (
+                      <div key={i} className="py-2.5 flex justify-between items-center">
+                        <span className="text-slate-300">{t.tranche} ({t.trades} trades)</span>
+                        <span className="text-emerald-400 font-semibold">{t.pnl} ({t.winRate} WR • {t.roi} ROI)</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
             
@@ -1247,7 +1274,9 @@ export default function App() {
                 <div>
                   <h4 className="text-xl font-bold text-white">Cumulative Bankroll (P&L)</h4>
                   <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
-                    {backtestVersion === 'v1.2'
+                    {backtestVersion === 'v1.2.1'
+                      ? `Execution curve across 148 trades (Ending: ${currentModel.endingBankroll}).`
+                      : backtestVersion === 'v1.2'
                       ? 'Out-of-sample execution curve across 168 held-out trades.'
                       : 'Interactive execution ledger across 522 constrained market conditions.'}
                   </p>
@@ -1295,7 +1324,12 @@ export default function App() {
               <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-800/80 mb-2 text-xs font-mono shrink-0">
                 <div className="flex items-center gap-1">
                   <span className="text-slate-500 mr-1 text-[11px]">RANGE:</span>
-                  {(backtestVersion === 'v1.2' ? [
+                  {(backtestVersion === 'v1.2.1' ? [
+                    { label: 'ALL (148)', start: 'dataMin', end: 'dataMax' },
+                    { label: 'T1–50', start: 1, end: 50 },
+                    { label: 'T50–100', start: 50, end: 100 },
+                    { label: 'T100–148', start: 100, end: 148 }
+                  ] : backtestVersion === 'v1.2' ? [
                     { label: 'ALL (168)', start: 'dataMin', end: 'dataMax' },
                     { label: 'T1–50', start: 1, end: 50 },
                     { label: 'T50–110', start: 50, end: 110 },
@@ -1331,7 +1365,7 @@ export default function App() {
               <div className="w-full flex-1 min-h-[300px] select-none">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
-                    data={backtestVersion === 'v1.2' ? CHART_DATA_V12 : CHART_DATA_V10}
+                    data={currentChartData}
                     margin={{ top: 10, right: 20, bottom: 15, left: 0 }}
                     onMouseDown={(e) => e && e.activeLabel && setChartRefLeft(e.activeLabel)}
                     onMouseMove={(e) => chartRefLeft && e && e.activeLabel && setChartRefRight(e.activeLabel)}
@@ -1368,10 +1402,10 @@ export default function App() {
                     <Line 
                       type="monotone" 
                       dataKey="bankroll" 
-                      stroke={backtestVersion === 'v1.2' ? '#10b981' : '#38bdf8'} 
+                      stroke={backtestVersion === 'v1.2.1' ? '#10b981' : (backtestVersion === 'v1.2' ? '#06b6d4' : '#38bdf8')} 
                       strokeWidth={3}
                       dot={false}
-                      activeDot={{ r: 6, fill: backtestVersion === 'v1.2' ? '#10b981' : '#38bdf8', stroke: '#0f172a', strokeWidth: 2 }}
+                      activeDot={{ r: 6, fill: backtestVersion === 'v1.2.1' ? '#10b981' : (backtestVersion === 'v1.2' ? '#06b6d4' : '#38bdf8'), stroke: '#0f172a', strokeWidth: 2 }}
                       isAnimationActive={false}
                     />
                     {chartRefLeft && chartRefRight && (
@@ -1448,16 +1482,16 @@ export default function App() {
               >
                 <div className="flex items-center justify-between w-full mb-1">
                   <span className="text-xs text-emerald-400 flex items-center gap-1.5 font-bold">
-                    <span>ENGINE v1.2</span>
+                    <span>ENGINE v1.2.1</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   </span>
-                  <span className="text-xs text-emerald-400 font-semibold shrink-0">+$5.6K (~56% ROI)</span>
+                  <span className="text-xs text-emerald-400 font-semibold shrink-0">+$33.9K (+33.4% ROI)</span>
                 </div>
                 <span className="text-base sm:text-lg text-white group-hover:text-emerald-300 transition-colors">
                   Production Engine: Backtest Analytics →
                 </span>
                 <span className="text-xs font-normal text-slate-400 mt-1">
-                  Multi-class simplex booster with isotonic frozen calibration & causal first-trigger execution across 91,000 temporal states
+                  Calibrated v1.2.1 multi-class booster under stateful tranche exposure, stagnation filtering, and autonomous slush fund allocation
                 </span>
               </button>
 
