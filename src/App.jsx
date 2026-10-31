@@ -733,7 +733,7 @@ export default function App() {
   const [chartRefLeft, setChartRefLeft] = useState('');
   const [chartRefRight, setChartRefRight] = useState('');
 
-  const currentMaxTrades = backtestVersion === 'v1.2.1' ? 148 : 168;
+  const currentMaxTrades = backtestVersion === 'v1.2.1' ? 1884 : 168;
 
   const handleChartZoom = useCallback(() => {
     if (chartRefLeft === chartRefRight || chartRefRight === '') {
@@ -1101,7 +1101,7 @@ export default function App() {
               </span>
               <span className="text-slate-400 font-mono text-xs">
                 {backtestVersion === 'v1.2.1'
-                  ? '148 Calibrated Executions Across 98 Held-Out Matches'
+                  ? '1,884 Calibrated Executions Across 197 Held-Out Matches'
                   : 'Held-Out Test Set (1,000 Matches / 91,000 States)'}
               </span>
             </div>
@@ -1169,7 +1169,7 @@ export default function App() {
               <div className="text-xs font-mono text-slate-500 mb-2 uppercase">EXECUTIONS</div>
               <div className="text-3xl md:text-4xl font-extrabold text-white">{currentModel.executions}</div>
               <div className="text-[11px] font-mono text-slate-500 mt-1">
-                {backtestVersion === 'v1.2.1' ? 'Held-Out Test Set (98 Matches)' : 'Held-Out Test Set'}
+                {backtestVersion === 'v1.2.1' ? 'Held-Out Test Set (197 Matches)' : 'Held-Out Test Set'}
               </div>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 md:p-6 shadow-xl">
@@ -1227,7 +1227,9 @@ export default function App() {
                 <div className="mt-6 p-4 rounded-lg bg-slate-900/60 border border-slate-800">
                   <div className="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2 font-bold flex items-center justify-between">
                     <span>Tranche Breakdown</span>
-                    <span className="text-emerald-400 text-[11px]">Max DD: 10.15% ($3,165)</span>
+                    <span className="text-emerald-400 text-[11px]">
+                      {backtestVersion === 'v1.2.1' ? 'Max DD: 15.92% ($2,961)' : 'Max DD: 10.15% ($3,165)'}
+                    </span>
                   </div>
                   <div className="divide-y divide-slate-800 text-xs font-mono">
                     {currentModel.trancheBreakdown.map((t, i) => (
@@ -1247,7 +1249,7 @@ export default function App() {
                   <h4 className="text-xl font-bold text-white">Cumulative Bankroll (P&L)</h4>
                   <p className="text-slate-400 text-xs sm:text-sm mt-0.5">
                     {backtestVersion === 'v1.2.1'
-                      ? `Execution curve across 148 trades (Ending: ${currentModel.endingBankroll}).`
+                      ? `Execution curve across 1,884 trades (Ending: ${currentModel.endingBankroll}).`
                       : 'Out-of-sample execution curve across 168 held-out trades.'}
                   </p>
                 </div>
@@ -1295,10 +1297,10 @@ export default function App() {
                 <div className="flex items-center gap-1">
                   <span className="text-slate-500 mr-1 text-[11px]">RANGE:</span>
                   {(backtestVersion === 'v1.2.1' ? [
-                    { label: 'ALL (148)', start: 'dataMin', end: 'dataMax' },
-                    { label: 'T1–50', start: 1, end: 50 },
-                    { label: 'T50–100', start: 50, end: 100 },
-                    { label: 'T100–148', start: 100, end: 148 }
+                    { label: 'ALL (1,884)', start: 'dataMin', end: 'dataMax' },
+                    { label: 'T1–500', start: 1, end: 500 },
+                    { label: 'T500–1000', start: 500, end: 1000 },
+                    { label: 'T1000–1884', start: 1000, end: 1884 }
                   ] : [
                     { label: 'ALL (168)', start: 'dataMin', end: 'dataMax' },
                     { label: 'T1–50', start: 1, end: 50 },
